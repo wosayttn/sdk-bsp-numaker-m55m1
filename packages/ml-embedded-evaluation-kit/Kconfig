@@ -1,0 +1,85 @@
+menu "ml-embedded-evaluation-kit"
+
+    config NU_PKG_USING_MLEVK
+        bool "Enable"
+
+    if NU_PKG_USING_MLEVK
+        choice
+            prompt "Select Use-case"
+
+            config MLEVK_UC_OBJECT_DETECTION
+                bool "Object detection"
+
+            config MLEVK_UC_VWW
+                bool "Visual Wake Word"
+
+            config MLEVK_UC_IMAGE_CLASS
+                bool "Image classification"
+
+            config MLEVK_UC_AD
+                bool "Anomaly Detection"
+
+            config MLEVK_UC_ASR
+                bool "Automated Speech Recognition"
+
+            config MLEVK_UC_INFERENCE_RUNNER
+                bool "Inference runner"
+
+            config MLEVK_UC_KWS
+                bool "Keyword spotting"
+
+            config MLEVK_UC_KWS_ASR
+                bool "Keyword spotting & Automated Speech Recognition"
+
+            config MLEVK_UC_NOISE_REDUCTION
+                bool "Noise Reduction"
+
+        endchoice
+
+        config MLEVK_UC_LIVE_DEMO
+            bool "LIVE Demo"
+
+        config MLEVK_UC_AREANA_DYNAMIC_ALLOCATE
+            bool "Allocate Areana cache memory on-demand."
+            default y
+
+        if MLEVK_UC_AREANA_DYNAMIC_ALLOCATE
+            choice
+                prompt "Select Areana placement"
+
+                config MLEVK_UC_AREANA_PLACE_SRAM
+                    bool "Place areana cache on SRAM"
+
+                config MLEVK_UC_AREANA_PLACE_HYPERRAM
+                    bool "Place areana cache on HyperRAM"
+            endchoice
+        endif
+
+        config MLEVK_UC_DYNAMIC_LOAD
+            bool "Load model/label from file"
+
+        if MLEVK_UC_DYNAMIC_LOAD
+            config MLEVK_UC_DYNAMIC_LOAD_PATH
+                string "Load model and label from specific PATH."
+                default "/mnt/sd0/model"
+        endif
+
+        config MLEVK_UC_LCD_RENDERING_DEVICE
+            string "Specific lcd device for rendering "
+            default "lcd"
+
+        config MLEVK_UC_LCD_DISPLAY_RIGHT
+            bool "Display result on right screen"
+            default y
+
+        config MLEVK_UC_AUDIO_CAPTURE_DEVICE
+            string "Specific audio device for recording"
+            default "dmic0"
+
+        config MLEVK_UC_AUDIO_PLAYBACK_DEVICE
+            string "Specific audio device for playback"
+            default "sound0"
+
+    endif
+
+endmenu

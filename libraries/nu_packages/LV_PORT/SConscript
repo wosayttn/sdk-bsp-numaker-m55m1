@@ -1,0 +1,41 @@
+Import('RTT_ROOT')
+from building import *
+
+group = []
+
+LVVersion = GetDepend('PKG_LVGL_VER_NUM')
+
+if LVVersion:
+    cwd = GetCurrentDir()
+    CPPPATH = [cwd]
+
+    print('LVGL Version: ' + LVVersion + ' Used.')
+
+    src = Glob('lv_demo.c')
+    src += Glob('lv_port_indev.c')
+
+    if GetDepend('USE_MA35_AARCH32'):
+
+        src += Glob('lv_port_disp_ma35.c')
+
+    elif GetDepend('SOC_SERIES_N9H30'):
+
+        src += Glob('lv_port_disp_n9h30.c')
+
+        if LVVersion < 0x000900:
+            src += Glob('lv_gpu_n9h30_2dge.c')
+        else:
+            src += Glob('draw_2dge/*.c')
+            CPPPATH += os.path.join(cwd, 'draw_2dge')
+
+    else:
+
+        src += Glob('lv_port_disp.c')
+
+        if GetDepend('SOC_SERIES_M55M1') and (LVVersion >= 0x000900):
+            src += Glob('draw_gdma/*.c')
+            CPPPATH += os.path.join(cwd, 'draw_gdma')
+
+    group = DefineGroup('LVGL-port', src, depend = ['PKG_USING_LVGL'], CPPPATH = CPPPATH)
+
+Return('group')

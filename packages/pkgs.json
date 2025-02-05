@@ -1,0 +1,57 @@
+[
+ {
+  "path": "/packages/iot/webnet", 
+  "ver": "v2.0.3", 
+  "name": "WEBNET"
+ }, 
+ {
+  "path": "/packages/iot/at_device", 
+  "ver": "v2.0.4", 
+  "name": "AT_DEVICE"
+ }, 
+ {
+  "path": "/packages/multimedia/LVGL/LVGL", 
+  "ver": "v8.3.9", 
+  "name": "LVGL"
+ }, 
+ {
+  "path": "/packages/multimedia/wavplayer", 
+  "ver": "latest", 
+  "name": "WAVPLAYER"
+ }, 
+ {
+  "path": "/packages/multimedia/helix", 
+  "ver": "latest", 
+  "name": "HELIX"
+ }, 
+ {
+  "path": "/packages/multimedia/mp3player", 
+  "ver": "latest", 
+  "name": "MP3PLAYER"
+ }, 
+ {
+  "path": "/packages/system/enhanced-kservice/rt_vsnprintf_full", 
+  "ver": "latest", 
+  "name": "RT_VSNPRINTF_FULL"
+ }, 
+ {
+  "path": "/packages/system/ramdisk", 
+  "ver": "latest", 
+  "name": "RAMDISK"
+ }, 
+ {
+  "path": "/packages/system/CherryUSB", 
+  "ver": "latest", 
+  "name": "CHERRYUSB"
+ }, 
+ {
+  "path": "/packages/peripherals/sensors/mpu6xxx", 
+  "ver": "latest", 
+  "name": "MPU6XXX"
+ }, 
+ {
+  "path": "/packages/misc/optparse", 
+  "ver": "v1.0.0", 
+  "name": "OPTPARSE"
+ }
+]

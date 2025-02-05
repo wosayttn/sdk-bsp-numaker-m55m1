@@ -1,0 +1,19 @@
+Import('RTT_ROOT')
+from building import *
+
+cwd = GetCurrentDir()
+group = []
+
+src = Split("""
+lcd_lt7381.c
+""")
+CPPPATH = [cwd]
+
+if GetDepend('NU_PKG_USING_LT7381_EBI'):
+    src += Glob('lt7381_ebi.c')
+
+if GetDepend('NU_PKG_USING_LT7381'):
+    group = DefineGroup('nu_pkgs_lt7381', src, depend = [''], CPPPATH = CPPPATH)
+
+Return('group')
+
