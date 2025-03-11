@@ -206,21 +206,6 @@ int tje_encode_with_func(tje_write_func *func,
 
 #endif
 
-#ifndef NDEBUG
-
-#ifdef _WIN32
-#define tje_log(msg) OutputDebugStringA(msg)
-#elif defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
-#define tje_log(msg) puts(msg)
-#else
-#warning "need a tje_log definition for your platform for debugging purposes (not needed if compiling with NDEBUG)"
-#endif
-
-#else  // NDEBUG
-#define tje_log(msg)
-#endif  // NDEBUG
-
-
 typedef struct
 {
     void           *context;
@@ -1288,7 +1273,6 @@ int tje_encode_to_file_at_quality(const char *dest_path,
     FILE *fd = fopen(dest_path, "wb");
     if (!fd)
     {
-        tje_log("Could not open file for writing.");
         return 0;
     }
 
@@ -1310,7 +1294,6 @@ int tje_encode_with_func(tje_write_func *func,
 {
     if (quality < 1 || quality > 3)
     {
-        tje_log("[ERROR] -- Valid 'quality' values are 1 (lowest), 2, or 3 (highest)\n");
         return 0;
     }
 

@@ -488,6 +488,8 @@ int camera_fini(void)
     {
         s_GrabberParam.thread_running = 0;
     }
+
+    return 0;
 }
 
 int camera_init(ccap_view_info_t psViewInfo_Packet, ccap_view_info_t psViewInfo_Planar)
@@ -515,6 +517,8 @@ int camera_init(ccap_view_info_t psViewInfo_Packet, ccap_view_info_t psViewInfo_
         if (ccap_thread != RT_NULL)
             rt_thread_startup(ccap_thread);
     }
+
+    return 0;
 }
 
 const uint8_t *camera_get_frame(int pipe)

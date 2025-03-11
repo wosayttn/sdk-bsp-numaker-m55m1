@@ -85,6 +85,7 @@ void SystemCoreClockUpdate(void)
 __WEAK void SetDebugUartMFP(void)
 {
 #if (!defined(DEBUG_ENABLE_SEMIHOST) || (DEBUG_ENABLE_SEMIHOST == 1)) && !defined(OS_USE_SEMIHOSTING)
+
 #if(USING_UART0  == 1)
     /* Set PB12 as UART0 RXD and PB13 as UART0 TXD */
     SET_UART0_RXD_PB12();
@@ -94,6 +95,7 @@ __WEAK void SetDebugUartMFP(void)
     SET_UART6_RXD_PH5();
     SET_UART6_TXD_PH4();
 #endif
+
 #endif
 }
 
@@ -113,12 +115,13 @@ __WEAK void SetDebugUartCLK(void)
     /* Waiting for HXT clock ready */
     CLK_WaitClockReady(CLK_STATUS_HXTSTB_Msk);
 #if(USING_UART0  == 1)
-    /* Select UART0 clock source from HXT */
+    /* Select UART0 clock source from HIRC */
     CLK_SetModuleClock(DEBUG_PORT_MODULE, CLK_UARTSEL0_UART0SEL_HIRC, CLK_UARTDIV0_UART0DIV(1));
 #else
-    /* Select UART6 clock source from HXT */
-    CLK_SetModuleClock(DEBUG_PORT_MODULE, CLK_UARTSEL0_UART6SEL_HXT, CLK_UARTDIV0_UART6DIV(1));
+    /* Select UART6 clock source from HIRC */
+    CLK_SetModuleClock(DEBUG_PORT_MODULE, CLK_UARTSEL0_UART6SEL_HIRC, CLK_UARTDIV0_UART6DIV(1));
 #endif
+
     /* Enable UART clock */
     CLK_EnableModuleClock(DEBUG_PORT_MODULE);
 
@@ -954,7 +957,9 @@ __WEAK void SCU_IRQHandler(void)
                 printf("\nMPC violation detected. (SCU_INTSTS2: 0x%08X)\n", u32Reg);
                 printf("  INT_Info1: 0x%08X\n", psMPC->int_info1);
                 printf("  INT_Info2: 0x%08X\n", psMPC->int_info2);
+
                 while (1) ;
+
 #endif
             }
         }
@@ -975,7 +980,9 @@ __WEAK void SCU_IRQHandler(void)
                 printf("\nSlave violation detected. (SCU_INTSTS0: 0x%08X)\n", u32Reg);
                 printf("  %s access ", sc_astrMasterName[SCU->PVSRC[i]]);
                 printf("%s@0x%08X illegallly.\n", sc_astrSlaveName[i], SCU->PVA[i]);
+
                 while (1) ;
+
 #endif
             }
         }
@@ -995,7 +1002,9 @@ __WEAK void SCU_IRQHandler(void)
 #if (CHECK_SCU_VIOLATION == 1)
                 printf("\nMSC violation detected. (SCU_INTSTS1: 0x%08X)\n", u32Reg);
                 printf("  %s access 0x%08X illegally.\n", sc_astrMasterVioName[i], SCU->MVA[i]);
+
                 while (1) ;
+
 #endif
             }
         }

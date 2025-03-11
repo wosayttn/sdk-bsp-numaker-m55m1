@@ -19,17 +19,17 @@ menu "ml-embedded-evaluation-kit"
             config MLEVK_UC_AD
                 bool "Anomaly Detection"
 
-            config MLEVK_UC_ASR
-                bool "Automated Speech Recognition"
+            #config MLEVK_UC_ASR
+            #    bool "Automated Speech Recognition"
 
-            config MLEVK_UC_INFERENCE_RUNNER
-                bool "Inference runner"
+            #config MLEVK_UC_INFERENCE_RUNNER
+            #    bool "Inference runner"
 
             config MLEVK_UC_KWS
                 bool "Keyword spotting"
 
-            config MLEVK_UC_KWS_ASR
-                bool "Keyword spotting & Automated Speech Recognition"
+            #config MLEVK_UC_KWS_ASR
+            #    bool "Keyword spotting & Automated Speech Recognition"
 
             config MLEVK_UC_NOISE_REDUCTION
                 bool "Noise Reduction"

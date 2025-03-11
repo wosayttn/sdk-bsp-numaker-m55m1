@@ -151,8 +151,6 @@ typedef enum KSMEM
 
 /** @} end of group KS_EXPORTED_CONSTANTS */
 
-extern int32_t g_KS_i32ErrCode;
-
 /** @addtogroup KS_EXPORTED_FUNCTIONS KS Exported Functions
     @{
 */

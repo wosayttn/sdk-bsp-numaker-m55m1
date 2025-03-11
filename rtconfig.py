@@ -80,11 +80,10 @@ elif PLATFORM == 'armclang':
     CFLAGS = DEVICE + ' --apcs=interwork'
     AFLAGS = DEVICE
     LFLAGS = DEVICE + ' --info sizes --info totals --info unused --info veneers --list rtthread.map --scatter ./linking_scripts/M55M1.scatter'
-
     LFLAGS += ' --keep *.o(.rti_fn.*)   --keep *.o(FSymTab) --keep *.o(VSymTab)'
+    LFLAGS += ' --libpath=' + EXEC_PATH + '/ARM/ARMCLANG/lib'
 
     EXEC_PATH += '/ARM/ARMCLANG/bin'
-    print(EXEC_PATH)
 
     if BUILD == 'debug':
         CFLAGS += ' -g -O0'

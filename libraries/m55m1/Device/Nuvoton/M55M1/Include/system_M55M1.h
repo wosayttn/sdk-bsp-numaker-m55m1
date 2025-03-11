@@ -24,7 +24,7 @@ extern "C" {
 /* Macro Definition                                                                                        */
 /*---------------------------------------------------------------------------------------------------------*/
 #ifndef NVT_DCACHE_ON
-#define NVT_DCACHE_ON           1               /*!< Set default data cache enabling */
+#define NVT_DCACHE_ON       1                   /*!< Set 1 to enable data cache or 0 to disable data cache */
 #endif
 
 #ifndef DEBUG_PORT
@@ -56,6 +56,7 @@ extern "C" {
 #define ICACHE_LINE_SIZE                        (__SCB_ICACHE_LINE_SIZE)    /*!< ICache line byte size              */
 #define DCACHE_LINE_SIZE                        (__SCB_DCACHE_LINE_SIZE)    /*!< DCache line byte size              */
 #define DCACHE_ALIGN_LINE_SIZE(u32ByteSize)     (((u32ByteSize) + (DCACHE_LINE_SIZE) - 1) & ~((DCACHE_LINE_SIZE) - 1))  /* Align to DCache line size */
+
 #define NVT_UNUSED(x)                           (void)(x)                                               /*!< To suppress the unused parameter warnings      */
 #define NVT_ITCM                                __attribute__((section("ITCM")))                        /*!< Placed declaration code in ITCM region         */
 #define NVT_DTCM_INIT                           __attribute__((section("DTCM.Init")))                   /*!< Placed declaration data in DTCM region         */

@@ -137,7 +137,6 @@ extern "C"
 #define FMC_ERR_SC_ENABLED          (-4UL)  /*!< FMC secure conceal is enabled            */
 #define FMC_ERR_SC_INVALID_BASE     (-5UL)  /*!< FMC invalid secure conceal base address (Must be page alignment and cannot set first page of APROM */
 #define FMC_ERR_SC_INVALID_PAGECNT  (-6UL)  /*!< FMC invalid secure conceal page count    */
-
 /** @} end of group FMC_EXPORTED_CONSTANTS */
 
 
@@ -169,13 +168,10 @@ extern "C"
 #define FMC_GET_SC_ACTIVE()            ((FMC->SCACT & FMC_SCACT_SCACT_Msk) ? TRUE : FALSE)           /*!< Get secure conceal function active flag \hideinitializer */
 /** @} end of group FMC_EXPORTED_MACROS */
 
-/*---------------------------------------------------------------------------------------------------------*/
-/*  Global variables                                                                                       */
-/*---------------------------------------------------------------------------------------------------------*/
-extern int32_t  g_FMC_i32ErrCode;
+extern int32_t  g_FMC_i32ErrCode;           /*!< FMC global error code                    */
 
 /** @addtogroup FMC_EXPORTED_FUNCTIONS FMC Exported Functions
-  @{
+    @{
 */
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -196,6 +192,23 @@ __STATIC_INLINE void FMC_Open(void)
 __STATIC_INLINE void FMC_Close(void)
 {
     FMC->ISPCTL &= ~FMC_ISPCTL_ISPEN_Msk;
+}
+
+/**
+  * @brief Enable FMC ISP INT function.
+  * @note  Workaround: Read ISPSTS once after trigger FMC_ISPTRG.ISPGO[0] to get ISPFF interrupt.
+  */
+__STATIC_INLINE void FMC_EnableINT(void)
+{
+    FMC->ISPCTL |= FMC_ISPCTL_INTEN_Msk;
+}
+
+/**
+  * @brief Disable FMC ISP INT function.
+  */
+__STATIC_INLINE void FMC_DisableINT(void)
+{
+    FMC->ISPCTL &= ~FMC_ISPCTL_INTEN_Msk;
 }
 
 /**

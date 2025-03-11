@@ -716,9 +716,9 @@ typedef struct
      * |        |          |This bit is set if chip wake-up from power-down state by Bus Idle Time-out Wake-up
      * |        |          |0 = There is no Bus Idle Time-out Wake-up event.
      * |        |          |1 = Chip wake-up from power-down state by Bus Idle Time-out Wake-up.
-     * |        |          |Note 1: When RXPDMAEN (LPUART_INTEN[15]) or TXPDMAEN (LPUART_INTEN[14]) is enabled, this bit is the shadow bit of HWTOIF (LPUART_INTSTS[20]); 
+     * |        |          |Note 1: When RXPDMAEN (LPUART_INTEN[15]) or TXPDMAEN (LPUART_INTEN[14]) is enabled, this bit is the shadow bit of HWTOIF (LPUART_INTSTS[20]);
      * |        |          |user can read/clear it by reading/resetting HWTOIF (LPUART_INTSTS[20]) or AOTOWKF (LPUART_AUTOSTS[0]).
-     * |        |          |Note 2: When RXPDMAEN (LPUART_INTEN[15]) and TXPDMAEN (LPUART_INTEN[14]) are both disabled, this bit is the shadow bit of RXTOIF (LPUART_INTSTS[4]); 
+     * |        |          |Note 2: When RXPDMAEN (LPUART_INTEN[15]) and TXPDMAEN (LPUART_INTEN[14]) are both disabled, this bit is the shadow bit of RXTOIF (LPUART_INTSTS[4]);
      * |        |          |user can read/clear it by reading/resetting RXTOIF (LPUART_INTSTS[4]) or AOTOWKF (LPUART_AUTOSTS[0]).
      * |        |          |Note 3: If WKAOTOEN (LPUART_AUTOCTL[8]) is enabled, the Bus Idle Time-out Wake-up event will set this bit.
      * |        |          |Note 4: This bit can be cleared by writing '1' to it.

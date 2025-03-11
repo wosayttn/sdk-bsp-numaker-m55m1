@@ -244,9 +244,6 @@
 #define UTEST_THR_STACK_SIZE 4096
 #define UTEST_THR_PRIORITY 20
 
-/* RT-Thread Utestcases */
-
-
 /* RT-Thread online packages */
 
 /* IoT - internet of things */
@@ -495,8 +492,6 @@
 #define NU_PKG_EBI_I80_DATA 0x2
 #define NU_PKG_USING_TPC
 #define NU_PKG_USING_TPC_FT5446
-#define UTEST_CMD_PREFIX "bsp.nuvoton.utest."
-#define BOARD_USE_UTEST
 
 /* ml-embedded-evaluation-kit */
 

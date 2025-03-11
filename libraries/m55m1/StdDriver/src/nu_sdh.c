@@ -424,13 +424,13 @@ void SDH_Set_clock(SDH_T *sdh, uint32_t sd_clock_khz)
         {
             u32SD_ClkSrc = (CLK->SDHSEL & CLK_SDHSEL_SDH0SEL_Msk);
             CLK->SDHSEL = (CLK->SDHSEL & ~CLK_SDHSEL_SDH0SEL_Msk) | CLK_SDHSEL_SDH0SEL_HIRC;
-            _SDH0_ReferenceClock = ((__HIRC / 1000ul) / (CLK_GetModuleClockDivider(SDH0_MODULE) + 1UL));
+            _SDH0_ReferenceClock = (__HIRC / 1000ul);
         }
         else
         {
             u32SD_ClkSrc = (CLK->SDHSEL & CLK_SDHSEL_SDH1SEL_Msk);
             CLK->SDHSEL = (CLK->SDHSEL & ~CLK_SDHSEL_SDH1SEL_Msk) | CLK_SDHSEL_SDH1SEL_HIRC;
-            _SDH1_ReferenceClock = ((__HIRC / 1000ul) / (CLK_GetModuleClockDivider(SDH1_MODULE) + 1UL));
+            _SDH1_ReferenceClock = (__HIRC / 1000ul);
         }
     }
     /* transfer state, clock source use sys_init() */
@@ -465,7 +465,6 @@ void SDH_Set_clock(SDH_T *sdh, uint32_t sd_clock_khz)
                     _SDH0_ReferenceClock = (CLK_GetHXTFreq() / 1000ul);
                     break;
             }
-
         }
         else
         {
@@ -494,7 +493,6 @@ void SDH_Set_clock(SDH_T *sdh, uint32_t sd_clock_khz)
                     _SDH1_ReferenceClock = (CLK_GetHXTFreq() / 1000ul);
                     break;
             }
-
         }
 
         if (sd_clock_khz >= 50000ul)

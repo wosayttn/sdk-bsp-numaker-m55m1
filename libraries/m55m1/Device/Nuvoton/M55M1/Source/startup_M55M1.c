@@ -28,7 +28,6 @@ extern __NO_RETURN void __PROGRAM_START(void);
   Internal References
  *----------------------------------------------------------------------------*/
 __NO_RETURN void Reset_Handler(void);
-__NO_RETURN void Reset_Handler_Main(void);
 void Default_Handler(void);
 
 /*----------------------------------------------------------------------------
@@ -429,6 +428,7 @@ __WEAK void Reset_Handler_PreInit(void)
      * or global variables in this function.
      */
 #ifndef NVT_CMSE_NON_SECURE
+
     /* Clock Setting is only available in secure mode */
     /* Enable the default APLL0 frequency and switch the SCLK clock source to APLL0. */
     CLK_SetBusClock(CLK_SCLKSEL_SCLKSEL_APLL0, CLK_APLLCTL_APLLSRC_HIRC, __HSI);
@@ -441,19 +441,17 @@ __WEAK void Reset_Handler_PreInit(void)
 /*----------------------------------------------------------------------------
   Reset Handler called on controller reset
  *----------------------------------------------------------------------------*/
-static int32_t i32TimeOutCnt = __HIRC;
-
 __NO_RETURN void Reset_Handler(void)
 {
-    // Copy __set_PSP/__set_MSPLIM/__set_PSPLIM from cmsis_armclang.h
+    /* Copy __set_PSP/__set_MSPLIM/__set_PSPLIM from cmsis_armclang.h */
     __ASM volatile("MSR psp, %0" : : "r"((uint32_t)(&__INITIAL_SP)) :);
     __ASM volatile("MSR msplim, %0" : : "r"((uint32_t)(&__STACK_LIMIT)));
     __ASM volatile("MSR psplim, %0" : : "r"((uint32_t)(&__STACK_LIMIT)));
 
-    // Enable SRAM1/2 functions are only available in secure mode
+    /* Enable SRAM1/2 functions are only available in secure mode */
     if (SCU_IS_CPU_NS(SCU_NS) == 0)
     {
-        // Unlock protected registers
+        /* Unlock protected registers */
         do
         {
             SYS->REGLCTL = 0x59UL;
@@ -498,6 +496,9 @@ __NO_RETURN void Reset_Handler(void)
         CLK->LPSRAMCTL |= (CLK_LPSRAMCTL_LPSRAM0CKEN_Msk);
     }
 
+    /* To assign __HIRC value directly before BSS initialization. */
+    SystemCoreClock = __HIRC;
+
 #if (defined (__FPU_USED) && (__FPU_USED == 1U)) || \
     (defined (__ARM_FEATURE_MVE) && (__ARM_FEATURE_MVE > 0U))
     SCB->CPACR |= ((3U << 10U * 2U) |         /* Enable CP10 Full Access */
@@ -534,6 +535,9 @@ __NO_RETURN void Reset_Handler(void)
 #endif
 
     Reset_Handler_PreInit();
+    /* All global variables will be initialized by __PROGRAM_START,
+     * therefore any global variables assignment will be overwritten after __PROGRAM_START.
+     */
     __PROGRAM_START();      // Enter PreMain (C library entry point)
 }
 

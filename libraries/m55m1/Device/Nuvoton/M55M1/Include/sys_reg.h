@@ -28,3336 +28,3336 @@ typedef struct
 {
 
 
-/**
- * @var SYS_T::PDID
- * Offset: 0x00  Part Device Identification Number Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[31:0]  |PDID      |Part Device Identification Number (Read Only)
- * |        |          |This register reflects device part number code
- * |        |          |Software can read this register to identify which device is used
- * @var SYS_T::RSTCTL
- * Offset: 0x04  System Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |CHIPRST   |Chip One-shot Reset (Write Protect)
- * |        |          |Setting this bit will reset the whole chip, including Processor core and all peripherals, and this bit will automatically return to 0 after the 2 clock cycles.
- * |        |          |The CHIPRST is same as the POR reset, all the chip controllers is reset and the chip setting from Flash are also reload.
- * |        |          |About the difference between CHIPRST and SYSRESETREQ(AIRCR[2]), please refer to section 6.2.2
- * |        |          |0 = Chip normal operation.
- * |        |          |1 = Chip one-shot reset.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[6]     |NPURST    |NPU Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the NPU
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = NPU controller normal operation.
- * |        |          |1 = NPU controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[7]     |CPURSTEN  |Processor Core Reset Enable (Write Protect)
- * |        |          |Setting this bit will only reset the processor core and Flash Memory Controller(FMC) when CPU execute WFI instruction.
- * |        |          |0 = Processor core not reset when execute WFI instruction.
- * |        |          |1 = Processor core reset when execute WFI instruction.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register..
- * @var SYS_T::RSTSTS
- * Offset: 0x08  System Reset Status Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |PORF      |POR Reset Flag
- * |        |          |The POR reset flag is set by the u201CReset Signalu201D from the Power-on Reset (POR) Controller or bit CHIPRST (SYS_RSTCTL[0]) to indicate the previous reset source.
- * |        |          |0 = No reset from POR or CHIPRST.
- * |        |          |1 = Power-on Reset (POR) or CHIPRST had issued the reset signal to reset the system.
- * |        |          |Note 1: Write 1 to clear this bit to 0.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |PINRF     |nRESET Pin Reset Flag
- * |        |          |The nRESET pin reset flag is set by the u201CReset Signalu201D from the nRESET Pin to indicate the previous reset source.
- * |        |          |0 = No reset from nRESET pin.
- * |        |          |1 = Pin nRESET had issued the reset signal to reset the system.
- * |        |          |Note 1: Write 1 to clear this bit to 0.
- * |        |          |Note 2: This bit is not retained when D4 power is turned off.
- * |[2]     |WDTRF     |WDT Reset Flag
- * |        |          |The WDT reset flag is set by the u201CReset Signalu201D from the Watchdog Timer or Window Watchdog Timer to indicate the previous reset source.
- * |        |          |0 = No reset from watchdog timer or window watchdog timer.
- * |        |          |1 = The watchdog timer or window watchdog timer had issued the reset signal to reset the system.
- * |        |          |Note 1: Write 1 to clear this bit to 0.
- * |        |          |Note 2: This bit is not retained when D2 power is turned off.
- * |        |          |Note 3: Watchdog Timer register RSTF(WDT_CTL[2]) bit is set if the system has been reset by WDT time-out reset
- * |        |          |Window Watchdog Timer register WWDTRF(WWDT_STATUS[1]) bit is set if the system has been reset by WWDT time-out reset.
- * |        |          |Note 4: Extra Watchdog Timer register RSTF(EWDT_CTL[2]) bit is set if the system has been reset by EWDT time-out reset
- * |        |          |Extra Window Watchdog Timer register WWDTRF(EWWDT_STATUS[1]) bit is set if the system has been reset by EWWDT time-out reset.
- * |[3]     |LVRRF     |LVR Reset Flag
- * |        |          |The LVR reset flag is set by the u201CReset Signalu201D from the Low Voltage Reset Controller to indicate the previous reset source.
- * |        |          |0 = No reset from LVR.
- * |        |          |1 = The LVR controller had issued the reset signal to reset the system.
- * |        |          |Note 1: Write 1 to clear this bit to 0.
- * |        |          |Note 2: This bit is not retained when D3 power is turned off.
- * |[4]     |BODRF     |BOD Reset Flag
- * |        |          |The BOD reset flag is set by the u201CReset Signalu201D from the Brown-out Detector to indicate the previous reset source.
- * |        |          |0 = No reset from BOD.
- * |        |          |1 = The BOD had issued the reset signal to reset the system.
- * |        |          |Note 1: Write 1 to clear this bit to 0.
- * |        |          |Note 2: This bit is not retained when D3 power is turned off.
- * |[5]     |SYSRF     |System Reset Flag
- * |        |          |The system reset flag is set by the u201CReset Signalu201D from the Cortex-M55 core to indicate the previous reset source.
- * |        |          |0 = No reset from the Cortex-M55.
- * |        |          |1 = The Cortex-M55 had issued the reset signal to reset the system by writing 1 to the bit SYSRESETREQ(AIRCR[2], Application Interrupt and Reset Control Register, address = 0xE000ED0C) in system control registers of Cortex-M55 core.
- * |        |          |Note 1: Write 1 to clear this bit to 0.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[7]     |CPURF     |CPU Reset Flag
- * |        |          |The CPU reset flag is set by hardware if software writes CPURST (SYS_RSTCTL[7]) 1 to reset the Cortex-M55 core and Flash Memory Controller (FMC).
- * |        |          |0 = No reset from CPU.
- * |        |          |1 = The Cortex-M55 core and FMC are reset by software setting CPURST to 1.
- * |        |          |Note 1: Write 1 to clear this bit to 0.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[8]     |CPULKRF   |CPU Lockup Reset Flag
- * |        |          |The CPU Lockup reset flag is set by hardware if Cortex-M55 lockup happened.
- * |        |          |0 = No reset from CPU lockup happened.
- * |        |          |1 = The Cortex-M55 lockup happened and chip is reset.
- * |        |          |Note 1: Write 1 to clear this bit to 0.
- * |        |          |Note 2: When CPU lockup happened under ICE is connected, this flag will set to 1 but chip will not reset.
- * |        |          |Note 3: This bit is not retained when D0 power is turned off.
- * @var SYS_T::VTORSET
- * Offset: 0x0C  VTOR Setting Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[31:7]  |VTORSET   |VTOR Setting After SPD Wakeup (Write Protect)
- * |        |          |The value will be loaded to Vector Table Offset Register, which is at the address 0xE000ED08, when chip wake up and Perfomace Domain be turn off.
- * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: These bits are not retained when D4 power is turned off.
- * @var SYS_T::SRAMICTL
- * Offset: 0x10  System SRAM Parity Error Interrupt Enable Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |PERRIEN   |SRAM Parity Check Error Interrupt Enable Bit
- * |        |          |0 = SRAM parity check error interrupt Disabled.
- * |        |          |1 = SRAM parity check error interrupt Enabled.
- * |        |          |Note: This bit is not retained when D0 power is turned off.
- * @var SYS_T::SRAMSTS
- * Offset: 0x14  System SRAM Parity Check Status Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |PERRIF    |SRAM Parity Check Error Flag
- * |        |          |This bit indicates the System SRAM byte 0 parity error occurred.
- * |        |          |0 = No System SRAM parity error.
- * |        |          |1 = System SRAM parity error occured.
- * |        |          |Note 1: Write 1 to clear this bit to 0.
- * |        |          |Note 2: The default value depends on the content of SRAM
- * |        |          |It is better to check this value before use it
- * |        |          |If the default value is 1, it shall be cleared first.
- * |        |          |Note 3: This bit is not retained when D0 power is turned off.
- * |[8]     |B0PERRIF  |SRAM Byte 0 Parity Check Error Flag (Read Only)
- * |        |          |This bit indicates the System SRAM byte 0 parity error occurred.
- * |        |          |0 = No System SRAM byte 0 parity error.
- * |        |          |1 = System SRAM byte 0 parity error occured.
- * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0..
- * |        |          |Note 2: The default value depends on the content of SRAM
- * |        |          |It is better to check this value before use it
- * |        |          |If the default value is 1, it shall be cleared first.
- * |        |          |Note 3: This bit is not retained when D0 power is turned off.
- * |[9]     |B1PERRIF  |SRAM Byte 1 Parity Check Error Flag (Read Only)
- * |        |          |This bit indicates the System SRAM byte 1 parity error occurred.
- * |        |          |0 = No System SRAM byte 1 parity error.
- * |        |          |1 = System SRAM byte 1 parity error occured.
- * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0.
- * |        |          |Note 2: The default value depends on the content of SRAM
- * |        |          |It is better to check this value before use it
- * |        |          |If the default value is 1, it shall be cleared first.
- * |        |          |Note 3: This bit is not retained when D0 power is turned off.
- * |[10]    |B2PERRIF  |SRAM Byte 2 Parity Check Error Flag (Read Only)
- * |        |          |This bit indicates the System SRAM byte 2 parity error occurred.
- * |        |          |0 = No System SRAM byte 2 parity error.
- * |        |          |1 = System SRAM byte 2 parity error occured.
- * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0.
- * |        |          |Note 2: The default value depends on the content of SRAM
- * |        |          |It is better to check this value before use it
- * |        |          |If the default value is 1, it shall be cleared first.
- * |        |          |Note 3: This bit is not retained when D0 power is turned off.
- * |[11]    |B3PERRIF  |SRAM Byte 3 Parity Check Error Flag (Read Only)
- * |        |          |This bit indicates the System SRAM byte 3 parity error occurred.
- * |        |          |0 = No System SRAM byte 3 parity error.
- * |        |          |1 = System SRAM byte 3 parity error occured.
- * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0.
- * |        |          |Note 2: The default value depends on the content of SRAM
- * |        |          |It is better to check this value before use it
- * |        |          |If the default value is 1, it shall be cleared first.
- * |        |          |Note 3: This bit is not retained when D0 power is turned off.
- * |[12]    |B4PERRIF  |SRAM Byte 4 Parity Check Error Flag (Read Only)
- * |        |          |This bit indicates the System SRAM byte 4 parity error occurred.
- * |        |          |0 = No System SRAM byte 4 parity error.
- * |        |          |1 = System SRAM byte 4 parity error occured.
- * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0.
- * |        |          |Note 2: The default value depends on the content of SRAM
- * |        |          |It is better to check this value before use it
- * |        |          |If the default value is 1, it shall be cleared first.
- * |        |          |Note 3: This bit is not retained when D0 power is turned off.
- * |[13]    |B5PERRIF  |SRAM Byte 5 Parity Check Error Flag (Read Only)
- * |        |          |This bit indicates the System SRAM byte 5 parity error occurred.
- * |        |          |0 = No System SRAM byte 5 parity error.
- * |        |          |1 = System SRAM byte 5 parity error occured.
- * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0.
- * |        |          |Note 2: The default value depends on the content of SRAM
- * |        |          |It is better to check this value before use it
- * |        |          |If the default value is 1, it shall be cleared first.
- * |        |          |Note 3: This bit is not retained when D0 power is turned off.
- * |[14]    |B6PERRIF  |SRAM Byte 6 Parity Check Error Flag (Read Only)
- * |        |          |This bit indicates the System SRAM byte 6 parity error occurred.
- * |        |          |0 = No System SRAM byte 6 parity error.
- * |        |          |1 = System SRAM byte 6 parity error occured.
- * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0.
- * |        |          |Note 2: The default value depends on the content of SRAM
- * |        |          |It is better to check this value before use it
- * |        |          |If the default value is 1, it shall be cleared first.
- * |        |          |Note 3: This bit is not retained when D0 power is turned off.
- * |[15]    |B7PERRIF  |SRAM Byte 7 Parity Check Error Flag (Read Only)
- * |        |          |This bit indicates the System SRAM byte 7 parity error occurred.
- * |        |          |0 = No System SRAM byte 7 parity error.
- * |        |          |1 = System SRAM byte 7 parity error occured.
- * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0.
- * |        |          |Note 2: The default value depends on the content of SRAM
- * |        |          |It is better to check this value before use it
- * |        |          |If the default value is 1, it shall be cleared first.
- * |        |          |Note 3: This bit is not retained when D0 power is turned off.
- * @var SYS_T::SRAMEADR
- * Offset: 0x18  System SRAM Parity Error Address Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[31:0]  |ERRADDR   |System SRAM Parity Error Address (Read Only)
- * |        |          |This register shows system SRAM parity error byte offset.
- * |        |          |Note: These bits are not retained when D0 power is turned off.
- * @var SYS_T::BODCTL
- * Offset: 0x20  Brown-out Detector Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |BODEN     |Brown-out Detector Enable Bit (Write Protect)
- * |        |          |The default value is set by Flash controller user configuration register CBODEN (CONFIG0 [19]).
- * |        |          |0 = Brown-out Detector function Disabled.
- * |        |          |1 = Brown-out Detector function Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: Write operation is ignored when WRBUSY is high.
- * |        |          |Note 3: This bit is not retained when D3 power is turned off.
- * |        |          |Note 4: The default value is set by inverse UCFG0[19].
- * |[1]     |BODLPM    |Brown-out Detector Low Power Mode (Write Protect)
- * |        |          |0 = BOD operated in normal mode (default).
- * |        |          |1 = BOD Low Power mode Enabled.
- * |        |          |Note 1: The BOD consumes about 10uA in normal mode, the low power mode can reduce the current to about 1/10 but slow the BOD response.
- * |        |          |Note 2: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 3: Write operation is ignored when WRBUSY is high.
- * |        |          |Note 4: This bit is not retained when D3 power is turned off.
- * |[2]     |BODRSTEN  |Brown-out Reset Enable Bit (Write Protect)
- * |        |          |The default value is set by Flash controller user configuration register CBORST(CONFIG0[20]) bit.
- * |        |          |0 = Brown-out u201CINTERRUPTu201D function Enabled.
- * |        |          |1 = Brown-out u201CRESETu201D function Enabled.
- * |        |          |Note 1: When the Brown-out Detector function is enabled (BODEN high) and BOD reset function is enabled (BODRSTEN high), BOD will assert a signal to reset chip when the detected voltage is lower than the threshold (BODOUT high).
- * |        |          |When the BOD function is enabled (BODEN high) and BOD interrupt function is enabled (BODRSTEN low), BOD will assert an interrupt if AVDD is lower than BODVL, BOD interrupt will keep till the BODIF set to 0
- * |        |          |BOD interrupt can be blocked by disabling the NVIC BOD interrupt or disabling BOD function (setting BODEN low).
- * |        |          |Note 2: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 3: This bit is not retained when D3 power is turned off.
- * |        |          |Note 4: Write operation is ignored when WRBUSY is high.
- * |        |          |Note 5: The default value is set by inverse UCFG0[20]
- * |        |          |Note 6: If D2PGEN(PMC_PWRCTL[2]) is 1 and enters Power-down mode, the brown-out reset function always keeps enabled even if BODRSTEN is 0.
- * |[6:4]   |BODDGSEL  |Brown-out Detector Output De-glitch Time Select (Write Protect)
- * |        |          |000 = BOD output is sampled by LIRC clock.
- * |        |          |001 = 4 system clock (SCLK).
- * |        |          |010 = 8 system clock (SCLK).
- * |        |          |011 = 16 system clock (SCLK).
- * |        |          |100 = 32 system clock (SCLK).
- * |        |          |101 = 64 system clock (SCLK).
- * |        |          |110 = 128 system clock (SCLK).
- * |        |          |111 = 256 system clock (SCLK).
- * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: Write operation is ignored when WRBUSY is high.
- * |        |          |Note 3: These bits are not retained when D0 power is turned off.
- * |        |          |Note 4: Because SCLK is invalid in Power-down mode, the de-glitch time must change to LIRC before system enters Power-down mode.
- * |        |          |Note 5: If BODLPM(SYS_BODCTL[1]) is 1, the Brown-out Detector Output de-glitch circuit always uses LIRC clock even if BODDGSEL is not 000.
- * |[10:8]  |BODVL     |Brown-out Detector Threshold Voltage Selection (Write Protect)
- * |        |          |The default value is set by Flash controller user configuration register CBOV (CONFIG0 [23:21]).
- * |        |          |000 = Brown-out Detector threshold voltage is 1.6V.
- * |        |          |001 = Brown-out Detector threshold voltage is 1.8V.
- * |        |          |010 = Brown-out Detector threshold voltage is 2.0V.
- * |        |          |011 = Brown-out Detector threshold voltage is 2.2V.
- * |        |          |100 = Brown-out Detector threshold voltage is 2.4V.
- * |        |          |101 = Brown-out Detector threshold voltage is 2.6V.
- * |        |          |110 = Brown-out Detector threshold voltage is 2.8V.
- * |        |          |111 = Brown-out Detector threshold voltage is 3.0V.
- * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: Write operation is ignored when WRBUSY is high.
- * |        |          |Note 3: These bits are not retained when D3 power is turned off.
- * |        |          |Note 4: The default value is set by UCFG0[23:21].
- * |[13:12] |BODWKEN   |Brown-out Detector Wake-Up Selection (Write Protect)
- * |        |          |00 = Brown-out Detector wake-up function Disable.
- * |        |          |01 = Brown-out Detector power rise wake-up function Enable.
- * |        |          |10 = Brown-out Detector power drop wake-up function Enable.
- * |        |          |11 = Brown-out Detector power rise and drop wake-up function Enable.
- * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: Write operation is ignored when WRBUSY is high.
- * |        |          |Note 3: These bits are not retained when D3 power is turned off.
- * |[16]    |LVREN     |Low Voltage Reset Enable Bit (Write Protect)
- * |        |          |The LVR function resets the chip when the input power voltage is lower than LVR circuit setting
- * |        |          |LVR function is enabled by default.
- * |        |          |0 = Low Voltage Reset function Disabled.
- * |        |          |1 = Low Voltage Reset function Enabled.
- * |        |          |Note 1: After enabling the bit, the LVR function will be active with 200us delay for LVR output stable (default).
- * |        |          |Note 2: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 3: Write operation is ignored when WRBUSY is high.
- * |        |          |Note 4: This bit is not retained when D3 power is turned off.
- * |[22:20] |LVRDGSEL  |LVR Output De-glitch Time Select (Write Protect)
- * |        |          |000 = Without de-glitch function.
- * |        |          |001 = 4 system clock (SCLK).
- * |        |          |010 = 8 system clock (SCLK).
- * |        |          |011 = 16 system clock (SCLK).
- * |        |          |100 = 32 system clock (SCLK).
- * |        |          |101 = 64 system clock (SCLK).
- * |        |          |110 = 128 system clock (SCLK).
- * |        |          |111 = 256 system clock (SCLK).
- * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: These bits are not retained when D0 power is turned off.
- * |        |          |Note 3: Because SCLK is invalid in Power-down mode, the de-glitch time must change to without de-glitch before system enters Power-down mode.
- * |[31]    |WRBUSY    |Write Busy Flag (Read Only)
- * |        |          |If SYS_BODCTL is written, this bit is asserted automatically by hardware, and is de-asserted when write procedure is finished.
- * |        |          |0 = SYS_BODCTL register is ready for write operation.
- * |        |          |1 = SYS_BODCTL register is busy on the last write operation. Other write operations are ignored.
- * @var SYS_T::BODSTS
- * Offset: 0x24  Brown-out Detector Status Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |BODOUT    |Brown-out Detector Output Status (Read Only)
- * |        |          |0 = Brown-out Detector output status is 0.
- * |        |          |It means the detected voltage is higher than BODVL(SYS_BODCTL[10:8]) setting or BODEN is 0.
- * |        |          |1 = Brown-out Detector output status is 1.
- * |        |          |It means the detected voltage is lower than BODVL(SYS_BODCTL[10:8]) setting
- * |        |          |If the BODEN is 0, BOD function disabled, this bit always responds 0.
- * |[1]     |BODIF     |Brown-out Detector Interrupt Flag
- * |        |          |0 = Brown-out Detector does not detect any voltage draft at VDD down through or up through the voltage of BODVL(SYS_BODCTL[10:8]) setting.
- * |        |          |1 = When Brown-out Detector detects the VDD is dropped down through the voltage of BODVL(SYS_BODCTL[10:8]) setting or the VDD is raised up through the voltage of BODVL(SYS_BODCTL[10:8]) setting, this bit is set to 1 and the brown-out interrupt is requested if brown-out interrupt is enabled.
- * |        |          |Note 1: Write 1 to clear this bit to 0.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * @var SYS_T::PORCTL
- * Offset: 0x28  Power-on Reset Controller Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[15:0]  |PORMASK   |Power-on Reset Mask Enable Bit (Write Protect)
- * |        |          |When powered on, the POR circuit generates a reset signal to reset the whole chip function, but noise on the power may cause the POR active again
- * |        |          |User can mask internal POR signal to avoid unpredictable noise to cause chip reset by writing 0x5AA5 to this field.
- * |        |          |The POR function will be active again when this field is set to another value or chip is reset by other reset source, including:
- * |        |          |nRESET, Watchdog, LVR reset, BOD reset, ICE reset command and the software-chip reset function.
- * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: These bits are not retained when D3 power is turned off.
- * |[31:16] |POROFF    |Power-on Reset Enable Bit (Write Protect)
- * |        |          |When powered on, the POR circuit generates a reset signal to reset the whole chip function, but noise on the power may cause the POR active again
- * |        |          |User can disable internal POR circuit to avoid unpredictable noise to cause chip reset by writing 0x5AA5 to this field.
- * |        |          |The POR function will be active again when this field is set to another value or chip is reset by other reset source, including:
- * |        |          |nRESET, Watchdog, LVR reset, BOD reset, ICE reset command and the software-chip reset function.
- * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: These bits are not retained when D3 power is turned off.
- * @var SYS_T::VREFCTL
- * Offset: 0x2C  VREF Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |VREFCTL   |VREF Control Bits (Write Protect)
- * |        |          |00000 = VREF is from external pin.
- * |        |          |00011 = VREF is internal 1.6V.
- * |        |          |00111 = VREF is internal 2.048V.
- * |        |          |01011 = VREF is internal 2.500V.
- * |        |          |01111 = VREF is internal 3.072V.
- * |        |          |10000 = VREF is from AVDD.
- * |        |          |Others = Reserved.
- * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: Write operation is ignored when WRBUSY is high.
- * |        |          |Note 3: These bits are not retained when D2 power is turned off.
- * |[7:6]   |PRELOADSEL|Pre-load Timing Selection (Write Protect)
- * |        |          |00 = pre-load time is 480us for 1uF Capacitor, initial = 0v.
- * |        |          |01 = pre-load time is 2ms for 4.7uF Capacitor, initial = 0v.
- * |        |          |10 = pre-load time is 3ms for 1uF Capacitor, initial = 3.6v.
- * |        |          |11 = pre-load time is 15ms for 4.7uF Capacitor, initial = 3.6v.
- * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: Write operation is ignored when WRBUSY is high.
- * |        |          |Note 3: These bits are not retained when D2 power is turned off.
- * |[8]     |SCPTEST   |Short Circuit Protection Test Pin (Write Protect)
- * |        |          |0 = Short circuit protection Disabled.
- * |        |          |1 = Short circuit protection Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: Write operation is ignored when WRBUSY is high.
- * |        |          |Note 3: These bits are not retained when D2 power is turned off.
- * |[9]     |SCPFINISH |Short Circuit Protection Result (Read Only)
- * |        |          |Short circuit protection finish.
- * |[31]    |WRBUSY    |Write Busy Flag (Read Only)
- * |        |          |If SYS_VREFCTL is written, this bit is asserted automatically by hardware, and is de-asserted when write procedure is finished.
- * |        |          |0 = SYS_VREFCTL register is ready for write operation.
- * |        |          |1 = SYS_VREFCTL register is busy on the last write operation. Other write operations are ignored.
- * @var SYS_T::IVSCTL
- * Offset: 0x30  Internal Voltage Source Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |VTEMPEN   |Temperature Sensor Enable Bit
- * |        |          |This bit is used to enable/disable temperature sensor function.
- * |        |          |0 = Temperature sensor function Disabled (default).
- * |        |          |1 = Temperature sensor function Enabled.
- * |        |          |Note 1: After this bit is set to 1, the value of temperature sensor output can be obtained from ADC conversion result
- * |        |          |Please refer to ADC chapter for details.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |VBATUGEN  |VBAT Unity Gain Buffer Enable Bit
- * |        |          |This bit is used to enable/disable VBAT unity gain buffer function.
- * |        |          |0 = VBAT unity gain buffer function Disabled (default).
- * |        |          |1 = VBAT unity gain buffer function Enabled.
- * |        |          |Note: After this bit is set to 1, the value of VBAT unity gain buffer output voltage can be obtained from ADC conversion result.
- * |[2]     |AVDDDIV4EN|AVDD divide 4 Enable Bit
- * |        |          |This bit is used to enable/disable AVDD divide 4 function.
- * |        |          |0 = AVDD divide 4 function Disabled (default).
- * |        |          |1 = AVDD divide 4 function Enabled.
- * |        |          |Note 1: After this bit is set to 1, the value of AVDD divide 4 output voltage can be obtained from ADC conversion result
- * |        |          |Note 2: These bits are not retained when D2 power is turned off.
- * |[4]     |VTEMPSEL  |Temperature Sensor Slope Select Bit
- * |        |          |This bit is used to select temperature sensor slope trend.
- * |        |          |0 = Temperature sensor CTAT slope.
- * |        |          |1 = Temperature sensor PTAT slope.
- * |        |          |Note 2: These bits are not retained when D0 power is turned off.
- * @var SYS_T::USBPHY
- * Offset: 0x34  USB PHY Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[1:0]   |USBROLE   |USB Role Option (Write Protect)
- * |        |          |These two bits are used to select the role of USB.
- * |        |          |00 = Standard USB Device mode.
- * |        |          |01 = Standard USB Host mode.
- * |        |          |10 = ID dependent mode.
- * |        |          |11 = On-The-Go device mode.
- * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: These bits are not retained when D1 power is turned off.
- * |[8]     |OTGPHYEN  |USB OTG PHY Enable (Write Protect)
- * |        |          |This bit is used to enable/disable OTG PHY function.
- * |        |          |0 = OTG PHY function Disabled (default).
- * |        |          |1 = OTG PHY function Enabled.
- * |        |          |Note: This bit is not retained when D1 power is turned off.
- * |[17:16] |HSUSBROLE |HSUSB Role Option (Write Protect)
- * |        |          |These two bits are used to select the role of HSUSB.
- * |        |          |00 = Standard HSUSB Device mode.
- * |        |          |01 = Standard HSUSB Host mode.
- * |        |          |10 = ID dependent mode.
- * |        |          |11 = On-The-Go device mode.
- * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: These bits are not retained when D1 power is turned off.
- * |[24]    |HSOTGPHYEN|HSUSB OTG PHY Enable (Write Protect)
- * |        |          |This bit is used to enable/disable HSOTG PHY function.
- * |        |          |0 = HSUSB OTG PHY function Disabled (default).
- * |        |          |1 = HSUSB OTG PHY function Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[25]    |HSUSBACT  |HSOTG PHY Active Control
- * |        |          |This bit is used to control HSOTG PHY at reset state or active state.
- * |        |          |0 = HSOTG PHY at reset state.
- * |        |          |1 = HSOTG PHY at active state.
- * |        |          |Note: After setting HSOTGPHYEN (SYS_USBPHY[24]) to enable HSOTG PHY, user should keep HSOTG PHY at reset mode at lease 10us before changing to active mode.
- * @var SYS_T::UTCPDCTL
- * Offset: 0x38  UTCPD Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |IOMODE    |UTCPD0 as I/O mode
- * |        |          |This bit is used to define UTCPD0 CCx and CCDBx function
- * |        |          |0 = Pin as UTCPD0 CCx and CCDBx function.
- * |        |          |1 = Pin as general I/O function.
- * |        |          |Note: This bit is not retained when D4 power is turned off.
- * |[1]     |POREN0    |UTCPD0 Power-on Enable Bit
- * |        |          |0 = UTCPD0 PHY in reset mode.
- * |        |          |1 = UTCPD0 PHY in normal mode.
- * |        |          |Note 1: user should set POREN0 to 1 after IOMODE is setting down.
- * |        |          |Note 2: This bit is not retained when D4 power is turned off.
- * |[10:8]  |PD0VBDSS  |UTCPD0 VBUS Detect Source Select
- * |        |          |UTCPD0 controller need a VBUS detect result to note if VBUS is connected
- * |        |          |For NPD0~2 usage, ACMP can be another voltage detect method to detect VBUS pulg in or out
- * |        |          |This bit field is used to select UTCPD0 VBUS detect source
- * |        |          |And the selected result is VBDETSW0
- * |        |          |000 = UTCPD0 VBUS detect source from UTCPD0 PHY.
- * |        |          |001 = UTCPD0 VBUS detect source from ACMP0 output.
- * |        |          |010 = UTCPD0 VBUS detect source from ACMP1 output.
- * |        |          |011 = UTCPD0 VBUS detect source from ACMP2 output.
- * |        |          |Others = Reserved.
- * |        |          |Note 1: Before use UTCPD0 function, UDVBDETS should be set and cannot change during UTCPD0 operating.
- * |        |          |Note 2: This bit is not retained when D3 power is turned off.
- * |[12]    |UDVBDETS  |UDC11 VBUS Detect Source Select
- * |        |          |0 = UDC11 VBUS detect source from OTGPHY.
- * |        |          |1 = UDC11 VBUS detect source from VBDETSW0.
- * |        |          |Note 1: Before use UDC11 function, UDVBDETS should be set and cannot change during UDC11 operating.
- * |        |          |Note 2: This bit is not retained when D3 power is turned off.
- * @var SYS_T::DBUSCTL
- * Offset: 0x40  Data Bus Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |H2XBSTEN  |Burst AHB2AXI Bridge access Enable Bit (Write Protect)
- * |        |          |0 = Normal operating.
- * |        |          |1 = Force the attribute of all access from AHB to AXI modifiable.
- * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::GPA_MFOS
- * Offset: 0x80  GPIOA Multiple Function Output Select Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |MFOS0     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[1]     |MFOS1     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[2]     |MFOS2     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[3]     |MFOS3     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[4]     |MFOS4     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[5]     |MFOS5     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[6]     |MFOS6     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[7]     |MFOS7     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[8]     |MFOS8     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[9]     |MFOS9     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[10]    |MFOS10    |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[11]    |MFOS11    |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[12]    |MFOS12    |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[13]    |MFOS13    |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[14]    |MFOS14    |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * |[15]    |MFOS15    |GPIOA Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note 1: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPB_MFOS
- * Offset: 0x84  GPIOB Multiple Function Output Select Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |MFOS0     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[1]     |MFOS1     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[2]     |MFOS2     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[3]     |MFOS3     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[4]     |MFOS4     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[5]     |MFOS5     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[6]     |MFOS6     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[7]     |MFOS7     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[8]     |MFOS8     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[9]     |MFOS9     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[10]    |MFOS10    |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[11]    |MFOS11    |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12]    |MFOS12    |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[13]    |MFOS13    |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[14]    |MFOS14    |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[15]    |MFOS15    |GPIOB Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPC_MFOS
- * Offset: 0x88  GPIOC Multiple Function Output Select Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |MFOS0     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[1]     |MFOS1     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[2]     |MFOS2     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[3]     |MFOS3     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[4]     |MFOS4     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[5]     |MFOS5     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[6]     |MFOS6     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[7]     |MFOS7     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[8]     |MFOS8     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[9]     |MFOS9     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[10]    |MFOS10    |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[11]    |MFOS11    |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12]    |MFOS12    |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[13]    |MFOS13    |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[14]    |MFOS14    |GPIOC Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPD_MFOS
- * Offset: 0x8C  GPIOD Multiple Function Output Select Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |MFOS0     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[1]     |MFOS1     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[2]     |MFOS2     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[3]     |MFOS3     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[4]     |MFOS4     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[5]     |MFOS5     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[6]     |MFOS6     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[7]     |MFOS7     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[8]     |MFOS8     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[9]     |MFOS9     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[10]    |MFOS10    |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[11]    |MFOS11    |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12]    |MFOS12    |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[13]    |MFOS13    |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[14]    |MFOS14    |GPIOD Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPE_MFOS
- * Offset: 0x90  GPIOE Multiple Function Output Select Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |MFOS0     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[1]     |MFOS1     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[2]     |MFOS2     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[3]     |MFOS3     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[4]     |MFOS4     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[5]     |MFOS5     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[6]     |MFOS6     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[7]     |MFOS7     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[8]     |MFOS8     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[9]     |MFOS9     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[10]    |MFOS10    |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[11]    |MFOS11    |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12]    |MFOS12    |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[13]    |MFOS13    |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[14]    |MFOS14    |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[15]    |MFOS15    |GPIOE Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPF_MFOS
- * Offset: 0x94  GPIOF Multiple Function Output Select Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |MFOS0     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[1]     |MFOS1     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[2]     |MFOS2     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[3]     |MFOS3     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[4]     |MFOS4     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[5]     |MFOS5     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[6]     |MFOS6     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[7]     |MFOS7     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[8]     |MFOS8     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[9]     |MFOS9     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[10]    |MFOS10    |GPIOF Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[11]    |MFOS11    |GPIOF Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPG_MFOS
- * Offset: 0x98  GPIOG Multiple Function Output Select Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |MFOS0     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[1]     |MFOS1     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[2]     |MFOS2     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[3]     |MFOS3     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[4]     |MFOS4     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[5]     |MFOS5     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[6]     |MFOS6     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[7]     |MFOS7     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[8]     |MFOS8     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[9]     |MFOS9     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[10]    |MFOS10    |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[11]    |MFOS11    |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12]    |MFOS12    |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[13]    |MFOS13    |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[14]    |MFOS14    |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[15]    |MFOS15    |GPIOG Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPH_MFOS
- * Offset: 0x9C  GPIOH Multiple Function Output Select Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |MFOS0     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[1]     |MFOS1     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[2]     |MFOS2     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[3]     |MFOS3     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[4]     |MFOS4     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[5]     |MFOS5     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[6]     |MFOS6     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[7]     |MFOS7     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[8]     |MFOS8     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[9]     |MFOS9     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[10]    |MFOS10    |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[11]    |MFOS11    |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12]    |MFOS12    |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[13]    |MFOS13    |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[14]    |MFOS14    |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[15]    |MFOS15    |GPIOH Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPI_MFOS
- * Offset: 0xA0  GPIOI Multiple Function Output Select Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[6]     |MFOS6     |GPIOI Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[7]     |MFOS7     |GPIOI Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[8]     |MFOS8     |GPIOI Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[9]     |MFOS9     |GPIOI Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[10]    |MFOS10    |GPIOI Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[11]    |MFOS11    |GPIOI Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12]    |MFOS12    |GPIOI Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[13]    |MFOS13    |GPIOI Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[14]    |MFOS14    |GPIOI Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[15]    |MFOS15    |GPIOI Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPJ_MFOS
- * Offset: 0xA4  GPIOJ Multiple Function Output Select Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |MFOS0     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[1]     |MFOS1     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[2]     |MFOS2     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[3]     |MFOS3     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[4]     |MFOS4     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[5]     |MFOS5     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[6]     |MFOS6     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[7]     |MFOS7     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[8]     |MFOS8     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[9]     |MFOS9     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[10]    |MFOS10    |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[11]    |MFOS11    |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12]    |MFOS12    |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[13]    |MFOS13    |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
- * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
- * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
- * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::REGLCTL
- * Offset: 0x100  Register Lock Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[7:0]   |REGLCTL   |Register Lock Control Code
- * |        |          |Some registers have write-protection function
- * |        |          |Writing these registers have to disable the protected function by writing the sequence value u201C59hu201D, u201C16hu201D, u201C88hu201D to this field
- * |        |          |After this sequence is completed, the REGLCTL bit will be set to 1 and write-protection registers can be normal write.
- * |        |          |REGLCTL[0]
- * |        |          |Register Lock Control Disable Index
- * |        |          |0 = Write-protection Enabled for writing protected registers
- * |        |          |Any write to the protected register is ignored.
- * |        |          |1 = Write-protection Disabled for writing protected registers.
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::TCTL48M
- * Offset: 0x110  HIRC 48M Trim Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[1:0]   |FREQSEL   |Trim Frequency Selection
- * |        |          |This field indicates the target frequency of 48 MHz internal high speed RC oscillator (HIRC48M) auto trim.
- * |        |          |During auto trim operation, if clock error detected with CESTOPEN is set to 1 or trim retry limitation count reached, this field will be cleared to 00 automatically.
- * |        |          |00 = Disable HIRC48M auto trim function.
- * |        |          |01 = Enable HIRC48M auto trim function and trim HIRC48M to 48 MHz.
- * |        |          |10 = Reserved..
- * |        |          |11 = Reserved.
- * |[3:2]   |ACCURSEL  |Trim Accuracy Selection
- * |        |          |This field indicates the target frequency accuracy of 48 MHz internal high speed RC oscillator (HIRC48M) auto trim.
- * |        |          |00 = Accuracy is +-0.25% deviation within all temperature ranges.
- * |        |          |01 = Accuracy is +-0.50% deviation within all temperature ranges.
- * |        |          |10 = Accuracy is +-0.75% deviation within all temperature ranges.
- * |        |          |11 = Accuracy is +-1% deviation within all temperature ranges.
- * |[5:4]   |LOOPSEL   |Trim Calculation Loop Selection
- * |        |          |This field defines that trim value calculation is based on how many reference clocks.
- * |        |          |00 = Trim value calculation is based on average difference in 4 clocks of reference clock.
- * |        |          |01 = Trim value calculation is based on average difference in 8 clocks of reference clock.
- * |        |          |10 = Trim value calculation is based on average difference in 16 clocks of reference clock.
- * |        |          |11 = Trim value calculation is based on average difference in 32 clocks of reference clock.
- * |        |          |Note: For example, if LOOPSEL is set as 00, auto trim circuit will calculate trim value based on the average frequency difference in 4 clocks of reference clock.
- * |[7:6]   |RETRYCNT  |Trim Value Update Limitation Count
- * |        |          |This field defines that how many times the auto trim circuit will try to update the HIRC48M trim value before the frequency of HIRC48M locked.
- * |        |          |Once the HIRC48M locked, the internal trim value update counter will be reset.
- * |        |          |If the trim value update counter reached this limitation value and frequency of HIRC48M is still not locked, the auto trim operation will be disabled and FREQSEL will be cleared to 00.
- * |        |          |00 = Trim retry count limitation is 64 loops.
- * |        |          |01 = Trim retry count limitation is 128 loops.
- * |        |          |10 = Trim retry count limitation is 256 loops.
- * |        |          |11 = Trim retry count limitation is 512 loops.
- * |[8]     |CESTOPEN  |Clock Error Stop Enable Bit
- * |        |          |0 = Trim operation is kept going if clock is inaccurate.
- * |        |          |1 = Trim operation is stopped if clock is inaccurate.
- * |[9]     |BOUNDEN   |Boundary Enable Bit
- * |        |          |0 = Boundary function Disabled.
- * |        |          |1 = Boundary function Enabled.
- * |[10]    |REFCKSEL  |Reference Clock Selection
- * |        |          |0 = HIRC48M trim reference clock is from external 32.768 kHz crystal oscillator.
- * |        |          |1 = HIRC48M trim reference clock is from internal USB synchronous mode.
- * |[20:16] |BOUNDARY  |Boundary Selection
- * |        |          |Fill the boundary range from 0x1 to 0x1F, 0x0 is reserved.
- * |        |          |Note: This field is effective only when the BOUNDEN(SYS_TCTL48M [9]) is enabled.
- * @var SYS_T::TIEN48M
- * Offset: 0x114  HIRC 48M Trim Interrupt Enable Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[1]     |TFAILIEN  |Trim Failure Interrupt Enable Bit
- * |        |          |This bit controls if an interrupt will be triggered while HIRC48M trim value update limitation count reached and HIRC48M frequency still not locked on target frequency set by FREQSEL(SYS_TCTL48M[1:0]).
- * |        |          |If this bit is high and TFAILIF(SYS_TSTS48M [1]) is set during auto trim operation, an interrupt will be triggered to notify that HIRC48M trim value update limitation count was reached.
- * |        |          |0 = Disable TFAILIF(SYS_TISTS48M [1]) status to trigger an interrupt to CPU.
- * |        |          |1 = Enable TFAILIF(SYS_TISTS48M[1]) status to trigger an interrupt to CPU.
- * |[2]     |CLKEIEN   |Clock Error Interrupt Enable Bit
- * |        |          |This bit controls if CPU would get an interrupt while clock is inaccuracy during auto trim operation.
- * |        |          |If this bit is set to1, and CLKERRIF(SYS_TISTS48M [2]) is set during auto trim operation, an interrupt will be triggered to notify the clock frequency is inaccuracy.
- * |        |          |0 = Disable CLKERRIF(SYS_TISTS48M [2]) status to trigger an interrupt to CPU.
- * |        |          |1 = Enable CLKERRIF(SYS_TISTS48M [2]) status to trigger an interrupt to CPU.
- * @var SYS_T::TISTS48M
- * Offset: 0x118  HIRC 48M Trim Interrupt Status Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |FREQLOCK  |HIRC48M Frequency Lock Status
- * |        |          |This bit indicates the HIRC48M frequency is locked.
- * |        |          |This is a status bit and does not trigger any interrupt.
- * |        |          |This bit will be set automatically, if the frequency is lock and the RC_TRIM is enabled.
- * |        |          |0 = The internal high-speed oscillator frequency is not locked at 48 MHz.
- * |        |          |1 = The internal high-speed oscillator frequency locked at 48 MHz.
- * |        |          |Note: Write 1 to clear this bit to 0.
- * |[1]     |TFAILIF   |Trim Failure Interrupt Status
- * |        |          |This bit indicates that HIRC48M trim value update limitation count reached and the HIRC48M clock frequency is still not locked
- * |        |          |Once this bit is set, the auto trim operation stopped and FREQSEL(SYS_TCTL48M[1:0]) will be cleared to 00 by hardware automatically.
- * |        |          |If this bit is set and TFAILIEN(SYS_TIEN48M[1]) is high, an interrupt will be triggered to notify that HIRC48M trim value update limitation count was reached.
- * |        |          |0 = Trim value update limitation count does not reach.
- * |        |          |1 = Trim value update limitation count reached and HIRC48M frequency still not locked.
- * |        |          |Note: Write 1 to clear this bit to 0.
- * |[2]     |CLKERRIF  |Clock Error Interrupt Status
- * |        |          |When the frequency of 32.768 kHz external low speed crystal oscillator (LXT) or 48 MHz internal high speed RC oscillator (HIRC48M) is shift larger to unreasonable value, this bit will be set and to be an indicate that clock frequency is inaccuracy
- * |        |          |Once this bit is set to 1, the auto trim operation stopped and FREQSEL(SYS_TCTL48M[1:0]) will be cleared to 00 by hardware automatically if CESTOPEN(SYS_TCTL48M[8]) is set to 1.
- * |        |          |If this bit is set and CLKEIEN(SYS_TIEN48M[2]) is high, an interrupt will be triggered to notify the clock frequency is inaccuracy.
- * |        |          |0 = Clock frequency is accurate.
- * |        |          |1 = Clock frequency is inaccurate.
- * |        |          |Note: Write 1 to clear this bit to 0.
- * |[3]     |OVBDIF    |Over Boundary Status
- * |        |          |When the over boundary function is set, if there occurs the over boundary condition, this flag will be set.
- * |        |          |This is a status bit and does not trigger any interrupt.
- * |        |          |0 = Over boundary condition did not occur.
- * |        |          |1 = Over boundary condition occurred.
- * |        |          |Note: Write 1 to clear this bit to 0.
- * @var SYS_T::TCTL12M
- * Offset: 0x120  HIRC 12M Trim Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[1:0]   |FREQSEL   |Trim Frequency Selection
- * |        |          |This field indicates the target frequency of 12 MHz internal high speed RC oscillator (HIRC) auto trim.
- * |        |          |During auto trim operation, if clock error detected with CESTOPEN is set to 1 or trim retry limitation count reached, this field will be cleared to 00 automatically.
- * |        |          |00 = Disable HIRC auto trim function.
- * |        |          |01 = Enable HIRC auto trim function and trim HIRC to 12 MHz.
- * |        |          |10 = Reserved..
- * |        |          |11 = Reserved.
- * |[3:2]   |ACCURSEL  |Trim Accuracy Selection
- * |        |          |This field indicates the target frequency accuracy of 12 MHz internal high speed RC oscillator (IRC) auto trim.
- * |        |          |00 = Accuracy is +-0.25% deviation within all temperature ranges.
- * |        |          |01 = Accuracy is +-0.50% deviation within all temperature ranges.
- * |        |          |10 = Accuracy is +-0.75% deviation within all temperature ranges.
- * |        |          |11 = Accuracy is +-1% deviation within all temperature ranges.
- * |[5:4]   |LOOPSEL   |Trim Calculation Loop Selection
- * |        |          |This field defines that trim value calculation is based on how many reference clocks.
- * |        |          |00 = Trim value calculation is based on average difference in 4 clocks of reference clock.
- * |        |          |01 = Trim value calculation is based on average difference in 8 clocks of reference clock.
- * |        |          |10 = Trim value calculation is based on average difference in 16 clocks of reference clock.
- * |        |          |11 = Trim value calculation is based on average difference in 32 clocks of reference clock.
- * |        |          |Note: For example, if LOOPSEL is set as 00, auto trim circuit will calculate trim value based on the average frequency difference in 4 clocks of reference clock.
- * |[7:6]   |RETRYCNT  |Trim Value Update Limitation Count
- * |        |          |This field defines that how many times the auto trim circuit will try to update the HIRC trim value before the frequency of HIRC locked.
- * |        |          |Once the HIRC locked, the internal trim value update counter will be reset.
- * |        |          |If the trim value update counter reached this limitation value and frequency of HIRC is still not locked, the auto trim operation will be disabled and FREQSEL will be cleared to 00.
- * |        |          |00 = Trim retry count limitation is 64 loops.
- * |        |          |01 = Trim retry count limitation is 128 loops.
- * |        |          |10 = Trim retry count limitation is 256 loops.
- * |        |          |11 = Trim retry count limitation is 512 loops.
- * |[8]     |CESTOPEN  |Clock Error Stop Enable Bit
- * |        |          |0 = The trim operation keeps going if clock is inaccurate.
- * |        |          |1 = The trim operation is stopped if clock is inaccurate.
- * |[9]     |BOUNDEN   |Boundary Enable Bit
- * |        |          |0 = Boundary function Disabled.
- * |        |          |1 = Boundary function Enabled.
- * |[10]    |REFCKSEL  |Reference Clock Selection
- * |        |          |0 = HIRC trim reference clock is from external 32.768 kHz crystal oscillator.
- * |        |          |1 = HIRC trim reference clock is from internal USB synchronous mode.
- * |[20:16] |BOUNDARY  |Boundary Selection
- * |        |          |Fill the boundary range from 0x1 to 0x1F, 0x0 is reserved.
- * |        |          |Note: This field is effective only when the BOUNDEN(SYS_TCTL12M[9]) is enabled.
- * @var SYS_T::TIEN12M
- * Offset: 0x124  HIRC 12M Trim Interrupt Enable Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[1]     |TFAILIEN  |Trim Failure Interrupt Enable Bit
- * |        |          |This bit controls if an interrupt will be triggered while HIRC trim value update limitation count reached and HIRC frequency still not locked on target frequency set by FREQSEL(SYS_TCTL12M[1:0]).
- * |        |          |If this bit is high and TFAILIF(SYS_TSTS12M[1]) is set during auto trim operation, an interrupt will be triggered to notify that HIRC trim value update limitation count was reached.
- * |        |          |0 = Disable TFAILIF(SYS_TISTS12M[1]) status to trigger an interrupt to CPU.
- * |        |          |1 = Enable TFAILIF(SYS_TISTS12M[1]) status to trigger an interrupt to CPU.
- * |[2]     |CLKEIEN   |Clock Error Interrupt Enable Bit
- * |        |          |This bit controls if CPU would get an interrupt while clock is inaccuracy during auto trim operation.
- * |        |          |If this bit is set to1, and CLKERRIF(SYS_TISTS12M[2]) is set during auto trim operation, an interrupt will be triggered to notify the clock frequency is inaccuracy.
- * |        |          |0 = Disable CLKERRIF(SYS_TISTS12M[2]) status to trigger an interrupt to CPU.
- * |        |          |1 = Enable CLKERRIF(SYS_TISTS12M[2]) status to trigger an interrupt to CPU.
- * @var SYS_T::TISTS12M
- * Offset: 0x128  HIRC 12M Trim Interrupt Status Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |FREQLOCK  |HIRC Frequency Lock Status
- * |        |          |This bit indicates the HIRC frequency is locked.
- * |        |          |This is a status bit and does not trigger any interrupt.
- * |        |          |This bit will be set automatically, if the frequency is lock and the RC_TRIM is enabled.
- * |        |          |0 = The internal high-speed oscillator frequency is not locked at 12 MHz yet.
- * |        |          |1 = The internal high-speed oscillator frequency locked at 12 MHz.
- * |        |          |Note: Write 1 to clear this bit to 0.
- * |[1]     |TFAILIF   |Trim Failure Interrupt Status
- * |        |          |This bit indicates that HIRC trim value update limitation count reached and the HIRC clock frequency is still not locked
- * |        |          |Once this bit is set, the auto trim operation stopped and FREQSEL(SYS_TCTL12M[1:0]) will be cleared to 00 by hardware automatically.
- * |        |          |If this bit is set and TFAILIEN(SYS_TIEN12M[1]) is high, an interrupt will be triggered to notify that HIRC trim value update limitation count was reached.
- * |        |          |0 = Trim value update limitation count did not reach.
- * |        |          |1 = Trim value update limitation count reached and HIRC frequency still not locked.
- * |        |          |Note: Write 1 to clear this bit to 0.
- * |[2]     |CLKERRIF  |Clock Error Interrupt Status
- * |        |          |When the frequency of 32.768 kHz external low speed crystal oscillator (LXT) or 12 MHz internal high speed RC oscillator (HIRC) is shift larger to unreasonable value, this bit will be set and to be an indicate that clock frequency is inaccuracy
- * |        |          |Once this bit is set to 1, the auto trim operation stopped and FREQSEL(SYS_TCTL12M[1:0]) will be cleared to 00 by hardware automatically if CESTOPEN(SYS_TCTL12M[8]) is set to 1.
- * |        |          |If this bit is set and CLKEIEN(SYS_IRCTIEN[2]) is high, an interrupt will be triggered to notify the clock frequency is inaccuracy.
- * |        |          |0 = Clock frequency is accurate.
- * |        |          |1 = Clock frequency is inaccurate.
- * |        |          |Note: Write 1 to clear this bit to 0.
- * |[3]     |OVBDIF    |Over Boundary Status
- * |        |          |When the over boundary function is set, if there occurs the over boundary condition, this flag will be set.
- * |        |          |This is a status bit and does not trigger any interrupt.
- * |        |          |0 = Over boundary condition did not occur.
- * |        |          |1 = Over boundary condition occurred.
- * |        |          |Note: Write 1 to clear this bit to 0.
- * @var SYS_T::TCTLMIRC
- * Offset: 0x130  MIRC Trim Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[1:0]   |FREQSEL   |Trim Frequency Selection
- * |        |          |This field indicates the target frequency of 1 MHz internal high speed RC oscillator (MIRC) auto trim.
- * |        |          |During auto trim operation, if clock error detected with CESTOPEN is set to 1 or trim retry limitation count reached, this field will be cleared to 00 automatically.
- * |        |          |00 = Disable MIRC auto trim function.
- * |        |          |01 = Enable MIRC auto trim function and trim MIRC to 1 MHz.
- * |        |          |10 = Reserved..
- * |        |          |11 = Reserved.
- * |[3:2]   |ACCURSEL  |Trim Accuracy Selection
- * |        |          |This field indicates the target frequency accuracy of 1 MHz internal high speed RC oscillator (MIRC) auto trim.
- * |        |          |00 = Accuracy is +-0.25% deviation within all temperature ranges.
- * |        |          |01 = Accuracy is +-0.50% deviation within all temperature ranges.
- * |        |          |10 = Accuracy is +-0.75% deviation within all temperature ranges.
- * |        |          |11 = Accuracy is +-1% deviation within all temperature ranges.
- * |[5:4]   |LOOPSEL   |Trim Calculation Loop Selection
- * |        |          |This field defines that trim value calculation is based on how many reference clocks.
- * |        |          |00 = Trim value calculation is based on average difference in 4 clocks of reference clock.
- * |        |          |01 = Trim value calculation is based on average difference in 8 clocks of reference clock.
- * |        |          |10 = Trim value calculation is based on average difference in 16 clocks of reference clock.
- * |        |          |11 = Trim value calculation is based on average difference in 32 clocks of reference clock.
- * |        |          |Note: For example, if LOOPSEL is set as 00, auto trim circuit will calculate trim value based on the average frequency difference in 4 clocks of reference clock.
- * |[7:6]   |RETRYCNT  |Trim Value Update Limitation Count
- * |        |          |This field defines that how many times the auto trim circuit will try to update the MIRC trim value before the frequency of MIRC locked.
- * |        |          |Once the MIRC locked, the internal trim value update counter will be reset.
- * |        |          |If the trim value update counter reached this limitation value and frequency of MIRC is still not locked, the auto trim operation will be disabled and FREQSEL will be cleared to 00.
- * |        |          |00 = Trim retry count limitation is 64 loops.
- * |        |          |01 = Trim retry count limitation is 128 loops.
- * |        |          |10 = Trim retry count limitation is 256 loops.
- * |        |          |11 = Trim retry count limitation is 512 loops.
- * |[8]     |CESTOPEN  |Clock Error Stop Enable Bit
- * |        |          |0 = The trim operation is kept going if clock is inaccurate.
- * |        |          |1 = The trim operation is stopped if clock is inaccurate.
- * |[9]     |BOUNDEN   |Boundary Enable Bit
- * |        |          |0 = Boundary function Disabled.
- * |        |          |1 = Boundary function Enabled.
- * |[10]    |REFCKSEL  |Reference Clock Selection
- * |        |          |0 = MIRC trim reference clock is from external 32.768 kHz crystal oscillator.
- * |        |          |1 = MIRC trim reference clock is from internal USB synchronous mode.
- * |[20:16] |BOUNDARY  |Boundary Selection
- * |        |          |Fill the boundary range from 0x1 to 0x1F, 0x0 is reserved.
- * |        |          |Note: This field is effective only when the BOUNDEN(SYS_TCTLMIRC [9]) is enabled.
- * @var SYS_T::TIENMIRC
- * Offset: 0x134  MIRC Trim Interrupt Enable Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[1]     |TFAILIEN  |Trim Failure Interrupt Enable Bit
- * |        |          |This bit controls if an interrupt will be triggered while MIRC trim value update limitation count reached and MIRC frequency still not locked on target frequency set by FREQSEL(SYS_TCTLMIRC[1:0]).
- * |        |          |If this bit is high and TFAILIF(SYS_TSTSMIRC[1]) is set during auto trim operation, an interrupt will be triggered to notify that MIRC trim value update limitation count was reached.
- * |        |          |0 = Disable TFAILIF(SYS_TISTSMIRC[1]) status to trigger an interrupt to CPU.
- * |        |          |1 = Enable TFAILIF(SYS_TISTSMIRC[1]) status to trigger an interrupt to CPU.
- * |[2]     |CLKEIEN   |Clock Error Interrupt Enable Bit
- * |        |          |This bit controls if CPU would get an interrupt while clock is inaccuracy during auto trim operation.
- * |        |          |If this bit is set to1, and CLKERRIF(SYS_TISTSMIRC[2]) is set during auto trim operation, an interrupt will be triggered to notify the clock frequency is inaccuracy.
- * |        |          |0 = Disable CLKERRIF(SYS_TISTSMIRC[2]) status to trigger an interrupt to CPU.
- * |        |          |1 = Enable CLKERRIF(SYS_TISTSMIRC[2]) status to trigger an interrupt to CPU.
- * @var SYS_T::TISTSMIRC
- * Offset: 0x138  MIRC Trim Interrupt Status Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |FREQLOCK  |MIRC Frequency Lock Status
- * |        |          |This bit indicates the MIRC frequency is locked.
- * |        |          |This is a status bit and does not trigger any interrupt.
- * |        |          |This bit will be set automatically, if the frequency is lock and the RC_TRIM is enabled.
- * |        |          |0 = The internal high-speed oscillator frequency is not locked at 1 MHz.
- * |        |          |1 = The internal high-speed oscillator frequency locked at 1 MHz.
- * |        |          |Note: Write 1 to clear this bit to 0.
- * |[1]     |TFAILIF   |Trim Failure Interrupt Status
- * |        |          |This bit indicates that MIRC trim value update limitation count reached and the MIRC clock frequency is still not locked
- * |        |          |Once this bit is set, the auto trim operation stopped and FREQSEL(SYS_TCTLMIRC[1:0]) will be cleared to 00 by hardware automatically.
- * |        |          |If this bit is set and TFAILIEN(SYS_TIENMIRC[1]) is high, an interrupt will be triggered to notify that MIRC trim value update limitation count was reached.
- * |        |          |0 = Trim value update limitation count does not reach.
- * |        |          |1 = Trim value update limitation count reached and MIRC frequency still not locked.
- * |        |          |Note: Write 1 to clear this bit to 0.
- * |[2]     |CLKERRIF  |Clock Error Interrupt Status
- * |        |          |When the frequency of 32.768 kHz external low speed crystal oscillator (LXT) or internal high speed RC oscillator (MIRC) is shift larger to unreasonable value, this bit will be set and to be an indicate that clock frequency is inaccuracy
- * |        |          |Once this bit is set to 1, the auto trim operation stopped and FREQSEL(SYS_TCTLMIRC[1:0]) will be cleared to 00 by hardware automatically if CESTOPEN(SYS_TCTLMIRC[8]) is set to 1.
- * |        |          |If this bit is set and CLKEIEN(SYS_TIENMIRC[2]) is high, an interrupt will be triggered to notify the clock frequency is inaccuracy.
- * |        |          |0 = Clock frequency is accurate.
- * |        |          |1 = Clock frequency is inaccurate.
- * |        |          |Note: Write 1 to clear this bit to 0.
- * |[3]     |OVBDIF    |Over Boundary Status
- * |        |          |When the over boundary function is set, if there occurs the over boundary condition, this flag will be set.
- * |        |          |This is a status bit and does not trigger any interrupt.
- * |        |          |0 = Over boundary condition did not occur.
- * |        |          |1 = Over boundary condition occurred.
- * |        |          |Note: Write 1 to clear this bit to 0.
- * @var SYS_T::ACMPRST
- * Offset: 0x200  ACMP Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |ACMP01RST |ACMP0/1 Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the ACMP0/1
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = ACMP0/1 controller normal operation.
- * |        |          |1 = ACMP0/1 controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |ACMP23RST |ACMP2/3 Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the ACMP2/3
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = ACMP2/3 controller normal operation.
- * |        |          |1 = ACMP2/3 controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::AWFRST
- * Offset: 0x204  AWF Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |AWF0RST   |AWF0 Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the AWF0
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = AWF0 controller normal operation.
- * |        |          |1 = AWF0 controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::BPWMRST
- * Offset: 0x208  BPWM Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |BPWM0RST  |BPWMx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the BPWMx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = BPWMx controller normal operation.
- * |        |          |1 = BPWMx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |BPWM1RST  |BPWMx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the BPWMx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = BPWMx controller normal operation.
- * |        |          |1 = BPWMx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::CANFDRST
- * Offset: 0x20C  CANFD Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |CANFD0RST |CANFDx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the CANFDx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = CANFDx controller normal operation.
- * |        |          |1 = CANFDx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |CANFD1RST |CANFDx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the CANFDx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = CANFDx controller normal operation.
- * |        |          |1 = CANFDx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::CCAPRST
- * Offset: 0x210  CCAP Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |CCAP0RST  |CCAPx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the CCAPx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = CCAPx controller normal operation.
- * |        |          |1 = CCAPx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::CRCRST
- * Offset: 0x214  CRC Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |CRC0RST   |CRCx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the CRCx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = CRCx controller normal operation.
- * |        |          |1 = CRCx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::CRYPTORST
- * Offset: 0x218  CRYPTO Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |CRYPTO0RST|CRYPTOx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the CRYPTOx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = CRYPTOx controller normal operation.
- * |        |          |1 = CRYPTOx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::DACRST
- * Offset: 0x21C  DAC Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |DAC01RST  |DAC0/1 Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the DAC0/1
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = DAC0/1 controller normal operation.
- * |        |          |1 = DAC0/1 controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::DMICRST
- * Offset: 0x220  DMIC Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |DMIC0RST  |DMICx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the DMICx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = DMICx controller normal operation.
- * |        |          |1 = DMICx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::EADCRST
- * Offset: 0x224  EADC Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |EADC0RST  |EADCx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the EADCx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = EADCx controller normal operation.
- * |        |          |1 = EADCx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::EBIRST
- * Offset: 0x228  EBI Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |EBI0RST   |EBIx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the EBIx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = EBIx controller normal operation.
- * |        |          |1 = EBIx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::ECAPRST
- * Offset: 0x22C  ECAP Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |ECAP0RST  |ECAPx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the ECAPx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = ECAPx controller normal operation.
- * |        |          |1 = ECAPx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |ECAP1RST  |ECAPx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the ECAPx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = ECAPx controller normal operation.
- * |        |          |1 = ECAPx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[2]     |ECAP2RST  |ECAPx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the ECAPx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = ECAPx controller normal operation.
- * |        |          |1 = ECAPx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[3]     |ECAP3RST  |ECAPx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the ECAPx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = ECAPx controller normal operation.
- * |        |          |1 = ECAPx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::EMACRST
- * Offset: 0x230  EMAC Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |EMAC0RST  |EMACx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the EMACx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = EMACx controller normal operation.
- * |        |          |1 = EMACx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::EPWMRST
- * Offset: 0x234  EPWM Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |EPWM0RST  |EPWMx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the EPWMx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = EPWMx controller normal operation.
- * |        |          |1 = EPWMx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |EPWM1RST  |EPWMx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the EPWMx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = EPWMx controller normal operation.
- * |        |          |1 = EPWMx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::EQEIRST
- * Offset: 0x238  EQEI Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |EQEI0RST  |EQEIx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the EQEIx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = EQEIx controller normal operation.
- * |        |          |1 = EQEIx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |EQEI1RST  |EQEIx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the EQEIx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = EQEIx controller normal operation.
- * |        |          |1 = EQEIx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[2]     |EQEI2RST  |EQEIx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the EQEIx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = EQEIx controller normal operation.
- * |        |          |1 = EQEIx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[3]     |EQEI3RST  |EQEIx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the EQEIx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = EQEIx controller normal operation.
- * |        |          |1 = EQEIx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::FMCRST
- * Offset: 0x23C  FMC Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |FMC0RST   |FMCx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the FMCx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = FMCx controller normal operation.
- * |        |          |1 = FMCx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::GDMARST
- * Offset: 0x240  GDMA Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |GDMA0RST  |GDMAx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the GDMAx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = GDMAx controller normal operation.
- * |        |          |1 = GDMAx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::GPIORST
- * Offset: 0x244  GPIO Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |GPIO0RST  |GPIOx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the GPIOx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = GPIOx controller normal operation.
- * |        |          |1 = GPIOx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::HSOTGRST
- * Offset: 0x248  HSOTG Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |HSOTG0RST |HSOTGx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the HSOTGx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = HSOTGx controller normal operation.
- * |        |          |1 = HSOTGx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::HSUSBDRST
- * Offset: 0x24C  HSUSBD Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |HSUSBD0RST|HSUSBDx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the HSUSBDx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = HSUSBDx controller normal operation.
- * |        |          |1 = HSUSBDx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::HSUSBHRST
- * Offset: 0x250  HSUSBH Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |HSUSBH0RST|HSUSBHx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the HSUSBHx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = HSUSBHx controller normal operation.
- * |        |          |1 = HSUSBHx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::I2CRST
- * Offset: 0x254  I2C Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |I2C0RST   |I2Cx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the I2Cx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = I2Cx controller normal operation.
- * |        |          |1 = I2Cx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |I2C1RST   |I2Cx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the I2Cx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = I2Cx controller normal operation.
- * |        |          |1 = I2Cx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[2]     |I2C2RST   |I2Cx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the I2Cx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = I2Cx controller normal operation.
- * |        |          |1 = I2Cx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[3]     |I2C3RST   |I2Cx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the I2Cx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = I2Cx controller normal operation.
- * |        |          |1 = I2Cx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::I2SRST
- * Offset: 0x258  I2S Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |I2S0RST   |I2Sx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the I2Sx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = I2Sx controller normal operation.
- * |        |          |1 = I2Sx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |I2S1RST   |I2Sx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the I2Sx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = I2Sx controller normal operation.
- * |        |          |1 = I2Sx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::I3CRST
- * Offset: 0x25C  I3C Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |I3C0RST   |I3Cx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the I3Cx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = I3Cx controller normal operation.
- * |        |          |1 = I3Cx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::KDFRST
- * Offset: 0x260  KDF Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |KDF0RST   |KDFx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the KDFx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = KDFx controller normal operation.
- * |        |          |1 = KDFx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::KPIRST
- * Offset: 0x264  KPI Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |KPI0RST   |KPIx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the KPIx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = KPIx controller normal operation.
- * |        |          |1 = KPIx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::KSRST
- * Offset: 0x268  KS Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |KS0RST    |KSx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the KSx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = KSx controller normal operation.
- * |        |          |1 = KSx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::LPADCRST
- * Offset: 0x26C  Low Power ADC Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |LPADC0RST |LPADCx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the LPADCx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = LPADCx controller normal operation.
- * |        |          |1 = LPADCx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::LPPDMARST
- * Offset: 0x270  Low Power PDMA Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |LPPDMA0RST|LPPDMAx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the LPPDMAx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = LPPDMAx controller normal operation.
- * |        |          |1 = LPPDMAx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::LPGPIORST
- * Offset: 0x274  Low Power GPIO Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |LPGPIO0RST|LPGPIOx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the LPGPIOx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = LPGPIOx controller normal operation.
- * |        |          |1 = LPGPIOx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::LPI2CRST
- * Offset: 0x278  Low Power I2C Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |LPI2C0RST |LPI2Cx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the LPI2Cx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = LPI2Cx controller normal operation.
- * |        |          |1 = LPI2Cx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::LPSPIRST
- * Offset: 0x27C  Low Power SPI Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |LPSPI0RST |LPSPIx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the LPSPIx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = LPSPIx controller normal operation.
- * |        |          |1 = LPSPIx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::LPTMRRST
- * Offset: 0x280  Low Power TMR Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |LPTMR0RST |LPTMRx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the LPTMRx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = LPTMRx controller normal operation.
- * |        |          |1 = LPTMRx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |LPTMR1RST |LPTMRx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the LPTMRx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = LPTMRx controller normal operation.
- * |        |          |1 = LPTMRx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::LPUARTRST
- * Offset: 0x284  Low Power UART Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |LPUART0RST|LPUARTx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the LPUARTx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = LPUARTx controller normal operation.
- * |        |          |1 = LPUARTx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::OTFCRST
- * Offset: 0x288  OTFC Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |OTFC0RST  |OTFCx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the OTFCx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = OTFCx controller normal operation.
- * |        |          |1 = OTFCx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::OTGRST
- * Offset: 0x28C  OTG Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |OTG0RST   |OTGx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the OTGx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = OTGx controller normal operation.
- * |        |          |1 = OTGx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::PDMARST
- * Offset: 0x290  PDMA Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |PDMA0RST  |PDMAx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the PDMAx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = PDMAx controller normal operation.
- * |        |          |1 = PDMAx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |PDMA1RST  |PDMAx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the PDMAx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = PDMAx controller normal operation.
- * |        |          |1 = PDMAx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::PSIORST
- * Offset: 0x294  PSIO Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |PSIO0RST  |PSIOx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the PSIOx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = PSIOx controller normal operation.
- * |        |          |1 = PSIOx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::QSPIRST
- * Offset: 0x298  QSPI Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |QSPI0RST  |QSPIx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the QSPIx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = QSPIx controller normal operation.
- * |        |          |1 = QSPIx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |QSPI1RST  |QSPIx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the QSPIx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = QSPIx controller normal operation.
- * |        |          |1 = QSPIx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::RTCRST
- * Offset: 0x29C  RTC Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |RTC0RST   |RTCx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the RTCx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = RTCx controller normal operation.
- * |        |          |1 = RTCx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::SCRST
- * Offset: 0x2A0  SC Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |SC0RST    |SCx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the SCx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = SCx controller normal operation.
- * |        |          |1 = SCx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |SC1RST    |SCx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the SCx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = SCx controller normal operation.
- * |        |          |1 = SCx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[2]     |SC2RST    |SCx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the SCx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = SCx controller normal operation.
- * |        |          |1 = SCx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::SCURST
- * Offset: 0x2A4  SCU Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |SCU0RST   |SCUx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the SCUx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = SCUx controller normal operation.
- * |        |          |1 = SCxU controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::SDHRST
- * Offset: 0x2A8  SDH Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |SDH0RST   |SDHx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the SDHx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = SDHx controller normal operation.
- * |        |          |1 = SDHx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |SDH1RST   |SDHx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the SDHx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = SDHx controller normal operation.
- * |        |          |1 = SDHx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::SPIRST
- * Offset: 0x2AC  SPI Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |SPI0RST   |SPIx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the SPIx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = SPIx controller normal operation.
- * |        |          |1 = SPIx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |SPI1RST   |SPIx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the SPIx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = SPIx controller normal operation.
- * |        |          |1 = SPIx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[2]     |SPI2RST   |SPIx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the SPIx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = SPIx controller normal operation.
- * |        |          |1 = SPIx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[3]     |SPI3RST   |SPIx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the SPIx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = SPIx controller normal operation.
- * |        |          |1 = SPIx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::SPIMRST
- * Offset: 0x2B0  SPIM Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |SPIM0RST  |SPIMx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the SPIMx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = SPIMx controller normal operation.
- * |        |          |1 = SPIMx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::TMRRST
- * Offset: 0x2C0  Timer Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |TMR0RST   |TMRx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the TMRx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = TMRx controller normal operation.
- * |        |          |1 = TMRx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |TMR1RST   |TMRx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the TMRx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = TMRx controller normal operation.
- * |        |          |1 = TMRx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[2]     |TMR2RST   |TMRx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the TMRx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = TMRx controller normal operation.
- * |        |          |1 = TMRx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[3]     |TMR3RST   |TMRx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the TMRx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = TMRx controller normal operation.
- * |        |          |1 = TMRx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::TRNGRST
- * Offset: 0x2C4  TRNG Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |TRNG0RST  |TRNGx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the TRNGx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = TRNGx controller normal operation.
- * |        |          |1 = TRNGx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::TTMRRST
- * Offset: 0x2C8  Tick Timer Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |TTMR0RST  |TTMRx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the TTMRx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = TTMRx controller normal operation.
- * |        |          |1 = TTMRx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |TTMR1RST  |TTMRx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the TTMRx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = TTMRx controller normal operation.
- * |        |          |1 = TTMRx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::UARTRST
- * Offset: 0x2CC  UART Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |UART0RST  |UARTx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = UARTx controller normal operation.
- * |        |          |1 = UARTx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |UART1RST  |UARTx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = UARTx controller normal operation.
- * |        |          |1 = UARTx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[2]     |UART2RST  |UARTx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = UARTx controller normal operation.
- * |        |          |1 = UARTx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[3]     |UART3RST  |UARTx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = UARTx controller normal operation.
- * |        |          |1 = UARTx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[4]     |UART4RST  |UARTx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = UARTx controller normal operation.
- * |        |          |1 = UARTx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[5]     |UART5RST  |UARTx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = UARTx controller normal operation.
- * |        |          |1 = UARTx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[6]     |UART6RST  |UARTx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = UARTx controller normal operation.
- * |        |          |1 = UARTx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[7]     |UART7RST  |UARTx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = UARTx controller normal operation.
- * |        |          |1 = UARTx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[8]     |UART8RST  |UARTx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = UARTx controller normal operation.
- * |        |          |1 = UARTx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[9]     |UART9RST  |UARTx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = UARTx controller normal operation.
- * |        |          |1 = UARTx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::USBDRST
- * Offset: 0x2D0  USB Device Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |USBD0RST  |USBDx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the USBDx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = USBDx controller normal operation.
- * |        |          |1 = USBDx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::USBHRST
- * Offset: 0x2D4  USB Host Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |USBH0RST  |USBHx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the USBHx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = USBHx controller normal operation.
- * |        |          |1 = USBHx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::USCIRST
- * Offset: 0x2D8  USCI Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |USCI0RST  |USCIx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the USCIx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = USCIx controller normal operation.
- * |        |          |1 = USCIx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::UTCPDRST
- * Offset: 0x2DC  UTCPD Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |UTCPD0RST |UTCPDx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the UTCPDx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = UTCPDx controller normal operation.
- * |        |          |1 = UTCPDx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::WWDTRST
- * Offset: 0x2E0  WWDT Reset Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |WWDT0RST  |WWDTx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the WWDTx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = WWDTx controller normal operation.
- * |        |          |1 = WWDTx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[1]     |WWDT1RST  |WWDTx Controller Reset (Write Protect)
- * |        |          |Setting this bit to 1 will generate a reset signal to the WWDTx
- * |        |          |User needs to set this bit to 0 to release from reset state.
- * |        |          |0 = WWDTx controller normal operation.
- * |        |          |1 = WWDTx controller reset.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * @var SYS_T::GPA_MFP0
- * Offset: 0x300  GPIOA Multiple Function Control Register 0
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PA0MFP    |PA.0 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PA1MFP    |PA.1 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PA2MFP    |PA.2 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PA3MFP    |PA.3 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPA_MFP1
- * Offset: 0x304  GPIOA Multiple Function Control Register 1
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PA4MFP    |PA.4 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PA5MFP    |PA.5 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PA6MFP    |PA.6 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PA7MFP    |PA.7 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPA_MFP2
- * Offset: 0x308  GPIOA Multiple Function Control Register 2
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PA8MFP    |PA.8 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PA9MFP    |PA.9 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PA10MFP   |PA.10 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PA11MFP   |PA.11 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPA_MFP3
- * Offset: 0x30C  GPIOA Multiple Function Control Register 3
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PA12MFP   |PA.12 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PA13MFP   |PA.13 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PA14MFP   |PA.14 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PA15MFP   |PA.15 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPB_MFP0
- * Offset: 0x310  GPIOB Multiple Function Control Register 0
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PB0MFP    |PB.0 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PB1MFP    |PB.1 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PB2MFP    |PB.2 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PB3MFP    |PB.3 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPB_MFP1
- * Offset: 0x314  GPIOB Multiple Function Control Register 1
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PB4MFP    |PB.4 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PB5MFP    |PB.5 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PB6MFP    |PB.6 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PB7MFP    |PB.7 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPB_MFP2
- * Offset: 0x318  GPIOB Multiple Function Control Register 2
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PB8MFP    |PB.8 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PB9MFP    |PB.9 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PB10MFP   |PB.10 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PB11MFP   |PB.11 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPB_MFP3
- * Offset: 0x31C  GPIOB Multiple Function Control Register 3
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PB12MFP   |PB.12 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PB13MFP   |PB.13 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PB14MFP   |PB.14 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PB15MFP   |PB.15 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPC_MFP0
- * Offset: 0x320  GPIOC Multiple Function Control Register 0
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PC0MFP    |PC.0 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PC1MFP    |PC.1 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PC2MFP    |PC.2 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PC3MFP    |PC.3 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPC_MFP1
- * Offset: 0x324  GPIOC Multiple Function Control Register 1
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PC4MFP    |PC.4 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PC5MFP    |PC.5 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PC6MFP    |PC.6 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PC7MFP    |PC.7 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPC_MFP2
- * Offset: 0x328  GPIOC Multiple Function Control Register 2
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PC8MFP    |PC.8 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PC9MFP    |PC.9 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PC10MFP   |PC.10 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PC11MFP   |PC.11 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPC_MFP3
- * Offset: 0x32C  GPIOC Multiple Function Control Register 3
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PC12MFP   |PC.12 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PC13MFP   |PC.13 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PC14MFP   |PC.14 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPD_MFP0
- * Offset: 0x330  GPIOD Multiple Function Control Register 0
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PD0MFP    |PD.0 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PD1MFP    |PD.1 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PD2MFP    |PD.2 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PD3MFP    |PD.3 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPD_MFP1
- * Offset: 0x334  GPIOD Multiple Function Control Register 1
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PD4MFP    |PD.4 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PD5MFP    |PD.5 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PD6MFP    |PD.6 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PD7MFP    |PD.7 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPD_MFP2
- * Offset: 0x338  GPIOD Multiple Function Control Register 2
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PD8MFP    |PD.8 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PD9MFP    |PD.9 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PD10MFP   |PD.10 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PD11MFP   |PD.11 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPD_MFP3
- * Offset: 0x33C  GPIOD Multiple Function Control Register 3
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PD12MFP   |PD.12 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PD13MFP   |PD.13 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PD14MFP   |PD.14 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPE_MFP0
- * Offset: 0x340  GPIOE Multiple Function Control Register 0
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PE0MFP    |PE.0 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PE1MFP    |PE.1 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PE2MFP    |PE.2 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PE3MFP    |PE.3 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPE_MFP1
- * Offset: 0x344  GPIOE Multiple Function Control Register 1
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PE4MFP    |PE.4 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PE5MFP    |PE.5 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PE6MFP    |PE.6 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PE7MFP    |PE.7 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPE_MFP2
- * Offset: 0x348  GPIOE Multiple Function Control Register 2
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PE8MFP    |PE.8 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PE9MFP    |PE.9 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PE10MFP   |PE.10 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PE11MFP   |PE.11 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPE_MFP3
- * Offset: 0x34C  GPIOE Multiple Function Control Register 3
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PE12MFP   |PE.12 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PE13MFP   |PE.13 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PE14MFP   |PE.14 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PE15MFP   |PE.15 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPF_MFP0
- * Offset: 0x350  GPIOF Multiple Function Control Register 0
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PF0MFP    |PF.0 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PF1MFP    |PF.1 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PF2MFP    |PF.2 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PF3MFP    |PF.3 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPF_MFP1
- * Offset: 0x354  GPIOF Multiple Function Control Register 1
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PF4MFP    |PF.4 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PF5MFP    |PF.5 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PF6MFP    |PF.6 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PF7MFP    |PF.7 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPF_MFP2
- * Offset: 0x358  GPIOF Multiple Function Control Register 2
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PF8MFP    |PF.8 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PF9MFP    |PF.9 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PF10MFP   |PF.10 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PF11MFP   |PF.11 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPG_MFP0
- * Offset: 0x360  GPIOG Multiple Function Control Register 0
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PG0MFP    |PG.0 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PG1MFP    |PG.1 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PG2MFP    |PG.2 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PG3MFP    |PG.3 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPG_MFP1
- * Offset: 0x364  GPIOG Multiple Function Control Register 1
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PG4MFP    |PG.4 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PG5MFP    |PG.5 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PG6MFP    |PG.6 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PG7MFP    |PG.7 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPG_MFP2
- * Offset: 0x368  GPIOG Multiple Function Control Register 2
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PG8MFP    |PG.8 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PG9MFP    |PG.9 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PG10MFP   |PG.10 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PG11MFP   |PG.11 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPG_MFP3
- * Offset: 0x36C  GPIOG Multiple Function Control Register 3
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PG12MFP   |PG.12 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PG13MFP   |PG.13 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PG14MFP   |PG.14 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PG15MFP   |PG.15 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPH_MFP0
- * Offset: 0x370  GPIOH Multiple Function Control Register 0
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PH0MFP    |PH.0 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PH1MFP    |PH.1 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PH2MFP    |PH.2 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PH3MFP    |PH.3 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPH_MFP1
- * Offset: 0x374  GPIOH Multiple Function Control Register 1
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PH4MFP    |PH.4 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PH5MFP    |PH.5 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PH6MFP    |PH.6 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PH7MFP    |PH.7 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPH_MFP2
- * Offset: 0x378  GPIOH Multiple Function Control Register 2
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PH8MFP    |PH.8 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PH9MFP    |PH.9 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PH10MFP   |PH.10 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PH11MFP   |PH.11 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPH_MFP3
- * Offset: 0x37C  GPIOH Multiple Function Control Register 3
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PH12MFP   |PH.12 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PH13MFP   |PH.13 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PH14MFP   |PH.14 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PH15MFP   |PH.15 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPI_MFP1
- * Offset: 0x384  GPIOI Multiple Function Control Register 1
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[20:16] |PI6MFP    |PI.6 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PI7MFP    |PI.7 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPI_MFP2
- * Offset: 0x388  GPIOI Multiple Function Control Register 2
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PI8MFP    |PI.8 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PI9MFP    |PI.9 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PI10MFP   |PI.10 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PI11MFP   |PI.11 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPI_MFP3
- * Offset: 0x38C  GPIOI Multiple Function Control Register 3
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PI12MFP   |PI.12 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PI13MFP   |PI.13 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PI14MFP   |PI.14 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PI15MFP   |PI.15 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPJ_MFP0
- * Offset: 0x390  GPIOJ Multiple Function Control Register 0
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PJ0MFP    |PJ.0 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PJ1MFP    |PJ.1 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PJ2MFP    |PJ.2 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PJ3MFP    |PJ.3 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPJ_MFP1
- * Offset: 0x394  GPIOJ Multiple Function Control Register 1
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PJ4MFP    |PJ.4 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PJ5MFP    |PJ.5 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PJ6MFP    |PJ.6 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PJ7MFP    |PJ.7 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPJ_MFP2
- * Offset: 0x398  GPIOJ Multiple Function Control Register 2
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PJ8MFP    |PJ.8 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PJ9MFP    |PJ.9 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[20:16] |PJ10MFP   |PJ.10 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[28:24] |PJ11MFP   |PJ.11 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::GPJ_MFP3
- * Offset: 0x39C  GPIOJ Multiple Function Control Register 3
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[4:0]   |PJ12MFP   |PJ.12 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * |[12:8]  |PJ13MFP   |PJ.13 Multi-function Pin Selection
- * |        |          |Note: These bits are not retained when D2 power is turned off.
- * @var SYS_T::NMIEN
- * Offset: 0x500  NMI Source Interrupt Enable Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |BODOUT    |BOD NMI Source Enable (Write Protect)
- * |        |          |0 = BOD NMI source Disabled.
- * |        |          |1 = BOD NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[1]     |IRCINT    |IRC TRIM NMI Source Enable (Write Protect)
- * |        |          |0 = IRC TRIM NMI source Disabled.
- * |        |          |1 = IRC TRIM NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D0 power is turned off.
- * |[2]     |PWRWUINT  |Power-down Mode Wake-up NMI Source Enable (Write Protect)
- * |        |          |0 = Power-down mode wake-up NMI source Disabled.
- * |        |          |1 = Power-down mode wake-up NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[3]     |SRAMPERR  |SRAM Parity Check Error NMI Source Enable (Write Protect)
- * |        |          |0 = SRAM parity check error NMI source Disabled.
- * |        |          |1 = SRAM parity check error NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[4]     |CLKFAIL   |Clock Fail Detected NMI Source Enable (Write Protect)
- * |        |          |0 = Clock fail detected interrupt NMI source Disabled.
- * |        |          |1 = Clock fail detected interrupt NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[6]     |RTCINT    |RTC NMI Source Enable (Write Protect)
- * |        |          |0 = RTC NMI source Disabled.
- * |        |          |1 = RTC NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[7]     |RTCTMPINT |RTC Tamper Interrupt NMI Source Enable (Write Protect)
- * |        |          |0 = Backup register tamper detected interrupt NMI source Disabled.
- * |        |          |1 = Backup register tamper detected interrupt NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[8]     |EINT0     |External Interrupt From PA.6, or PB.5 Pin NMI Source Enable (Write Protect)
- * |        |          |0 = External interrupt from PA.6, or PB.5 pin NMI source Disabled.
- * |        |          |1 = External interrupt from PA.6, or PB.5 pin NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[9]     |EINT1     |External Interrupt From PA.7 or PB.4 Pin NMI Source Enable (Write Protect)
- * |        |          |0 = External interrupt from PA.7 or PB.4 pin NMI source Disabled.
- * |        |          |1 = External interrupt from PA.7 or P4.4 pin NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[10]    |EINT2     |External Interrupt From PB.3 or PC.6 Pin NMI Source Enable (Write Protect)
- * |        |          |0 = External interrupt from PB.3 or PC.6 pin NMI source Disabled.
- * |        |          |1 = External interrupt from PB.3 or PC.6 pin NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[11]    |EINT3     |External Interrupt From PB.2 or PC.7 Pin NMI Source Enable (Write Protect)
- * |        |          |0 = External interrupt from PB.2 or PC.7pin NMI source Disabled.
- * |        |          |1 = External interrupt from PB.2 or PC.7 pin NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[12]    |EINT4     |External Interrupt From PA.8 or PB.6 Pin NMI Source Enable (Write Protect)
- * |        |          |0 = External interrupt from PA.8 or PB.6 pin NMI source Disabled.
- * |        |          |1 = External interrupt from PA.8 or PB.6 pin NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[13]    |EINT5     |External Interrupt From PB.7 or PD.12 Pin NMI Source Enable (Write Protect)
- * |        |          |0 = External interrupt from PB.7 or PD.12 pin NMI source Disabled.
- * |        |          |1 = External interrupt from PB.7 or PD.12 pin NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[14]    |EINT6     |External Interrupt From PB.8 or PD.11 Pin NMI Source Enable (Write Protect)
- * |        |          |0 = External interrupt from PB.8 or PD.11 pin NMI source Disabled.
- * |        |          |1 = External interrupt from PB.8 or PD.11 pin NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[15]    |EINT7     |External Interrupt From PB.9 or PD.10 Pin NMI Source Enable (Write Protect)
- * |        |          |0 = External interrupt from PB.9 or PD.10 pin NMI source Disabled.
- * |        |          |1 = External interrupt from PB.9 or PD.10 pin NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[16]    |UART0INT  |UART0 NMI Source Enable (Write Protect)
- * |        |          |0 = UART0 NMI source Disabled.
- * |        |          |1 = UART0 NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * |[17]    |UART1INT  |UART1 NMI Source Enable (Write Protect)
- * |        |          |0 = UART1 NMI source Disabled.
- * |        |          |1 = UART1 NMI source Enabled.
- * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |        |          |Note 2: This bit is not retained when D1 power is turned off.
- * @var SYS_T::NMISTS
- * Offset: 0x504  NMI Source Interrupt Status Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |BODOUT    |BOD Interrupt Flag (Read Only)
- * |        |          |0 = BOD interrupt is deasserted.
- * |        |          |1 = BOD interrupt is asserted.
- * |[1]     |IRCINT    |IRC TRIM Interrupt Flag (Read Only)
- * |        |          |0 = HIRC TRIM interrupt is deasserted.
- * |        |          |1 = HIRC TRIM interrupt is asserted. 
- * |[2]     |PWRWUINT  |Power-down Mode Wake-up Interrupt Flag (Read Only)
- * |        |          |0 = Power-down mode wake-up interrupt is deasserted.
- * |        |          |1 = Power-down mode wake-up interrupt is asserted. 
- * |[3]     |SRAMPERR  |SRAM Parity Check Error Interrupt Flag (Read Only)
- * |        |          |0 = SRAM parity check error interrupt is deasserted.
- * |        |          |1 = SRAM parity check error interrupt is asserted. 
- * |[4]     |CLKFAIL   |Clock Fail Detected Interrupt Flag (Read Only)
- * |        |          |0 = Clock fail detected interrupt is deasserted.
- * |        |          |1 = Clock fail detected interrupt is asserted. 
- * |[6]     |RTCINT    |RTC Interrupt Flag (Read Only)
- * |        |          |0 = RTC interrupt is deasserted.
- * |        |          |1 = RTC interrupt is asserted.
- * |[7]     |RTCTMPINT |RTC Tamper Interrupt Flag (Read Only)
- * |        |          |0 = Backup register tamper detected interrupt is deasserted.
- * |        |          |1 = Backup register tamper detected interrupt is asserted.
- * |[8]     |EINT0     |External Interrupt From PA.6, or PB.5 Pin Interrupt Flag (Read Only)
- * |        |          |0 = External Interrupt from PA.6, or PB.5 interrupt is deasserted.
- * |        |          |1 = External Interrupt from PA.6, or PB.5 interrupt is asserted.
- * |[9]     |EINT1     |External Interrupt From PA.7, or PB.4 Pin Interrupt Flag (Read Only)
- * |        |          |0 = External Interrupt from PA.7, or PB.4 interrupt is deasserted.
- * |        |          |1 = External Interrupt from PA.7, or PB.4 interrupt is asserted. 
- * |[10]    |EINT2     |External Interrupt From PB.3 or PC.6 Pin Interrupt Flag (Read Only)
- * |        |          |0 = External Interrupt from PB.3 or PC.6 interrupt is deasserted.
- * |        |          |1 = External Interrupt from PB.3 or PC.6 interrupt is asserted.
- * |[11]    |EINT3     |External Interrupt From PB.2 or PC.7 Pin Interrupt Flag (Read Only)
- * |        |          |0 = External Interrupt from PB.2 or PC.7 interrupt is deasserted.
- * |        |          |1 = External Interrupt from PB.2 or PC.7 interrupt is asserted.
- * |[12]    |EINT4     |External Interrupt From PA.8 or PB.6 Pin Interrupt Flag (Read Only)
- * |        |          |0 = External Interrupt from PA.8 or PB.6 interrupt is deasserted.
- * |        |          |1 = External Interrupt from PA.8 or PB.6 interrupt is asserted.
- * |[13]    |EINT5     |External Interrupt From PB.7 or PD.12 Pin Interrupt Flag (Read Only)
- * |        |          |0 = External Interrupt from PB.7 or PD.12 interrupt is deasserted.
- * |        |          |1 = External Interrupt from PB.7 or PD.12 interrupt is asserted.
- * |[14]    |EINT6     |External Interrupt From PB.8 or PD.11 Pin Interrupt Flag (Read Only)
- * |        |          |0 = External Interrupt from PB.8 or PD.11 interrupt is deasserted.
- * |        |          |1 = External Interrupt from PB.8 or PD.11 interrupt is asserted.
- * |[15]    |EINT7     |External Interrupt From PB.9 or PD.10 Pin Interrupt Flag (Read Only)
- * |        |          |0 = External Interrupt from PB.9 or PD.10 interrupt is deasserted.
- * |        |          |1 = External Interrupt from PB.9 or PD.10 interrupt is asserted.
- * |[16]    |UART0INT  |UART0 Interrupt Flag (Read Only)
- * |        |          |0 = UART1 interrupt is deasserted.
- * |        |          |1 = UART1 interrupt is asserted.
- * |[17]    |UART1INT  |UART1 Interrupt Flag (Read Only)
- * |        |          |0 = UART1 interrupt is deasserted.
- * |        |          |1 = UART1 interrupt is asserted.
- * @var SYS_T::SRAMBCTL
- * Offset: 0xE90  System SRAM BIST Control Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |SR0BIST   |System SRAM 0 BIST Enable Bit (Write Protect)
- * |        |          |This bit enables System SRAM 0 BIST function.
- * |        |          |0 = System SRAM 0 BIST Disabled.
- * |        |          |1 = System SRAM 0 BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[1]     |SR1BIST   |System SRAM 1 BIST Enable Bit (Write Protect)
- * |        |          |This bit enables System SRAM 1 BIST function.
- * |        |          |0 = System SRAM 1 BIST Disabled.
- * |        |          |1 = System SRAM 1 BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[2]     |SR2BIST   |System SRAM 2 BIST Enable Bit (Write Protect)
- * |        |          |This bit enables System SRAM 2 BIST function.
- * |        |          |0 = System SRAM 2 BIST Disabled.
- * |        |          |1 = System SRAM 2 BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[3]     |SR3BIST   |System SRAM 3 BIST Enable Bit (Write Protect)
- * |        |          |This bit enables System SRAM 3 BIST function.
- * |        |          |0 = System SRAM 3 BIST Disabled.
- * |        |          |1 = System SRAM 3 BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[4]     |LPSRBIST  |Low Power System SRAM BIST Enable Bit (Write Protect)
- * |        |          |This bit enables Low Power System SRAM BIST function.
- * |        |          |0 = Low Power System SRAM BIST Disabled.
- * |        |          |1 = Low Power System SRAM BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[8]     |CAN0BIST  |CAN0 SRAM BIST Enable Bit (Write Protect)
- * |        |          |This bit enables CAN0 SRAM BIST function.
- * |        |          |0 = CAN0 SRAM BIST Disabled.
- * |        |          |1 = CAN0 SRAM BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[9]     |CAN1BIST  |CAN1 SRAM BIST Enable Bit (Write Protect)
- * |        |          |This bit enables CAN1 SRAM BIST function.
- * |        |          |0 = CAN1 SRAM BIST Disabled.
- * |        |          |1 = CAN1 SRAM BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[10]    |SPIM0BIST |SPIM0 SRAM BIST Enable Bit (Write Protect)
- * |        |          |This bit enables SPIM0 SRAM BIST function.
- * |        |          |0 = SPIM0 SRAM BIST Disabled.
- * |        |          |1 = SPIM0 SRAM BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[12]    |CCAPBIST  |CCAP SRAM BIST Enable Bit (Write Protect)
- * |        |          |This bit enables CCAP SRAM BIST function.
- * |        |          |0 = CCAP SRAM BIST Disabled.
- * |        |          |1 = CCAP SRAM BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[13]    |I3CBIST   |I3C SRAM BIST Enable Bit (Write Protect)
- * |        |          |This bit enables I3C SRAM BIST function.
- * |        |          |0 = I3C SRAM BIST Disabled.
- * |        |          |1 = I3C SRAM BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[14]    |KSBIST    |KS SRAM BIST Enable Bit (Write Protect)
- * |        |          |This bit enables KS SRAM BIST function.
- * |        |          |0 = KS SRAM BIST Disabled.
- * |        |          |1 = KS SRAM BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[15]    |RSABIST   |RSA SRAM BIST Enable Bit (Write Protect)
- * |        |          |This bit enables RSA SRAM BIST function.
- * |        |          |0 = RSA SRAM BIST Disabled.
- * |        |          |1 = RSA SRAM BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[16]    |DMICBIST  |DMIC SRAM BIST Enable Bit (Write Protect)
- * |        |          |This bit enables DMIC SRAM BIST function.
- * |        |          |0 = DMIC SRAM BIST Disabled.
- * |        |          |1 = DMIC SRAM BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[17]    |EMACBIST  |EMAC SRAM BIST Enable Bit (Write Protect)
- * |        |          |This bit enables EMAC SRAM BIST function.
- * |        |          |0 = EMAC SRAM BIST Disabled.
- * |        |          |1 = EMAC SRAM BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[18]    |NPUBIST   |NPU SRAM BIST Enable Bit (Write Protect)
- * |        |          |This bit enables NPU SRAM BIST function.
- * |        |          |0 = NPU SRAM BIST Disabled.
- * |        |          |1 = NPU SRAM BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[24]    |USBDBIST  |USBD SRAM BIST Enable Bit (Write Protect)
- * |        |          |This bit enables USBD SRAM BIST function.
- * |        |          |0 = USBD SRAM BIST Disabled.
- * |        |          |1 = USBD SRAM BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[25]    |HSUSBDBIST|HSUSBD SRAM BIST Enable Bit (Write Protect)
- * |        |          |This bit enables HSUSBD SRAM BIST function.
- * |        |          |0 = HSUSBD SRAM BIST Disabled.
- * |        |          |1 = HSUSBD SRAM BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * |[26]    |HSUSBHBIST|HSUSBH SRAM BIST Enable Bit (Write Protect)
- * |        |          |This bit enables HSUSBH SRAM BIST function.
- * |        |          |0 = HSUSBH SRAM BIST Disabled.
- * |        |          |1 = HSUSBH SRAM BIST Enabled.
- * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
- * @var SYS_T::SRAMBFF
- * Offset: 0xE94  System SRAM BIST Finish Flag Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |SR0BFF    |System SRAM 0 BIST Finish Flag (Read Only)
- * |        |          |0 = System SRAM 0 BIST is active.
- * |        |          |1 = System SRAM 0 BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when SR0BIST(SYS_SRAMBCTL[0]) set to 0.
- * |[1]     |SR1BFF    |System SRAM 1 BIST Finish Flag (Read Only)
- * |        |          |0 = System SRAM 1 BIST is active.
- * |        |          |1 = System SRAM 1 BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when SR1BIST(SYS_SRAMBCTL[1]) set to 0.
- * |[2]     |SR2BFF    |System SRAM 2 BIST Finish Flag (Read Only)
- * |        |          |0 = System SRAM 2 BIST is active.
- * |        |          |1 = System SRAM 2 BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when SR2BIST(SYS_SRAMBCTL[2]) set to 0.
- * |[3]     |SR3BFF    |System SRAM 3 BIST Finish Flag (Read Only)
- * |        |          |0 = System SRAM 3 BIST is active.
- * |        |          |1 = System SRAM 3 BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when SR3BIST(SYS_SRAMBCTL[3]) set to 0.
- * |[4]     |LPSRBFF   |Low Power System SRAM BIST Finish Flag (Read Only)
- * |        |          |0 = Low Power System SRAM BIST is active.
- * |        |          |1 = Low Power System SRAM BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when LPSRBIST(SYS_SRAMBCTL[4]) set to 0.
- * |[8]     |CAN0BFF   |CAN0 SRAM BIST Finish Flag (Read Only)
- * |        |          |0 = CAN0 SRAM BIST is active.
- * |        |          |1 = CAN0 SRAM BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when CAN0BIST(SYS_SRAMBCTL[8]) set to 0.
- * |[9]     |CAN1BFF   |CAN1 SRAM BIST Finish Flag (Read Only)
- * |        |          |0 = CAN1 SRAM BIST is active.
- * |        |          |1 = CAN1 SRAM BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when CAN1BIST(SYS_SRAMBCTL[9]) set to 0.
- * |[10]    |SPIM0BFF  |SPIM0 SRAM BIST Finish Flag (Read Only)
- * |        |          |0 = SPIM0 SRAM BIST is active.
- * |        |          |1 = SPIM0 SRAM BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when SPIM0BIST(SYS_SRAMBCTL[10]) set to 0.
- * |[12]    |CCAPBFF   |CCAP SRAM BIST Finish Flag (Read Only)
- * |        |          |0 = CCAP SRAM BIST is active.
- * |        |          |1 = CCAP SRAM BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when CCAPBIST(SYS_SRAMBCTL[12]) set to 0.
- * |[13]    |I3CBFF    |I3C SRAM BIST Finish Flag (Read Only)
- * |        |          |0 = I3C SRAM BIST is active.
- * |        |          |1 = I3C SRAM BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when I3CBIST(SYS_SRAMBCTL[13]) set to 0.
- * |[14]    |KSBFF     |KS SRAM BIST Finish Flag (Read Only)
- * |        |          |0 = KS SRAM BIST is active.
- * |        |          |1 = KS SRAM BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when KSBIST(SYS_SRAMBCTL[14]) set to 0.
- * |[15]    |RSABFF    |RSA SRAM BIST Finish Flag (Read Only)
- * |        |          |0 = RSA SRAM BIST is active.
- * |        |          |1 = RSA SRAM BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when RSABIST(SYS_SRAMBCTL[15]) set to 0.
- * |[16]    |DMICBFF   |DMIC SRAM BIST Finish Flag (Read Only)
- * |        |          |0 = DMIC SRAM BIST is active.
- * |        |          |1 = DMIC SRAM BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when DMICBIST(SYS_SRAMBCTL[16]) set to 0.
- * |[17]    |EMACBFF   |EMAC SRAM BIST Finish Flag (Read Only)
- * |        |          |0 = EMAC SRAM BIST is active.
- * |        |          |1 = EMAC SRAM BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when EMACBIST(SYS_SRAMBCTL[17]) set to 0.
- * |[18]    |NPUBFF    |NPU SRAM BIST Finish Flag (Read Only)
- * |        |          |0 = NPU SRAM BIST is active.
- * |        |          |1 = NPU SRAM BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when NPUBIST(SYS_SRAMBCTL[18]) set to 0.
- * |[24]    |USBDBFF   |USBD SRAM BIST Finish Flag (Read Only)
- * |        |          |0 = USBD SRAM BIST is active.
- * |        |          |1 = USBD SRAM BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when USBDBIST(SYS_SRAMBCTL[24]) set to 0.
- * |[25]    |HSUSBDBFF |HSUSBD SRAM BIST Finish Flag (Read Only)
- * |        |          |0 = HSUSBD SRAM BIST is active.
- * |        |          |1 = HSUSBD SRAM BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when HSUSBDBIST(SYS_SRAMBCTL[25]) set to 0.
- * |[26]    |HSUSBHBFF |HSUSBH SRAM BIST Finish Flag (Read Only)
- * |        |          |0 = HSUSBH SRAM BIST is active.
- * |        |          |1 = HSUSBH SRAM BIST test finish.
- * |        |          |Note 1: This bit will be clear to 0 when HSUSBHBIST(SYS_SRAMBCTL[26]) set to 0.
- * @var SYS_T::SRAMBRF
- * Offset: 0xE98  System SRAM BIST Result Flag Register
- * ---------------------------------------------------------------------------------------------------
- * |Bits    |Field     |Descriptions
- * | :----: | :----:   | :---- |
- * |[0]     |SR0BRF    |System SRAM 0 BIST Result Flag (Read Only)
- * |        |          |0 = System SRAM 0 BIST test pass.
- * |        |          |1 = System SRAM 0 BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when SR0BIST(SYS_SRAMBCTL[0]) set to 0.
- * |[1]     |SR1BRF    |System SRAM 1 BIST Result Flag (Read Only)
- * |        |          |0 = System SRAM 1 BIST test pass.
- * |        |          |1 = System SRAM 1 BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when SR1BIST(SYS_SRAMBCTL[1]) set to 0.
- * |[2]     |SR2BRF    |System SRAM 2 BIST Result Flag (Read Only)
- * |        |          |0 = System SRAM 2 BIST test pass.
- * |        |          |1 = System SRAM 2 BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when SR2BIST(SYS_SRAMBCTL[3]) set to 0.
- * |[3]     |SR3BRF    |System SRAM 3 BIST Result Flag (Read Only)
- * |        |          |0 = System SRAM 3 BIST test pass.
- * |        |          |1 = System SRAM 3 BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when SR3BIST(SYS_SRAMBCTL[3]) set to 0.
- * |[4]     |LPSRBRF   |Low Power System SRAM BIST Result Flag (Read Only)
- * |        |          |0 = Low Power System SRAM BIST test pass.
- * |        |          |1 = Low Power System SRAM BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when LPSRBIST(SYS_SRAMBCTL[4]) set to 0.
- * |[8]     |CAN0BRF   |CAN0 SRAM BIST Result Flag (Read Only)
- * |        |          |0 = CAN0 SRAM BIST test pass.
- * |        |          |1 = CAN0 SRAM BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when CAN0BIST(SYS_SRAMBCTL[8]) set to 0.
- * |[9]     |CAN1BRF   |CAN1 SRAM BIST Result Flag (Read Only)
- * |        |          |0 = CAN1 SRAM BIST test pass.
- * |        |          |1 = CAN1 SRAM BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when CAN1BIST(SYS_SRAMBCTL[9]) set to 0.
- * |[10]    |SPIM0BRF  |SPIM0 SRAM BIST Result Flag (Read Only)
- * |        |          |0 = SPIM0 SRAM BIST test pass.
- * |        |          |1 = SPIM0 SRAM BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when SPIM0BIST(SYS_SRAMBCTL[10]) set to 0.
- * |[12]    |CCAPBRF   |CCAP SRAM BIST Result Flag (Read Only)
- * |        |          |0 = CCAP SRAM BIST test pass.
- * |        |          |1 = CCAP SRAM BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when CCAPBIST(SYS_SRAMBCTL[12]) set to 0.
- * |[13]    |I3CBRF    |I3C SRAM BIST Result Flag (Read Only)
- * |        |          |0 = I3C SRAM BIST test pass.
- * |        |          |1 = I3C SRAM BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when I3CBIST(SYS_SRAMBCTL[13]) set to 0.
- * |[14]    |KSBRF     |KS SRAM BIST Result Flag (Read Only)
- * |        |          |0 = KS SRAM BIST test pass.
- * |        |          |1 = KS SRAM BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when KSBIST(SYS_SRAMBCTL[14]) set to 0.
- * |[15]    |RSABRF    |RSA SRAM BIST Result Flag (Read Only)
- * |        |          |0 = RSA SRAM BIST test pass.
- * |        |          |1 = RSA SRAM BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when RSABIST(SYS_SRAMBCTL[15]) set to 0.
- * |[16]    |DMICBRF   |DMIC SRAM BIST Result Flag (Read Only)
- * |        |          |0 = DMIC SRAM BIST test pass.
- * |        |          |1 = DMIC SRAM BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when DMICBIST(SYS_SRAMBCTL[16]) set to 0.
- * |[17]    |EMACBRF   |EMAC SRAM BIST Result Flag (Read Only)
- * |        |          |0 = EMAC SRAM BIST test pass.
- * |        |          |1 = EMAC SRAM BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when EMACBIST(SYS_SRAMBCTL[17]) set to 0.
- * |[18]    |NPUBRF    |NPU SRAM BIST Result Flag (Read Only)
- * |        |          |0 = NPU SRAM BIST test pass.
- * |        |          |1 = NPU SRAM BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when NPUBIST(SYS_SRAMBCTL[18]) set to 0.
- * |[24]    |USBDBRF   |USBD SRAM BIST Result Flag (Read Only)
- * |        |          |0 = USBD SRAM BIST test pass.
- * |        |          |1 = USBD SRAM BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when USBDBIST(SYS_SRAMBCTL[24]) set to 0.
- * |[25]    |HSUSBDBRF |HSUSBD SRAM BIST Result Flag (Read Only)
- * |        |          |0 = HSUSBD SRAM BIST test pass.
- * |        |          |1 = HSUSBD SRAM BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when HSUSBDBIST(SYS_SRAMBCTL[25]) set to 0.
- * |[26]    |HSUSBHBRF |HSUSBH SRAM BIST Result Flag (Read Only)
- * |        |          |0 = HSUSBH SRAM BIST test pass.
- * |        |          |1 = HSUSBH SRAM BIST test fail.
- * |        |          |Note 1: This bit will be clear to 0 when HSUSBHBIST(SYS_SRAMBCTL[26]) set to 0.
- */
+    /**
+     * @var SYS_T::PDID
+     * Offset: 0x00  Part Device Identification Number Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:0]  |PDID      |Part Device Identification Number (Read Only)
+     * |        |          |This register reflects device part number code
+     * |        |          |Software can read this register to identify which device is used
+     * @var SYS_T::RSTCTL
+     * Offset: 0x04  System Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CHIPRST   |Chip One-shot Reset (Write Protect)
+     * |        |          |Setting this bit will reset the whole chip, including Processor core and all peripherals, and this bit will automatically return to 0 after the 2 clock cycles.
+     * |        |          |The CHIPRST is same as the POR reset, all the chip controllers is reset and the chip setting from Flash are also reload.
+     * |        |          |About the difference between CHIPRST and SYSRESETREQ(AIRCR[2]), please refer to section 6.2.2
+     * |        |          |0 = Chip normal operation.
+     * |        |          |1 = Chip one-shot reset.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[6]     |NPURST    |NPU Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the NPU
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = NPU controller normal operation.
+     * |        |          |1 = NPU controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[7]     |CPURSTEN  |Processor Core Reset Enable (Write Protect)
+     * |        |          |Setting this bit will only reset the processor core and Flash Memory Controller(FMC) when CPU execute WFI instruction.
+     * |        |          |0 = Processor core not reset when execute WFI instruction.
+     * |        |          |1 = Processor core reset when execute WFI instruction.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register..
+     * @var SYS_T::RSTSTS
+     * Offset: 0x08  System Reset Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |PORF      |POR Reset Flag
+     * |        |          |The POR reset flag is set by the u201CReset Signalu201D from the Power-on Reset (POR) Controller or bit CHIPRST (SYS_RSTCTL[0]) to indicate the previous reset source.
+     * |        |          |0 = No reset from POR or CHIPRST.
+     * |        |          |1 = Power-on Reset (POR) or CHIPRST had issued the reset signal to reset the system.
+     * |        |          |Note 1: Write 1 to clear this bit to 0.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |PINRF     |nRESET Pin Reset Flag
+     * |        |          |The nRESET pin reset flag is set by the u201CReset Signalu201D from the nRESET Pin to indicate the previous reset source.
+     * |        |          |0 = No reset from nRESET pin.
+     * |        |          |1 = Pin nRESET had issued the reset signal to reset the system.
+     * |        |          |Note 1: Write 1 to clear this bit to 0.
+     * |        |          |Note 2: This bit is not retained when D4 power is turned off.
+     * |[2]     |WDTRF     |WDT Reset Flag
+     * |        |          |The WDT reset flag is set by the u201CReset Signalu201D from the Watchdog Timer or Window Watchdog Timer to indicate the previous reset source.
+     * |        |          |0 = No reset from watchdog timer or window watchdog timer.
+     * |        |          |1 = The watchdog timer or window watchdog timer had issued the reset signal to reset the system.
+     * |        |          |Note 1: Write 1 to clear this bit to 0.
+     * |        |          |Note 2: This bit is not retained when D2 power is turned off.
+     * |        |          |Note 3: Watchdog Timer register RSTF(WDT_CTL[2]) bit is set if the system has been reset by WDT time-out reset
+     * |        |          |Window Watchdog Timer register WWDTRF(WWDT_STATUS[1]) bit is set if the system has been reset by WWDT time-out reset.
+     * |        |          |Note 4: Extra Watchdog Timer register RSTF(EWDT_CTL[2]) bit is set if the system has been reset by EWDT time-out reset
+     * |        |          |Extra Window Watchdog Timer register WWDTRF(EWWDT_STATUS[1]) bit is set if the system has been reset by EWWDT time-out reset.
+     * |[3]     |LVRRF     |LVR Reset Flag
+     * |        |          |The LVR reset flag is set by the u201CReset Signalu201D from the Low Voltage Reset Controller to indicate the previous reset source.
+     * |        |          |0 = No reset from LVR.
+     * |        |          |1 = The LVR controller had issued the reset signal to reset the system.
+     * |        |          |Note 1: Write 1 to clear this bit to 0.
+     * |        |          |Note 2: This bit is not retained when D3 power is turned off.
+     * |[4]     |BODRF     |BOD Reset Flag
+     * |        |          |The BOD reset flag is set by the u201CReset Signalu201D from the Brown-out Detector to indicate the previous reset source.
+     * |        |          |0 = No reset from BOD.
+     * |        |          |1 = The BOD had issued the reset signal to reset the system.
+     * |        |          |Note 1: Write 1 to clear this bit to 0.
+     * |        |          |Note 2: This bit is not retained when D3 power is turned off.
+     * |[5]     |SYSRF     |System Reset Flag
+     * |        |          |The system reset flag is set by the u201CReset Signalu201D from the Cortex-M55 core to indicate the previous reset source.
+     * |        |          |0 = No reset from the Cortex-M55.
+     * |        |          |1 = The Cortex-M55 had issued the reset signal to reset the system by writing 1 to the bit SYSRESETREQ(AIRCR[2], Application Interrupt and Reset Control Register, address = 0xE000ED0C) in system control registers of Cortex-M55 core.
+     * |        |          |Note 1: Write 1 to clear this bit to 0.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[7]     |CPURF     |CPU Reset Flag
+     * |        |          |The CPU reset flag is set by hardware if software writes CPURST (SYS_RSTCTL[7]) 1 to reset the Cortex-M55 core and Flash Memory Controller (FMC).
+     * |        |          |0 = No reset from CPU.
+     * |        |          |1 = The Cortex-M55 core and FMC are reset by software setting CPURST to 1.
+     * |        |          |Note 1: Write 1 to clear this bit to 0.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[8]     |CPULKRF   |CPU Lockup Reset Flag
+     * |        |          |The CPU Lockup reset flag is set by hardware if Cortex-M55 lockup happened.
+     * |        |          |0 = No reset from CPU lockup happened.
+     * |        |          |1 = The Cortex-M55 lockup happened and chip is reset.
+     * |        |          |Note 1: Write 1 to clear this bit to 0.
+     * |        |          |Note 2: When CPU lockup happened under ICE is connected, this flag will set to 1 but chip will not reset.
+     * |        |          |Note 3: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::VTORSET
+     * Offset: 0x0C  VTOR Setting Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:7]  |VTORSET   |VTOR Setting After SPD Wakeup (Write Protect)
+     * |        |          |The value will be loaded to Vector Table Offset Register, which is at the address 0xE000ED08, when chip wake up and Perfomace Domain be turn off.
+     * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: These bits are not retained when D4 power is turned off.
+     * @var SYS_T::SRAMICTL
+     * Offset: 0x10  System SRAM Parity Error Interrupt Enable Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |PERRIEN   |SRAM Parity Check Error Interrupt Enable Bit
+     * |        |          |0 = SRAM parity check error interrupt Disabled.
+     * |        |          |1 = SRAM parity check error interrupt Enabled.
+     * |        |          |Note: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::SRAMSTS
+     * Offset: 0x14  System SRAM Parity Check Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |PERRIF    |SRAM Parity Check Error Flag
+     * |        |          |This bit indicates the System SRAM byte 0 parity error occurred.
+     * |        |          |0 = No System SRAM parity error.
+     * |        |          |1 = System SRAM parity error occured.
+     * |        |          |Note 1: Write 1 to clear this bit to 0.
+     * |        |          |Note 2: The default value depends on the content of SRAM
+     * |        |          |It is better to check this value before use it
+     * |        |          |If the default value is 1, it shall be cleared first.
+     * |        |          |Note 3: This bit is not retained when D0 power is turned off.
+     * |[8]     |B0PERRIF  |SRAM Byte 0 Parity Check Error Flag (Read Only)
+     * |        |          |This bit indicates the System SRAM byte 0 parity error occurred.
+     * |        |          |0 = No System SRAM byte 0 parity error.
+     * |        |          |1 = System SRAM byte 0 parity error occured.
+     * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0..
+     * |        |          |Note 2: The default value depends on the content of SRAM
+     * |        |          |It is better to check this value before use it
+     * |        |          |If the default value is 1, it shall be cleared first.
+     * |        |          |Note 3: This bit is not retained when D0 power is turned off.
+     * |[9]     |B1PERRIF  |SRAM Byte 1 Parity Check Error Flag (Read Only)
+     * |        |          |This bit indicates the System SRAM byte 1 parity error occurred.
+     * |        |          |0 = No System SRAM byte 1 parity error.
+     * |        |          |1 = System SRAM byte 1 parity error occured.
+     * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0.
+     * |        |          |Note 2: The default value depends on the content of SRAM
+     * |        |          |It is better to check this value before use it
+     * |        |          |If the default value is 1, it shall be cleared first.
+     * |        |          |Note 3: This bit is not retained when D0 power is turned off.
+     * |[10]    |B2PERRIF  |SRAM Byte 2 Parity Check Error Flag (Read Only)
+     * |        |          |This bit indicates the System SRAM byte 2 parity error occurred.
+     * |        |          |0 = No System SRAM byte 2 parity error.
+     * |        |          |1 = System SRAM byte 2 parity error occured.
+     * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0.
+     * |        |          |Note 2: The default value depends on the content of SRAM
+     * |        |          |It is better to check this value before use it
+     * |        |          |If the default value is 1, it shall be cleared first.
+     * |        |          |Note 3: This bit is not retained when D0 power is turned off.
+     * |[11]    |B3PERRIF  |SRAM Byte 3 Parity Check Error Flag (Read Only)
+     * |        |          |This bit indicates the System SRAM byte 3 parity error occurred.
+     * |        |          |0 = No System SRAM byte 3 parity error.
+     * |        |          |1 = System SRAM byte 3 parity error occured.
+     * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0.
+     * |        |          |Note 2: The default value depends on the content of SRAM
+     * |        |          |It is better to check this value before use it
+     * |        |          |If the default value is 1, it shall be cleared first.
+     * |        |          |Note 3: This bit is not retained when D0 power is turned off.
+     * |[12]    |B4PERRIF  |SRAM Byte 4 Parity Check Error Flag (Read Only)
+     * |        |          |This bit indicates the System SRAM byte 4 parity error occurred.
+     * |        |          |0 = No System SRAM byte 4 parity error.
+     * |        |          |1 = System SRAM byte 4 parity error occured.
+     * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0.
+     * |        |          |Note 2: The default value depends on the content of SRAM
+     * |        |          |It is better to check this value before use it
+     * |        |          |If the default value is 1, it shall be cleared first.
+     * |        |          |Note 3: This bit is not retained when D0 power is turned off.
+     * |[13]    |B5PERRIF  |SRAM Byte 5 Parity Check Error Flag (Read Only)
+     * |        |          |This bit indicates the System SRAM byte 5 parity error occurred.
+     * |        |          |0 = No System SRAM byte 5 parity error.
+     * |        |          |1 = System SRAM byte 5 parity error occured.
+     * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0.
+     * |        |          |Note 2: The default value depends on the content of SRAM
+     * |        |          |It is better to check this value before use it
+     * |        |          |If the default value is 1, it shall be cleared first.
+     * |        |          |Note 3: This bit is not retained when D0 power is turned off.
+     * |[14]    |B6PERRIF  |SRAM Byte 6 Parity Check Error Flag (Read Only)
+     * |        |          |This bit indicates the System SRAM byte 6 parity error occurred.
+     * |        |          |0 = No System SRAM byte 6 parity error.
+     * |        |          |1 = System SRAM byte 6 parity error occured.
+     * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0.
+     * |        |          |Note 2: The default value depends on the content of SRAM
+     * |        |          |It is better to check this value before use it
+     * |        |          |If the default value is 1, it shall be cleared first.
+     * |        |          |Note 3: This bit is not retained when D0 power is turned off.
+     * |[15]    |B7PERRIF  |SRAM Byte 7 Parity Check Error Flag (Read Only)
+     * |        |          |This bit indicates the System SRAM byte 7 parity error occurred.
+     * |        |          |0 = No System SRAM byte 7 parity error.
+     * |        |          |1 = System SRAM byte 7 parity error occured.
+     * |        |          |Note 1: Write 1 to PERRIF for clear this bit to 0.
+     * |        |          |Note 2: The default value depends on the content of SRAM
+     * |        |          |It is better to check this value before use it
+     * |        |          |If the default value is 1, it shall be cleared first.
+     * |        |          |Note 3: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::SRAMEADR
+     * Offset: 0x18  System SRAM Parity Error Address Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[31:0]  |ERRADDR   |System SRAM Parity Error Address (Read Only)
+     * |        |          |This register shows system SRAM parity error byte offset.
+     * |        |          |Note: These bits are not retained when D0 power is turned off.
+     * @var SYS_T::BODCTL
+     * Offset: 0x20  Brown-out Detector Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BODEN     |Brown-out Detector Enable Bit (Write Protect)
+     * |        |          |The default value is set by Flash controller user configuration register CBODEN (CONFIG0 [19]).
+     * |        |          |0 = Brown-out Detector function Disabled.
+     * |        |          |1 = Brown-out Detector function Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: Write operation is ignored when WRBUSY is high.
+     * |        |          |Note 3: This bit is not retained when D3 power is turned off.
+     * |        |          |Note 4: The default value is set by inverse UCFG0[19].
+     * |[1]     |BODLPM    |Brown-out Detector Low Power Mode (Write Protect)
+     * |        |          |0 = BOD operated in normal mode (default).
+     * |        |          |1 = BOD Low Power mode Enabled.
+     * |        |          |Note 1: The BOD consumes about 10uA in normal mode, the low power mode can reduce the current to about 1/10 but slow the BOD response.
+     * |        |          |Note 2: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 3: Write operation is ignored when WRBUSY is high.
+     * |        |          |Note 4: This bit is not retained when D3 power is turned off.
+     * |[2]     |BODRSTEN  |Brown-out Reset Enable Bit (Write Protect)
+     * |        |          |The default value is set by Flash controller user configuration register CBORST(CONFIG0[20]) bit.
+     * |        |          |0 = Brown-out u201CINTERRUPTu201D function Enabled.
+     * |        |          |1 = Brown-out u201CRESETu201D function Enabled.
+     * |        |          |Note 1: When the Brown-out Detector function is enabled (BODEN high) and BOD reset function is enabled (BODRSTEN high), BOD will assert a signal to reset chip when the detected voltage is lower than the threshold (BODOUT high).
+     * |        |          |When the BOD function is enabled (BODEN high) and BOD interrupt function is enabled (BODRSTEN low), BOD will assert an interrupt if AVDD is lower than BODVL, BOD interrupt will keep till the BODIF set to 0
+     * |        |          |BOD interrupt can be blocked by disabling the NVIC BOD interrupt or disabling BOD function (setting BODEN low).
+     * |        |          |Note 2: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 3: This bit is not retained when D3 power is turned off.
+     * |        |          |Note 4: Write operation is ignored when WRBUSY is high.
+     * |        |          |Note 5: The default value is set by inverse UCFG0[20]
+     * |        |          |Note 6: If D2PGEN(PMC_PWRCTL[2]) is 1 and enters Power-down mode, the brown-out reset function always keeps enabled even if BODRSTEN is 0.
+     * |[6:4]   |BODDGSEL  |Brown-out Detector Output De-glitch Time Select (Write Protect)
+     * |        |          |000 = BOD output is sampled by LIRC clock.
+     * |        |          |001 = 4 system clock (SCLK).
+     * |        |          |010 = 8 system clock (SCLK).
+     * |        |          |011 = 16 system clock (SCLK).
+     * |        |          |100 = 32 system clock (SCLK).
+     * |        |          |101 = 64 system clock (SCLK).
+     * |        |          |110 = 128 system clock (SCLK).
+     * |        |          |111 = 256 system clock (SCLK).
+     * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: Write operation is ignored when WRBUSY is high.
+     * |        |          |Note 3: These bits are not retained when D0 power is turned off.
+     * |        |          |Note 4: Because SCLK is invalid in Power-down mode, the de-glitch time must change to LIRC before system enters Power-down mode.
+     * |        |          |Note 5: If BODLPM(SYS_BODCTL[1]) is 1, the Brown-out Detector Output de-glitch circuit always uses LIRC clock even if BODDGSEL is not 000.
+     * |[10:8]  |BODVL     |Brown-out Detector Threshold Voltage Selection (Write Protect)
+     * |        |          |The default value is set by Flash controller user configuration register CBOV (CONFIG0 [23:21]).
+     * |        |          |000 = Brown-out Detector threshold voltage is 1.6V.
+     * |        |          |001 = Brown-out Detector threshold voltage is 1.8V.
+     * |        |          |010 = Brown-out Detector threshold voltage is 2.0V.
+     * |        |          |011 = Brown-out Detector threshold voltage is 2.2V.
+     * |        |          |100 = Brown-out Detector threshold voltage is 2.4V.
+     * |        |          |101 = Brown-out Detector threshold voltage is 2.6V.
+     * |        |          |110 = Brown-out Detector threshold voltage is 2.8V.
+     * |        |          |111 = Brown-out Detector threshold voltage is 3.0V.
+     * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: Write operation is ignored when WRBUSY is high.
+     * |        |          |Note 3: These bits are not retained when D3 power is turned off.
+     * |        |          |Note 4: The default value is set by UCFG0[23:21].
+     * |[13:12] |BODWKEN   |Brown-out Detector Wake-Up Selection (Write Protect)
+     * |        |          |00 = Brown-out Detector wake-up function Disable.
+     * |        |          |01 = Brown-out Detector power rise wake-up function Enable.
+     * |        |          |10 = Brown-out Detector power drop wake-up function Enable.
+     * |        |          |11 = Brown-out Detector power rise and drop wake-up function Enable.
+     * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: Write operation is ignored when WRBUSY is high.
+     * |        |          |Note 3: These bits are not retained when D3 power is turned off.
+     * |[16]    |LVREN     |Low Voltage Reset Enable Bit (Write Protect)
+     * |        |          |The LVR function resets the chip when the input power voltage is lower than LVR circuit setting
+     * |        |          |LVR function is enabled by default.
+     * |        |          |0 = Low Voltage Reset function Disabled.
+     * |        |          |1 = Low Voltage Reset function Enabled.
+     * |        |          |Note 1: After enabling the bit, the LVR function will be active with 200us delay for LVR output stable (default).
+     * |        |          |Note 2: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 3: Write operation is ignored when WRBUSY is high.
+     * |        |          |Note 4: This bit is not retained when D3 power is turned off.
+     * |[22:20] |LVRDGSEL  |LVR Output De-glitch Time Select (Write Protect)
+     * |        |          |000 = Without de-glitch function.
+     * |        |          |001 = 4 system clock (SCLK).
+     * |        |          |010 = 8 system clock (SCLK).
+     * |        |          |011 = 16 system clock (SCLK).
+     * |        |          |100 = 32 system clock (SCLK).
+     * |        |          |101 = 64 system clock (SCLK).
+     * |        |          |110 = 128 system clock (SCLK).
+     * |        |          |111 = 256 system clock (SCLK).
+     * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: These bits are not retained when D0 power is turned off.
+     * |        |          |Note 3: Because SCLK is invalid in Power-down mode, the de-glitch time must change to without de-glitch before system enters Power-down mode.
+     * |[31]    |WRBUSY    |Write Busy Flag (Read Only)
+     * |        |          |If SYS_BODCTL is written, this bit is asserted automatically by hardware, and is de-asserted when write procedure is finished.
+     * |        |          |0 = SYS_BODCTL register is ready for write operation.
+     * |        |          |1 = SYS_BODCTL register is busy on the last write operation. Other write operations are ignored.
+     * @var SYS_T::BODSTS
+     * Offset: 0x24  Brown-out Detector Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BODOUT    |Brown-out Detector Output Status (Read Only)
+     * |        |          |0 = Brown-out Detector output status is 0.
+     * |        |          |It means the detected voltage is higher than BODVL(SYS_BODCTL[10:8]) setting or BODEN is 0.
+     * |        |          |1 = Brown-out Detector output status is 1.
+     * |        |          |It means the detected voltage is lower than BODVL(SYS_BODCTL[10:8]) setting
+     * |        |          |If the BODEN is 0, BOD function disabled, this bit always responds 0.
+     * |[1]     |BODIF     |Brown-out Detector Interrupt Flag
+     * |        |          |0 = Brown-out Detector does not detect any voltage draft at VDD down through or up through the voltage of BODVL(SYS_BODCTL[10:8]) setting.
+     * |        |          |1 = When Brown-out Detector detects the VDD is dropped down through the voltage of BODVL(SYS_BODCTL[10:8]) setting or the VDD is raised up through the voltage of BODVL(SYS_BODCTL[10:8]) setting, this bit is set to 1 and the brown-out interrupt is requested if brown-out interrupt is enabled.
+     * |        |          |Note 1: Write 1 to clear this bit to 0.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * @var SYS_T::PORCTL
+     * Offset: 0x28  Power-on Reset Controller Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[15:0]  |PORMASK   |Power-on Reset Mask Enable Bit (Write Protect)
+     * |        |          |When powered on, the POR circuit generates a reset signal to reset the whole chip function, but noise on the power may cause the POR active again
+     * |        |          |User can mask internal POR signal to avoid unpredictable noise to cause chip reset by writing 0x5AA5 to this field.
+     * |        |          |The POR function will be active again when this field is set to another value or chip is reset by other reset source, including:
+     * |        |          |nRESET, Watchdog, LVR reset, BOD reset, ICE reset command and the software-chip reset function.
+     * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: These bits are not retained when D3 power is turned off.
+     * |[31:16] |POROFF    |Power-on Reset Enable Bit (Write Protect)
+     * |        |          |When powered on, the POR circuit generates a reset signal to reset the whole chip function, but noise on the power may cause the POR active again
+     * |        |          |User can disable internal POR circuit to avoid unpredictable noise to cause chip reset by writing 0x5AA5 to this field.
+     * |        |          |The POR function will be active again when this field is set to another value or chip is reset by other reset source, including:
+     * |        |          |nRESET, Watchdog, LVR reset, BOD reset, ICE reset command and the software-chip reset function.
+     * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: These bits are not retained when D3 power is turned off.
+     * @var SYS_T::VREFCTL
+     * Offset: 0x2C  VREF Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |VREFCTL   |VREF Control Bits (Write Protect)
+     * |        |          |00000 = VREF is from external pin.
+     * |        |          |00011 = VREF is internal 1.6V.
+     * |        |          |00111 = VREF is internal 2.048V.
+     * |        |          |01011 = VREF is internal 2.500V.
+     * |        |          |01111 = VREF is internal 3.072V.
+     * |        |          |10000 = VREF is from AVDD.
+     * |        |          |Others = Reserved.
+     * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: Write operation is ignored when WRBUSY is high.
+     * |        |          |Note 3: These bits are not retained when D2 power is turned off.
+     * |[7:6]   |PRELOADSEL|Pre-load Timing Selection (Write Protect)
+     * |        |          |00 = pre-load time is 480us for 1uF Capacitor, initial = 0v.
+     * |        |          |01 = pre-load time is 2ms for 4.7uF Capacitor, initial = 0v.
+     * |        |          |10 = pre-load time is 3ms for 1uF Capacitor, initial = 3.6v.
+     * |        |          |11 = pre-load time is 15ms for 4.7uF Capacitor, initial = 3.6v.
+     * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: Write operation is ignored when WRBUSY is high.
+     * |        |          |Note 3: These bits are not retained when D2 power is turned off.
+     * |[8]     |SCPTEST   |Short Circuit Protection Test Pin (Write Protect)
+     * |        |          |0 = Short circuit protection Disabled.
+     * |        |          |1 = Short circuit protection Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: Write operation is ignored when WRBUSY is high.
+     * |        |          |Note 3: These bits are not retained when D2 power is turned off.
+     * |[9]     |SCPFINISH |Short Circuit Protection Result (Read Only)
+     * |        |          |Short circuit protection finish.
+     * |[31]    |WRBUSY    |Write Busy Flag (Read Only)
+     * |        |          |If SYS_VREFCTL is written, this bit is asserted automatically by hardware, and is de-asserted when write procedure is finished.
+     * |        |          |0 = SYS_VREFCTL register is ready for write operation.
+     * |        |          |1 = SYS_VREFCTL register is busy on the last write operation. Other write operations are ignored.
+     * @var SYS_T::IVSCTL
+     * Offset: 0x30  Internal Voltage Source Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |VTEMPEN   |Temperature Sensor Enable Bit
+     * |        |          |This bit is used to enable/disable temperature sensor function.
+     * |        |          |0 = Temperature sensor function Disabled (default).
+     * |        |          |1 = Temperature sensor function Enabled.
+     * |        |          |Note 1: After this bit is set to 1, the value of temperature sensor output can be obtained from ADC conversion result
+     * |        |          |Please refer to ADC chapter for details.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |VBATUGEN  |VBAT Unity Gain Buffer Enable Bit
+     * |        |          |This bit is used to enable/disable VBAT unity gain buffer function.
+     * |        |          |0 = VBAT unity gain buffer function Disabled (default).
+     * |        |          |1 = VBAT unity gain buffer function Enabled.
+     * |        |          |Note: After this bit is set to 1, the value of VBAT unity gain buffer output voltage can be obtained from ADC conversion result.
+     * |[2]     |AVDDDIV4EN|AVDD divide 4 Enable Bit
+     * |        |          |This bit is used to enable/disable AVDD divide 4 function.
+     * |        |          |0 = AVDD divide 4 function Disabled (default).
+     * |        |          |1 = AVDD divide 4 function Enabled.
+     * |        |          |Note 1: After this bit is set to 1, the value of AVDD divide 4 output voltage can be obtained from ADC conversion result
+     * |        |          |Note 2: These bits are not retained when D2 power is turned off.
+     * |[4]     |VTEMPSEL  |Temperature Sensor Slope Select Bit
+     * |        |          |This bit is used to select temperature sensor slope trend.
+     * |        |          |0 = Temperature sensor CTAT slope.
+     * |        |          |1 = Temperature sensor PTAT slope.
+     * |        |          |Note 2: These bits are not retained when D0 power is turned off.
+     * @var SYS_T::USBPHY
+     * Offset: 0x34  USB PHY Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[1:0]   |USBROLE   |USB Role Option (Write Protect)
+     * |        |          |These two bits are used to select the role of USB.
+     * |        |          |00 = Standard USB Device mode.
+     * |        |          |01 = Standard USB Host mode.
+     * |        |          |10 = ID dependent mode.
+     * |        |          |11 = On-The-Go device mode.
+     * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: These bits are not retained when D1 power is turned off.
+     * |[8]     |OTGPHYEN  |USB OTG PHY Enable (Write Protect)
+     * |        |          |This bit is used to enable/disable OTG PHY function.
+     * |        |          |0 = OTG PHY function Disabled (default).
+     * |        |          |1 = OTG PHY function Enabled.
+     * |        |          |Note: This bit is not retained when D1 power is turned off.
+     * |[17:16] |HSUSBROLE |HSUSB Role Option (Write Protect)
+     * |        |          |These two bits are used to select the role of HSUSB.
+     * |        |          |00 = Standard HSUSB Device mode.
+     * |        |          |01 = Standard HSUSB Host mode.
+     * |        |          |10 = ID dependent mode.
+     * |        |          |11 = On-The-Go device mode.
+     * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: These bits are not retained when D1 power is turned off.
+     * |[24]    |HSOTGPHYEN|HSUSB OTG PHY Enable (Write Protect)
+     * |        |          |This bit is used to enable/disable HSOTG PHY function.
+     * |        |          |0 = HSUSB OTG PHY function Disabled (default).
+     * |        |          |1 = HSUSB OTG PHY function Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[25]    |HSUSBACT  |HSOTG PHY Active Control
+     * |        |          |This bit is used to control HSOTG PHY at reset state or active state.
+     * |        |          |0 = HSOTG PHY at reset state.
+     * |        |          |1 = HSOTG PHY at active state.
+     * |        |          |Note: After setting HSOTGPHYEN (SYS_USBPHY[24]) to enable HSOTG PHY, user should keep HSOTG PHY at reset mode at lease 10us before changing to active mode.
+     * @var SYS_T::UTCPDCTL
+     * Offset: 0x38  UTCPD Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |IOMODE    |UTCPD0 as I/O mode
+     * |        |          |This bit is used to define UTCPD0 CCx and CCDBx function
+     * |        |          |0 = Pin as UTCPD0 CCx and CCDBx function.
+     * |        |          |1 = Pin as general I/O function.
+     * |        |          |Note: This bit is not retained when D4 power is turned off.
+     * |[1]     |POREN0    |UTCPD0 Power-on Enable Bit
+     * |        |          |0 = UTCPD0 PHY in reset mode.
+     * |        |          |1 = UTCPD0 PHY in normal mode.
+     * |        |          |Note 1: user should set POREN0 to 1 after IOMODE is setting down.
+     * |        |          |Note 2: This bit is not retained when D4 power is turned off.
+     * |[10:8]  |PD0VBDSS  |UTCPD0 VBUS Detect Source Select
+     * |        |          |UTCPD0 controller need a VBUS detect result to note if VBUS is connected
+     * |        |          |For NPD0~2 usage, ACMP can be another voltage detect method to detect VBUS pulg in or out
+     * |        |          |This bit field is used to select UTCPD0 VBUS detect source
+     * |        |          |And the selected result is VBDETSW0
+     * |        |          |000 = UTCPD0 VBUS detect source from UTCPD0 PHY.
+     * |        |          |001 = UTCPD0 VBUS detect source from ACMP0 output.
+     * |        |          |010 = UTCPD0 VBUS detect source from ACMP1 output.
+     * |        |          |011 = UTCPD0 VBUS detect source from ACMP2 output.
+     * |        |          |Others = Reserved.
+     * |        |          |Note 1: Before use UTCPD0 function, UDVBDETS should be set and cannot change during UTCPD0 operating.
+     * |        |          |Note 2: This bit is not retained when D3 power is turned off.
+     * |[12]    |UDVBDETS  |UDC11 VBUS Detect Source Select
+     * |        |          |0 = UDC11 VBUS detect source from OTGPHY.
+     * |        |          |1 = UDC11 VBUS detect source from VBDETSW0.
+     * |        |          |Note 1: Before use UDC11 function, UDVBDETS should be set and cannot change during UDC11 operating.
+     * |        |          |Note 2: This bit is not retained when D3 power is turned off.
+     * @var SYS_T::DBUSCTL
+     * Offset: 0x40  Data Bus Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |H2XBSTEN  |Burst AHB2AXI Bridge access Enable Bit (Write Protect)
+     * |        |          |0 = Normal operating.
+     * |        |          |1 = Force the attribute of all access from AHB to AXI modifiable.
+     * |        |          |Note 1: These bits are write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::GPA_MFOS
+     * Offset: 0x80  GPIOA Multiple Function Output Select Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |MFOS0     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[1]     |MFOS1     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[2]     |MFOS2     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[3]     |MFOS3     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[4]     |MFOS4     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[5]     |MFOS5     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[6]     |MFOS6     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[7]     |MFOS7     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[8]     |MFOS8     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[9]     |MFOS9     |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[10]    |MFOS10    |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[11]    |MFOS11    |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[12]    |MFOS12    |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[13]    |MFOS13    |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[14]    |MFOS14    |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * |[15]    |MFOS15    |GPIOA Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PA.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note 1: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPB_MFOS
+     * Offset: 0x84  GPIOB Multiple Function Output Select Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |MFOS0     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[1]     |MFOS1     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[2]     |MFOS2     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[3]     |MFOS3     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[4]     |MFOS4     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[5]     |MFOS5     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[6]     |MFOS6     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[7]     |MFOS7     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[8]     |MFOS8     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[9]     |MFOS9     |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[10]    |MFOS10    |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[11]    |MFOS11    |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12]    |MFOS12    |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[13]    |MFOS13    |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[14]    |MFOS14    |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[15]    |MFOS15    |GPIOB Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PB.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPC_MFOS
+     * Offset: 0x88  GPIOC Multiple Function Output Select Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |MFOS0     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[1]     |MFOS1     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[2]     |MFOS2     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[3]     |MFOS3     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[4]     |MFOS4     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[5]     |MFOS5     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[6]     |MFOS6     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[7]     |MFOS7     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[8]     |MFOS8     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[9]     |MFOS9     |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[10]    |MFOS10    |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[11]    |MFOS11    |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12]    |MFOS12    |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[13]    |MFOS13    |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[14]    |MFOS14    |GPIOC Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PC.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPD_MFOS
+     * Offset: 0x8C  GPIOD Multiple Function Output Select Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |MFOS0     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[1]     |MFOS1     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[2]     |MFOS2     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[3]     |MFOS3     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[4]     |MFOS4     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[5]     |MFOS5     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[6]     |MFOS6     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[7]     |MFOS7     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[8]     |MFOS8     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[9]     |MFOS9     |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[10]    |MFOS10    |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[11]    |MFOS11    |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12]    |MFOS12    |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[13]    |MFOS13    |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[14]    |MFOS14    |GPIOD Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PD.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPE_MFOS
+     * Offset: 0x90  GPIOE Multiple Function Output Select Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |MFOS0     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[1]     |MFOS1     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[2]     |MFOS2     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[3]     |MFOS3     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[4]     |MFOS4     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[5]     |MFOS5     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[6]     |MFOS6     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[7]     |MFOS7     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[8]     |MFOS8     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[9]     |MFOS9     |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[10]    |MFOS10    |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[11]    |MFOS11    |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12]    |MFOS12    |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[13]    |MFOS13    |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[14]    |MFOS14    |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[15]    |MFOS15    |GPIOE Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PE.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPF_MFOS
+     * Offset: 0x94  GPIOF Multiple Function Output Select Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |MFOS0     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[1]     |MFOS1     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[2]     |MFOS2     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[3]     |MFOS3     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[4]     |MFOS4     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[5]     |MFOS5     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[6]     |MFOS6     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[7]     |MFOS7     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[8]     |MFOS8     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[9]     |MFOS9     |GPIOF Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[10]    |MFOS10    |GPIOF Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[11]    |MFOS11    |GPIOF Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PF.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPG_MFOS
+     * Offset: 0x98  GPIOG Multiple Function Output Select Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |MFOS0     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[1]     |MFOS1     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[2]     |MFOS2     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[3]     |MFOS3     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[4]     |MFOS4     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[5]     |MFOS5     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[6]     |MFOS6     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[7]     |MFOS7     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[8]     |MFOS8     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[9]     |MFOS9     |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[10]    |MFOS10    |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[11]    |MFOS11    |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12]    |MFOS12    |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[13]    |MFOS13    |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[14]    |MFOS14    |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[15]    |MFOS15    |GPIOG Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PG.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPH_MFOS
+     * Offset: 0x9C  GPIOH Multiple Function Output Select Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |MFOS0     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[1]     |MFOS1     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[2]     |MFOS2     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[3]     |MFOS3     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[4]     |MFOS4     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[5]     |MFOS5     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[6]     |MFOS6     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[7]     |MFOS7     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[8]     |MFOS8     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[9]     |MFOS9     |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[10]    |MFOS10    |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[11]    |MFOS11    |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12]    |MFOS12    |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[13]    |MFOS13    |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[14]    |MFOS14    |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[15]    |MFOS15    |GPIOH Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PH.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPI_MFOS
+     * Offset: 0xA0  GPIOI Multiple Function Output Select Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[6]     |MFOS6     |GPIOI Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[7]     |MFOS7     |GPIOI Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[8]     |MFOS8     |GPIOI Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[9]     |MFOS9     |GPIOI Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[10]    |MFOS10    |GPIOI Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[11]    |MFOS11    |GPIOI Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12]    |MFOS12    |GPIOI Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[13]    |MFOS13    |GPIOI Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[14]    |MFOS14    |GPIOI Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[15]    |MFOS15    |GPIOI Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PI.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPJ_MFOS
+     * Offset: 0xA4  GPIOJ Multiple Function Output Select Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |MFOS0     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[1]     |MFOS1     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[2]     |MFOS2     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[3]     |MFOS3     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[4]     |MFOS4     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[5]     |MFOS5     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[6]     |MFOS6     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[7]     |MFOS7     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[8]     |MFOS8     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[9]     |MFOS9     |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[10]    |MFOS10    |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[11]    |MFOS11    |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12]    |MFOS12    |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[13]    |MFOS13    |GPIOJ Pin[x] Multiple Function Pin Output Mode Select
+     * |        |          |This bit used to select multiple function pin output mode type for PJ.x pin.
+     * |        |          |0 = Multiple function pin output mode type is Push-pull mode.
+     * |        |          |1 = Multiple function pin output mode type is Open-drain mode.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::REGLCTL
+     * Offset: 0x100  Register Lock Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[7:0]   |REGLCTL   |Register Lock Control Code
+     * |        |          |Some registers have write-protection function
+     * |        |          |Writing these registers have to disable the protected function by writing the sequence value u201C59hu201D, u201C16hu201D, u201C88hu201D to this field
+     * |        |          |After this sequence is completed, the REGLCTL bit will be set to 1 and write-protection registers can be normal write.
+     * |        |          |REGLCTL[0]
+     * |        |          |Register Lock Control Disable Index
+     * |        |          |0 = Write-protection Enabled for writing protected registers
+     * |        |          |Any write to the protected register is ignored.
+     * |        |          |1 = Write-protection Disabled for writing protected registers.
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::TCTL48M
+     * Offset: 0x110  HIRC 48M Trim Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[1:0]   |FREQSEL   |Trim Frequency Selection
+     * |        |          |This field indicates the target frequency of 48 MHz internal high speed RC oscillator (HIRC48M) auto trim.
+     * |        |          |During auto trim operation, if clock error detected with CESTOPEN is set to 1 or trim retry limitation count reached, this field will be cleared to 00 automatically.
+     * |        |          |00 = Disable HIRC48M auto trim function.
+     * |        |          |01 = Enable HIRC48M auto trim function and trim HIRC48M to 48 MHz.
+     * |        |          |10 = Reserved..
+     * |        |          |11 = Reserved.
+     * |[3:2]   |ACCURSEL  |Trim Accuracy Selection
+     * |        |          |This field indicates the target frequency accuracy of 48 MHz internal high speed RC oscillator (HIRC48M) auto trim.
+     * |        |          |00 = Accuracy is +-0.25% deviation within all temperature ranges.
+     * |        |          |01 = Accuracy is +-0.50% deviation within all temperature ranges.
+     * |        |          |10 = Accuracy is +-0.75% deviation within all temperature ranges.
+     * |        |          |11 = Accuracy is +-1% deviation within all temperature ranges.
+     * |[5:4]   |LOOPSEL   |Trim Calculation Loop Selection
+     * |        |          |This field defines that trim value calculation is based on how many reference clocks.
+     * |        |          |00 = Trim value calculation is based on average difference in 4 clocks of reference clock.
+     * |        |          |01 = Trim value calculation is based on average difference in 8 clocks of reference clock.
+     * |        |          |10 = Trim value calculation is based on average difference in 16 clocks of reference clock.
+     * |        |          |11 = Trim value calculation is based on average difference in 32 clocks of reference clock.
+     * |        |          |Note: For example, if LOOPSEL is set as 00, auto trim circuit will calculate trim value based on the average frequency difference in 4 clocks of reference clock.
+     * |[7:6]   |RETRYCNT  |Trim Value Update Limitation Count
+     * |        |          |This field defines that how many times the auto trim circuit will try to update the HIRC48M trim value before the frequency of HIRC48M locked.
+     * |        |          |Once the HIRC48M locked, the internal trim value update counter will be reset.
+     * |        |          |If the trim value update counter reached this limitation value and frequency of HIRC48M is still not locked, the auto trim operation will be disabled and FREQSEL will be cleared to 00.
+     * |        |          |00 = Trim retry count limitation is 64 loops.
+     * |        |          |01 = Trim retry count limitation is 128 loops.
+     * |        |          |10 = Trim retry count limitation is 256 loops.
+     * |        |          |11 = Trim retry count limitation is 512 loops.
+     * |[8]     |CESTOPEN  |Clock Error Stop Enable Bit
+     * |        |          |0 = Trim operation is kept going if clock is inaccurate.
+     * |        |          |1 = Trim operation is stopped if clock is inaccurate.
+     * |[9]     |BOUNDEN   |Boundary Enable Bit
+     * |        |          |0 = Boundary function Disabled.
+     * |        |          |1 = Boundary function Enabled.
+     * |[10]    |REFCKSEL  |Reference Clock Selection
+     * |        |          |0 = HIRC48M trim reference clock is from external 32.768 kHz crystal oscillator.
+     * |        |          |1 = HIRC48M trim reference clock is from internal USB synchronous mode.
+     * |[20:16] |BOUNDARY  |Boundary Selection
+     * |        |          |Fill the boundary range from 0x1 to 0x1F, 0x0 is reserved.
+     * |        |          |Note: This field is effective only when the BOUNDEN(SYS_TCTL48M [9]) is enabled.
+     * @var SYS_T::TIEN48M
+     * Offset: 0x114  HIRC 48M Trim Interrupt Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[1]     |TFAILIEN  |Trim Failure Interrupt Enable Bit
+     * |        |          |This bit controls if an interrupt will be triggered while HIRC48M trim value update limitation count reached and HIRC48M frequency still not locked on target frequency set by FREQSEL(SYS_TCTL48M[1:0]).
+     * |        |          |If this bit is high and TFAILIF(SYS_TSTS48M [1]) is set during auto trim operation, an interrupt will be triggered to notify that HIRC48M trim value update limitation count was reached.
+     * |        |          |0 = Disable TFAILIF(SYS_TISTS48M [1]) status to trigger an interrupt to CPU.
+     * |        |          |1 = Enable TFAILIF(SYS_TISTS48M[1]) status to trigger an interrupt to CPU.
+     * |[2]     |CLKEIEN   |Clock Error Interrupt Enable Bit
+     * |        |          |This bit controls if CPU would get an interrupt while clock is inaccuracy during auto trim operation.
+     * |        |          |If this bit is set to1, and CLKERRIF(SYS_TISTS48M [2]) is set during auto trim operation, an interrupt will be triggered to notify the clock frequency is inaccuracy.
+     * |        |          |0 = Disable CLKERRIF(SYS_TISTS48M [2]) status to trigger an interrupt to CPU.
+     * |        |          |1 = Enable CLKERRIF(SYS_TISTS48M [2]) status to trigger an interrupt to CPU.
+     * @var SYS_T::TISTS48M
+     * Offset: 0x118  HIRC 48M Trim Interrupt Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |FREQLOCK  |HIRC48M Frequency Lock Status
+     * |        |          |This bit indicates the HIRC48M frequency is locked.
+     * |        |          |This is a status bit and does not trigger any interrupt.
+     * |        |          |This bit will be set automatically, if the frequency is lock and the RC_TRIM is enabled.
+     * |        |          |0 = The internal high-speed oscillator frequency is not locked at 48 MHz.
+     * |        |          |1 = The internal high-speed oscillator frequency locked at 48 MHz.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[1]     |TFAILIF   |Trim Failure Interrupt Status
+     * |        |          |This bit indicates that HIRC48M trim value update limitation count reached and the HIRC48M clock frequency is still not locked
+     * |        |          |Once this bit is set, the auto trim operation stopped and FREQSEL(SYS_TCTL48M[1:0]) will be cleared to 00 by hardware automatically.
+     * |        |          |If this bit is set and TFAILIEN(SYS_TIEN48M[1]) is high, an interrupt will be triggered to notify that HIRC48M trim value update limitation count was reached.
+     * |        |          |0 = Trim value update limitation count does not reach.
+     * |        |          |1 = Trim value update limitation count reached and HIRC48M frequency still not locked.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[2]     |CLKERRIF  |Clock Error Interrupt Status
+     * |        |          |When the frequency of 32.768 kHz external low speed crystal oscillator (LXT) or 48 MHz internal high speed RC oscillator (HIRC48M) is shift larger to unreasonable value, this bit will be set and to be an indicate that clock frequency is inaccuracy
+     * |        |          |Once this bit is set to 1, the auto trim operation stopped and FREQSEL(SYS_TCTL48M[1:0]) will be cleared to 00 by hardware automatically if CESTOPEN(SYS_TCTL48M[8]) is set to 1.
+     * |        |          |If this bit is set and CLKEIEN(SYS_TIEN48M[2]) is high, an interrupt will be triggered to notify the clock frequency is inaccuracy.
+     * |        |          |0 = Clock frequency is accurate.
+     * |        |          |1 = Clock frequency is inaccurate.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[3]     |OVBDIF    |Over Boundary Status
+     * |        |          |When the over boundary function is set, if there occurs the over boundary condition, this flag will be set.
+     * |        |          |This is a status bit and does not trigger any interrupt.
+     * |        |          |0 = Over boundary condition did not occur.
+     * |        |          |1 = Over boundary condition occurred.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * @var SYS_T::TCTL12M
+     * Offset: 0x120  HIRC 12M Trim Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[1:0]   |FREQSEL   |Trim Frequency Selection
+     * |        |          |This field indicates the target frequency of 12 MHz internal high speed RC oscillator (HIRC) auto trim.
+     * |        |          |During auto trim operation, if clock error detected with CESTOPEN is set to 1 or trim retry limitation count reached, this field will be cleared to 00 automatically.
+     * |        |          |00 = Disable HIRC auto trim function.
+     * |        |          |01 = Enable HIRC auto trim function and trim HIRC to 12 MHz.
+     * |        |          |10 = Reserved..
+     * |        |          |11 = Reserved.
+     * |[3:2]   |ACCURSEL  |Trim Accuracy Selection
+     * |        |          |This field indicates the target frequency accuracy of 12 MHz internal high speed RC oscillator (IRC) auto trim.
+     * |        |          |00 = Accuracy is +-0.25% deviation within all temperature ranges.
+     * |        |          |01 = Accuracy is +-0.50% deviation within all temperature ranges.
+     * |        |          |10 = Accuracy is +-0.75% deviation within all temperature ranges.
+     * |        |          |11 = Accuracy is +-1% deviation within all temperature ranges.
+     * |[5:4]   |LOOPSEL   |Trim Calculation Loop Selection
+     * |        |          |This field defines that trim value calculation is based on how many reference clocks.
+     * |        |          |00 = Trim value calculation is based on average difference in 4 clocks of reference clock.
+     * |        |          |01 = Trim value calculation is based on average difference in 8 clocks of reference clock.
+     * |        |          |10 = Trim value calculation is based on average difference in 16 clocks of reference clock.
+     * |        |          |11 = Trim value calculation is based on average difference in 32 clocks of reference clock.
+     * |        |          |Note: For example, if LOOPSEL is set as 00, auto trim circuit will calculate trim value based on the average frequency difference in 4 clocks of reference clock.
+     * |[7:6]   |RETRYCNT  |Trim Value Update Limitation Count
+     * |        |          |This field defines that how many times the auto trim circuit will try to update the HIRC trim value before the frequency of HIRC locked.
+     * |        |          |Once the HIRC locked, the internal trim value update counter will be reset.
+     * |        |          |If the trim value update counter reached this limitation value and frequency of HIRC is still not locked, the auto trim operation will be disabled and FREQSEL will be cleared to 00.
+     * |        |          |00 = Trim retry count limitation is 64 loops.
+     * |        |          |01 = Trim retry count limitation is 128 loops.
+     * |        |          |10 = Trim retry count limitation is 256 loops.
+     * |        |          |11 = Trim retry count limitation is 512 loops.
+     * |[8]     |CESTOPEN  |Clock Error Stop Enable Bit
+     * |        |          |0 = The trim operation keeps going if clock is inaccurate.
+     * |        |          |1 = The trim operation is stopped if clock is inaccurate.
+     * |[9]     |BOUNDEN   |Boundary Enable Bit
+     * |        |          |0 = Boundary function Disabled.
+     * |        |          |1 = Boundary function Enabled.
+     * |[10]    |REFCKSEL  |Reference Clock Selection
+     * |        |          |0 = HIRC trim reference clock is from external 32.768 kHz crystal oscillator.
+     * |        |          |1 = HIRC trim reference clock is from internal USB synchronous mode.
+     * |[20:16] |BOUNDARY  |Boundary Selection
+     * |        |          |Fill the boundary range from 0x1 to 0x1F, 0x0 is reserved.
+     * |        |          |Note: This field is effective only when the BOUNDEN(SYS_TCTL12M[9]) is enabled.
+     * @var SYS_T::TIEN12M
+     * Offset: 0x124  HIRC 12M Trim Interrupt Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[1]     |TFAILIEN  |Trim Failure Interrupt Enable Bit
+     * |        |          |This bit controls if an interrupt will be triggered while HIRC trim value update limitation count reached and HIRC frequency still not locked on target frequency set by FREQSEL(SYS_TCTL12M[1:0]).
+     * |        |          |If this bit is high and TFAILIF(SYS_TSTS12M[1]) is set during auto trim operation, an interrupt will be triggered to notify that HIRC trim value update limitation count was reached.
+     * |        |          |0 = Disable TFAILIF(SYS_TISTS12M[1]) status to trigger an interrupt to CPU.
+     * |        |          |1 = Enable TFAILIF(SYS_TISTS12M[1]) status to trigger an interrupt to CPU.
+     * |[2]     |CLKEIEN   |Clock Error Interrupt Enable Bit
+     * |        |          |This bit controls if CPU would get an interrupt while clock is inaccuracy during auto trim operation.
+     * |        |          |If this bit is set to1, and CLKERRIF(SYS_TISTS12M[2]) is set during auto trim operation, an interrupt will be triggered to notify the clock frequency is inaccuracy.
+     * |        |          |0 = Disable CLKERRIF(SYS_TISTS12M[2]) status to trigger an interrupt to CPU.
+     * |        |          |1 = Enable CLKERRIF(SYS_TISTS12M[2]) status to trigger an interrupt to CPU.
+     * @var SYS_T::TISTS12M
+     * Offset: 0x128  HIRC 12M Trim Interrupt Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |FREQLOCK  |HIRC Frequency Lock Status
+     * |        |          |This bit indicates the HIRC frequency is locked.
+     * |        |          |This is a status bit and does not trigger any interrupt.
+     * |        |          |This bit will be set automatically, if the frequency is lock and the RC_TRIM is enabled.
+     * |        |          |0 = The internal high-speed oscillator frequency is not locked at 12 MHz yet.
+     * |        |          |1 = The internal high-speed oscillator frequency locked at 12 MHz.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[1]     |TFAILIF   |Trim Failure Interrupt Status
+     * |        |          |This bit indicates that HIRC trim value update limitation count reached and the HIRC clock frequency is still not locked
+     * |        |          |Once this bit is set, the auto trim operation stopped and FREQSEL(SYS_TCTL12M[1:0]) will be cleared to 00 by hardware automatically.
+     * |        |          |If this bit is set and TFAILIEN(SYS_TIEN12M[1]) is high, an interrupt will be triggered to notify that HIRC trim value update limitation count was reached.
+     * |        |          |0 = Trim value update limitation count did not reach.
+     * |        |          |1 = Trim value update limitation count reached and HIRC frequency still not locked.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[2]     |CLKERRIF  |Clock Error Interrupt Status
+     * |        |          |When the frequency of 32.768 kHz external low speed crystal oscillator (LXT) or 12 MHz internal high speed RC oscillator (HIRC) is shift larger to unreasonable value, this bit will be set and to be an indicate that clock frequency is inaccuracy
+     * |        |          |Once this bit is set to 1, the auto trim operation stopped and FREQSEL(SYS_TCTL12M[1:0]) will be cleared to 00 by hardware automatically if CESTOPEN(SYS_TCTL12M[8]) is set to 1.
+     * |        |          |If this bit is set and CLKEIEN(SYS_IRCTIEN[2]) is high, an interrupt will be triggered to notify the clock frequency is inaccuracy.
+     * |        |          |0 = Clock frequency is accurate.
+     * |        |          |1 = Clock frequency is inaccurate.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[3]     |OVBDIF    |Over Boundary Status
+     * |        |          |When the over boundary function is set, if there occurs the over boundary condition, this flag will be set.
+     * |        |          |This is a status bit and does not trigger any interrupt.
+     * |        |          |0 = Over boundary condition did not occur.
+     * |        |          |1 = Over boundary condition occurred.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * @var SYS_T::TCTLMIRC
+     * Offset: 0x130  MIRC Trim Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[1:0]   |FREQSEL   |Trim Frequency Selection
+     * |        |          |This field indicates the target frequency of 1 MHz internal high speed RC oscillator (MIRC) auto trim.
+     * |        |          |During auto trim operation, if clock error detected with CESTOPEN is set to 1 or trim retry limitation count reached, this field will be cleared to 00 automatically.
+     * |        |          |00 = Disable MIRC auto trim function.
+     * |        |          |01 = Enable MIRC auto trim function and trim MIRC to 1 MHz.
+     * |        |          |10 = Reserved..
+     * |        |          |11 = Reserved.
+     * |[3:2]   |ACCURSEL  |Trim Accuracy Selection
+     * |        |          |This field indicates the target frequency accuracy of 1 MHz internal high speed RC oscillator (MIRC) auto trim.
+     * |        |          |00 = Accuracy is +-0.25% deviation within all temperature ranges.
+     * |        |          |01 = Accuracy is +-0.50% deviation within all temperature ranges.
+     * |        |          |10 = Accuracy is +-0.75% deviation within all temperature ranges.
+     * |        |          |11 = Accuracy is +-1% deviation within all temperature ranges.
+     * |[5:4]   |LOOPSEL   |Trim Calculation Loop Selection
+     * |        |          |This field defines that trim value calculation is based on how many reference clocks.
+     * |        |          |00 = Trim value calculation is based on average difference in 4 clocks of reference clock.
+     * |        |          |01 = Trim value calculation is based on average difference in 8 clocks of reference clock.
+     * |        |          |10 = Trim value calculation is based on average difference in 16 clocks of reference clock.
+     * |        |          |11 = Trim value calculation is based on average difference in 32 clocks of reference clock.
+     * |        |          |Note: For example, if LOOPSEL is set as 00, auto trim circuit will calculate trim value based on the average frequency difference in 4 clocks of reference clock.
+     * |[7:6]   |RETRYCNT  |Trim Value Update Limitation Count
+     * |        |          |This field defines that how many times the auto trim circuit will try to update the MIRC trim value before the frequency of MIRC locked.
+     * |        |          |Once the MIRC locked, the internal trim value update counter will be reset.
+     * |        |          |If the trim value update counter reached this limitation value and frequency of MIRC is still not locked, the auto trim operation will be disabled and FREQSEL will be cleared to 00.
+     * |        |          |00 = Trim retry count limitation is 64 loops.
+     * |        |          |01 = Trim retry count limitation is 128 loops.
+     * |        |          |10 = Trim retry count limitation is 256 loops.
+     * |        |          |11 = Trim retry count limitation is 512 loops.
+     * |[8]     |CESTOPEN  |Clock Error Stop Enable Bit
+     * |        |          |0 = The trim operation is kept going if clock is inaccurate.
+     * |        |          |1 = The trim operation is stopped if clock is inaccurate.
+     * |[9]     |BOUNDEN   |Boundary Enable Bit
+     * |        |          |0 = Boundary function Disabled.
+     * |        |          |1 = Boundary function Enabled.
+     * |[10]    |REFCKSEL  |Reference Clock Selection
+     * |        |          |0 = MIRC trim reference clock is from external 32.768 kHz crystal oscillator.
+     * |        |          |1 = MIRC trim reference clock is from internal USB synchronous mode.
+     * |[20:16] |BOUNDARY  |Boundary Selection
+     * |        |          |Fill the boundary range from 0x1 to 0x1F, 0x0 is reserved.
+     * |        |          |Note: This field is effective only when the BOUNDEN(SYS_TCTLMIRC [9]) is enabled.
+     * @var SYS_T::TIENMIRC
+     * Offset: 0x134  MIRC Trim Interrupt Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[1]     |TFAILIEN  |Trim Failure Interrupt Enable Bit
+     * |        |          |This bit controls if an interrupt will be triggered while MIRC trim value update limitation count reached and MIRC frequency still not locked on target frequency set by FREQSEL(SYS_TCTLMIRC[1:0]).
+     * |        |          |If this bit is high and TFAILIF(SYS_TSTSMIRC[1]) is set during auto trim operation, an interrupt will be triggered to notify that MIRC trim value update limitation count was reached.
+     * |        |          |0 = Disable TFAILIF(SYS_TISTSMIRC[1]) status to trigger an interrupt to CPU.
+     * |        |          |1 = Enable TFAILIF(SYS_TISTSMIRC[1]) status to trigger an interrupt to CPU.
+     * |[2]     |CLKEIEN   |Clock Error Interrupt Enable Bit
+     * |        |          |This bit controls if CPU would get an interrupt while clock is inaccuracy during auto trim operation.
+     * |        |          |If this bit is set to1, and CLKERRIF(SYS_TISTSMIRC[2]) is set during auto trim operation, an interrupt will be triggered to notify the clock frequency is inaccuracy.
+     * |        |          |0 = Disable CLKERRIF(SYS_TISTSMIRC[2]) status to trigger an interrupt to CPU.
+     * |        |          |1 = Enable CLKERRIF(SYS_TISTSMIRC[2]) status to trigger an interrupt to CPU.
+     * @var SYS_T::TISTSMIRC
+     * Offset: 0x138  MIRC Trim Interrupt Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |FREQLOCK  |MIRC Frequency Lock Status
+     * |        |          |This bit indicates the MIRC frequency is locked.
+     * |        |          |This is a status bit and does not trigger any interrupt.
+     * |        |          |This bit will be set automatically, if the frequency is lock and the RC_TRIM is enabled.
+     * |        |          |0 = The internal high-speed oscillator frequency is not locked at 1 MHz.
+     * |        |          |1 = The internal high-speed oscillator frequency locked at 1 MHz.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[1]     |TFAILIF   |Trim Failure Interrupt Status
+     * |        |          |This bit indicates that MIRC trim value update limitation count reached and the MIRC clock frequency is still not locked
+     * |        |          |Once this bit is set, the auto trim operation stopped and FREQSEL(SYS_TCTLMIRC[1:0]) will be cleared to 00 by hardware automatically.
+     * |        |          |If this bit is set and TFAILIEN(SYS_TIENMIRC[1]) is high, an interrupt will be triggered to notify that MIRC trim value update limitation count was reached.
+     * |        |          |0 = Trim value update limitation count does not reach.
+     * |        |          |1 = Trim value update limitation count reached and MIRC frequency still not locked.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[2]     |CLKERRIF  |Clock Error Interrupt Status
+     * |        |          |When the frequency of 32.768 kHz external low speed crystal oscillator (LXT) or internal high speed RC oscillator (MIRC) is shift larger to unreasonable value, this bit will be set and to be an indicate that clock frequency is inaccuracy
+     * |        |          |Once this bit is set to 1, the auto trim operation stopped and FREQSEL(SYS_TCTLMIRC[1:0]) will be cleared to 00 by hardware automatically if CESTOPEN(SYS_TCTLMIRC[8]) is set to 1.
+     * |        |          |If this bit is set and CLKEIEN(SYS_TIENMIRC[2]) is high, an interrupt will be triggered to notify the clock frequency is inaccuracy.
+     * |        |          |0 = Clock frequency is accurate.
+     * |        |          |1 = Clock frequency is inaccurate.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * |[3]     |OVBDIF    |Over Boundary Status
+     * |        |          |When the over boundary function is set, if there occurs the over boundary condition, this flag will be set.
+     * |        |          |This is a status bit and does not trigger any interrupt.
+     * |        |          |0 = Over boundary condition did not occur.
+     * |        |          |1 = Over boundary condition occurred.
+     * |        |          |Note: Write 1 to clear this bit to 0.
+     * @var SYS_T::ACMPRST
+     * Offset: 0x200  ACMP Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |ACMP01RST |ACMP0/1 Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the ACMP0/1
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = ACMP0/1 controller normal operation.
+     * |        |          |1 = ACMP0/1 controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |ACMP23RST |ACMP2/3 Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the ACMP2/3
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = ACMP2/3 controller normal operation.
+     * |        |          |1 = ACMP2/3 controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::AWFRST
+     * Offset: 0x204  AWF Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |AWF0RST   |AWF0 Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the AWF0
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = AWF0 controller normal operation.
+     * |        |          |1 = AWF0 controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::BPWMRST
+     * Offset: 0x208  BPWM Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BPWM0RST  |BPWMx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the BPWMx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = BPWMx controller normal operation.
+     * |        |          |1 = BPWMx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |BPWM1RST  |BPWMx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the BPWMx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = BPWMx controller normal operation.
+     * |        |          |1 = BPWMx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::CANFDRST
+     * Offset: 0x20C  CANFD Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CANFD0RST |CANFDx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the CANFDx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = CANFDx controller normal operation.
+     * |        |          |1 = CANFDx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |CANFD1RST |CANFDx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the CANFDx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = CANFDx controller normal operation.
+     * |        |          |1 = CANFDx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::CCAPRST
+     * Offset: 0x210  CCAP Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CCAP0RST  |CCAPx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the CCAPx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = CCAPx controller normal operation.
+     * |        |          |1 = CCAPx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::CRCRST
+     * Offset: 0x214  CRC Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CRC0RST   |CRCx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the CRCx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = CRCx controller normal operation.
+     * |        |          |1 = CRCx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::CRYPTORST
+     * Offset: 0x218  CRYPTO Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |CRYPTO0RST|CRYPTOx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the CRYPTOx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = CRYPTOx controller normal operation.
+     * |        |          |1 = CRYPTOx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::DACRST
+     * Offset: 0x21C  DAC Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |DAC01RST  |DAC0/1 Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the DAC0/1
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = DAC0/1 controller normal operation.
+     * |        |          |1 = DAC0/1 controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::DMICRST
+     * Offset: 0x220  DMIC Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |DMIC0RST  |DMICx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the DMICx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = DMICx controller normal operation.
+     * |        |          |1 = DMICx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::EADCRST
+     * Offset: 0x224  EADC Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |EADC0RST  |EADCx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the EADCx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = EADCx controller normal operation.
+     * |        |          |1 = EADCx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::EBIRST
+     * Offset: 0x228  EBI Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |EBI0RST   |EBIx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the EBIx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = EBIx controller normal operation.
+     * |        |          |1 = EBIx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::ECAPRST
+     * Offset: 0x22C  ECAP Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |ECAP0RST  |ECAPx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the ECAPx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = ECAPx controller normal operation.
+     * |        |          |1 = ECAPx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |ECAP1RST  |ECAPx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the ECAPx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = ECAPx controller normal operation.
+     * |        |          |1 = ECAPx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[2]     |ECAP2RST  |ECAPx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the ECAPx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = ECAPx controller normal operation.
+     * |        |          |1 = ECAPx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[3]     |ECAP3RST  |ECAPx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the ECAPx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = ECAPx controller normal operation.
+     * |        |          |1 = ECAPx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::EMACRST
+     * Offset: 0x230  EMAC Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |EMAC0RST  |EMACx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the EMACx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = EMACx controller normal operation.
+     * |        |          |1 = EMACx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::EPWMRST
+     * Offset: 0x234  EPWM Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |EPWM0RST  |EPWMx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the EPWMx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = EPWMx controller normal operation.
+     * |        |          |1 = EPWMx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |EPWM1RST  |EPWMx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the EPWMx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = EPWMx controller normal operation.
+     * |        |          |1 = EPWMx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::EQEIRST
+     * Offset: 0x238  EQEI Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |EQEI0RST  |EQEIx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the EQEIx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = EQEIx controller normal operation.
+     * |        |          |1 = EQEIx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |EQEI1RST  |EQEIx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the EQEIx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = EQEIx controller normal operation.
+     * |        |          |1 = EQEIx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[2]     |EQEI2RST  |EQEIx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the EQEIx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = EQEIx controller normal operation.
+     * |        |          |1 = EQEIx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[3]     |EQEI3RST  |EQEIx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the EQEIx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = EQEIx controller normal operation.
+     * |        |          |1 = EQEIx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::FMCRST
+     * Offset: 0x23C  FMC Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |FMC0RST   |FMCx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the FMCx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = FMCx controller normal operation.
+     * |        |          |1 = FMCx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::GDMARST
+     * Offset: 0x240  GDMA Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |GDMA0RST  |GDMAx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the GDMAx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = GDMAx controller normal operation.
+     * |        |          |1 = GDMAx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::GPIORST
+     * Offset: 0x244  GPIO Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |GPIO0RST  |GPIOx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the GPIOx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = GPIOx controller normal operation.
+     * |        |          |1 = GPIOx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::HSOTGRST
+     * Offset: 0x248  HSOTG Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |HSOTG0RST |HSOTGx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the HSOTGx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = HSOTGx controller normal operation.
+     * |        |          |1 = HSOTGx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::HSUSBDRST
+     * Offset: 0x24C  HSUSBD Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |HSUSBD0RST|HSUSBDx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the HSUSBDx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = HSUSBDx controller normal operation.
+     * |        |          |1 = HSUSBDx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::HSUSBHRST
+     * Offset: 0x250  HSUSBH Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |HSUSBH0RST|HSUSBHx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the HSUSBHx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = HSUSBHx controller normal operation.
+     * |        |          |1 = HSUSBHx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::I2CRST
+     * Offset: 0x254  I2C Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |I2C0RST   |I2Cx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the I2Cx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = I2Cx controller normal operation.
+     * |        |          |1 = I2Cx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |I2C1RST   |I2Cx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the I2Cx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = I2Cx controller normal operation.
+     * |        |          |1 = I2Cx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[2]     |I2C2RST   |I2Cx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the I2Cx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = I2Cx controller normal operation.
+     * |        |          |1 = I2Cx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[3]     |I2C3RST   |I2Cx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the I2Cx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = I2Cx controller normal operation.
+     * |        |          |1 = I2Cx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::I2SRST
+     * Offset: 0x258  I2S Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |I2S0RST   |I2Sx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the I2Sx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = I2Sx controller normal operation.
+     * |        |          |1 = I2Sx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |I2S1RST   |I2Sx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the I2Sx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = I2Sx controller normal operation.
+     * |        |          |1 = I2Sx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::I3CRST
+     * Offset: 0x25C  I3C Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |I3C0RST   |I3Cx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the I3Cx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = I3Cx controller normal operation.
+     * |        |          |1 = I3Cx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::KDFRST
+     * Offset: 0x260  KDF Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |KDF0RST   |KDFx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the KDFx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = KDFx controller normal operation.
+     * |        |          |1 = KDFx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::KPIRST
+     * Offset: 0x264  KPI Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |KPI0RST   |KPIx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the KPIx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = KPIx controller normal operation.
+     * |        |          |1 = KPIx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::KSRST
+     * Offset: 0x268  KS Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |KS0RST    |KSx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the KSx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = KSx controller normal operation.
+     * |        |          |1 = KSx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::LPADCRST
+     * Offset: 0x26C  Low Power ADC Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |LPADC0RST |LPADCx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the LPADCx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = LPADCx controller normal operation.
+     * |        |          |1 = LPADCx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::LPPDMARST
+     * Offset: 0x270  Low Power PDMA Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |LPPDMA0RST|LPPDMAx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the LPPDMAx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = LPPDMAx controller normal operation.
+     * |        |          |1 = LPPDMAx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::LPGPIORST
+     * Offset: 0x274  Low Power GPIO Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |LPGPIO0RST|LPGPIOx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the LPGPIOx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = LPGPIOx controller normal operation.
+     * |        |          |1 = LPGPIOx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::LPI2CRST
+     * Offset: 0x278  Low Power I2C Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |LPI2C0RST |LPI2Cx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the LPI2Cx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = LPI2Cx controller normal operation.
+     * |        |          |1 = LPI2Cx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::LPSPIRST
+     * Offset: 0x27C  Low Power SPI Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |LPSPI0RST |LPSPIx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the LPSPIx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = LPSPIx controller normal operation.
+     * |        |          |1 = LPSPIx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::LPTMRRST
+     * Offset: 0x280  Low Power TMR Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |LPTMR0RST |LPTMRx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the LPTMRx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = LPTMRx controller normal operation.
+     * |        |          |1 = LPTMRx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |LPTMR1RST |LPTMRx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the LPTMRx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = LPTMRx controller normal operation.
+     * |        |          |1 = LPTMRx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::LPUARTRST
+     * Offset: 0x284  Low Power UART Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |LPUART0RST|LPUARTx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the LPUARTx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = LPUARTx controller normal operation.
+     * |        |          |1 = LPUARTx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::OTFCRST
+     * Offset: 0x288  OTFC Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |OTFC0RST  |OTFCx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the OTFCx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = OTFCx controller normal operation.
+     * |        |          |1 = OTFCx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::OTGRST
+     * Offset: 0x28C  OTG Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |OTG0RST   |OTGx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the OTGx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = OTGx controller normal operation.
+     * |        |          |1 = OTGx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::PDMARST
+     * Offset: 0x290  PDMA Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |PDMA0RST  |PDMAx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the PDMAx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = PDMAx controller normal operation.
+     * |        |          |1 = PDMAx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |PDMA1RST  |PDMAx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the PDMAx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = PDMAx controller normal operation.
+     * |        |          |1 = PDMAx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::PSIORST
+     * Offset: 0x294  PSIO Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |PSIO0RST  |PSIOx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the PSIOx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = PSIOx controller normal operation.
+     * |        |          |1 = PSIOx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::QSPIRST
+     * Offset: 0x298  QSPI Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |QSPI0RST  |QSPIx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the QSPIx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = QSPIx controller normal operation.
+     * |        |          |1 = QSPIx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |QSPI1RST  |QSPIx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the QSPIx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = QSPIx controller normal operation.
+     * |        |          |1 = QSPIx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::RTCRST
+     * Offset: 0x29C  RTC Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |RTC0RST   |RTCx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the RTCx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = RTCx controller normal operation.
+     * |        |          |1 = RTCx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::SCRST
+     * Offset: 0x2A0  SC Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SC0RST    |SCx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the SCx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = SCx controller normal operation.
+     * |        |          |1 = SCx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |SC1RST    |SCx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the SCx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = SCx controller normal operation.
+     * |        |          |1 = SCx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[2]     |SC2RST    |SCx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the SCx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = SCx controller normal operation.
+     * |        |          |1 = SCx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::SCURST
+     * Offset: 0x2A4  SCU Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SCU0RST   |SCUx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the SCUx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = SCUx controller normal operation.
+     * |        |          |1 = SCxU controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::SDHRST
+     * Offset: 0x2A8  SDH Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SDH0RST   |SDHx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the SDHx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = SDHx controller normal operation.
+     * |        |          |1 = SDHx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |SDH1RST   |SDHx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the SDHx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = SDHx controller normal operation.
+     * |        |          |1 = SDHx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::SPIRST
+     * Offset: 0x2AC  SPI Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SPI0RST   |SPIx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the SPIx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = SPIx controller normal operation.
+     * |        |          |1 = SPIx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |SPI1RST   |SPIx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the SPIx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = SPIx controller normal operation.
+     * |        |          |1 = SPIx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[2]     |SPI2RST   |SPIx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the SPIx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = SPIx controller normal operation.
+     * |        |          |1 = SPIx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[3]     |SPI3RST   |SPIx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the SPIx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = SPIx controller normal operation.
+     * |        |          |1 = SPIx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::SPIMRST
+     * Offset: 0x2B0  SPIM Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SPIM0RST  |SPIMx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the SPIMx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = SPIMx controller normal operation.
+     * |        |          |1 = SPIMx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::TMRRST
+     * Offset: 0x2C0  Timer Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |TMR0RST   |TMRx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the TMRx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = TMRx controller normal operation.
+     * |        |          |1 = TMRx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |TMR1RST   |TMRx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the TMRx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = TMRx controller normal operation.
+     * |        |          |1 = TMRx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[2]     |TMR2RST   |TMRx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the TMRx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = TMRx controller normal operation.
+     * |        |          |1 = TMRx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[3]     |TMR3RST   |TMRx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the TMRx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = TMRx controller normal operation.
+     * |        |          |1 = TMRx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::TRNGRST
+     * Offset: 0x2C4  TRNG Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |TRNG0RST  |TRNGx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the TRNGx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = TRNGx controller normal operation.
+     * |        |          |1 = TRNGx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::TTMRRST
+     * Offset: 0x2C8  Tick Timer Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |TTMR0RST  |TTMRx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the TTMRx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = TTMRx controller normal operation.
+     * |        |          |1 = TTMRx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |TTMR1RST  |TTMRx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the TTMRx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = TTMRx controller normal operation.
+     * |        |          |1 = TTMRx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::UARTRST
+     * Offset: 0x2CC  UART Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |UART0RST  |UARTx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = UARTx controller normal operation.
+     * |        |          |1 = UARTx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |UART1RST  |UARTx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = UARTx controller normal operation.
+     * |        |          |1 = UARTx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[2]     |UART2RST  |UARTx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = UARTx controller normal operation.
+     * |        |          |1 = UARTx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[3]     |UART3RST  |UARTx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = UARTx controller normal operation.
+     * |        |          |1 = UARTx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[4]     |UART4RST  |UARTx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = UARTx controller normal operation.
+     * |        |          |1 = UARTx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[5]     |UART5RST  |UARTx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = UARTx controller normal operation.
+     * |        |          |1 = UARTx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[6]     |UART6RST  |UARTx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = UARTx controller normal operation.
+     * |        |          |1 = UARTx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[7]     |UART7RST  |UARTx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = UARTx controller normal operation.
+     * |        |          |1 = UARTx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[8]     |UART8RST  |UARTx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = UARTx controller normal operation.
+     * |        |          |1 = UARTx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[9]     |UART9RST  |UARTx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the UARTx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = UARTx controller normal operation.
+     * |        |          |1 = UARTx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::USBDRST
+     * Offset: 0x2D0  USB Device Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |USBD0RST  |USBDx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the USBDx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = USBDx controller normal operation.
+     * |        |          |1 = USBDx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::USBHRST
+     * Offset: 0x2D4  USB Host Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |USBH0RST  |USBHx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the USBHx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = USBHx controller normal operation.
+     * |        |          |1 = USBHx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::USCIRST
+     * Offset: 0x2D8  USCI Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |USCI0RST  |USCIx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the USCIx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = USCIx controller normal operation.
+     * |        |          |1 = USCIx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::UTCPDRST
+     * Offset: 0x2DC  UTCPD Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |UTCPD0RST |UTCPDx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the UTCPDx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = UTCPDx controller normal operation.
+     * |        |          |1 = UTCPDx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::WWDTRST
+     * Offset: 0x2E0  WWDT Reset Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |WWDT0RST  |WWDTx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the WWDTx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = WWDTx controller normal operation.
+     * |        |          |1 = WWDTx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[1]     |WWDT1RST  |WWDTx Controller Reset (Write Protect)
+     * |        |          |Setting this bit to 1 will generate a reset signal to the WWDTx
+     * |        |          |User needs to set this bit to 0 to release from reset state.
+     * |        |          |0 = WWDTx controller normal operation.
+     * |        |          |1 = WWDTx controller reset.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * @var SYS_T::GPA_MFP0
+     * Offset: 0x300  GPIOA Multiple Function Control Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PA0MFP    |PA.0 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PA1MFP    |PA.1 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PA2MFP    |PA.2 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PA3MFP    |PA.3 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPA_MFP1
+     * Offset: 0x304  GPIOA Multiple Function Control Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PA4MFP    |PA.4 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PA5MFP    |PA.5 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PA6MFP    |PA.6 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PA7MFP    |PA.7 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPA_MFP2
+     * Offset: 0x308  GPIOA Multiple Function Control Register 2
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PA8MFP    |PA.8 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PA9MFP    |PA.9 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PA10MFP   |PA.10 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PA11MFP   |PA.11 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPA_MFP3
+     * Offset: 0x30C  GPIOA Multiple Function Control Register 3
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PA12MFP   |PA.12 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PA13MFP   |PA.13 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PA14MFP   |PA.14 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PA15MFP   |PA.15 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPB_MFP0
+     * Offset: 0x310  GPIOB Multiple Function Control Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PB0MFP    |PB.0 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PB1MFP    |PB.1 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PB2MFP    |PB.2 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PB3MFP    |PB.3 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPB_MFP1
+     * Offset: 0x314  GPIOB Multiple Function Control Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PB4MFP    |PB.4 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PB5MFP    |PB.5 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PB6MFP    |PB.6 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PB7MFP    |PB.7 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPB_MFP2
+     * Offset: 0x318  GPIOB Multiple Function Control Register 2
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PB8MFP    |PB.8 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PB9MFP    |PB.9 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PB10MFP   |PB.10 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PB11MFP   |PB.11 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPB_MFP3
+     * Offset: 0x31C  GPIOB Multiple Function Control Register 3
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PB12MFP   |PB.12 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PB13MFP   |PB.13 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PB14MFP   |PB.14 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PB15MFP   |PB.15 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPC_MFP0
+     * Offset: 0x320  GPIOC Multiple Function Control Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PC0MFP    |PC.0 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PC1MFP    |PC.1 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PC2MFP    |PC.2 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PC3MFP    |PC.3 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPC_MFP1
+     * Offset: 0x324  GPIOC Multiple Function Control Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PC4MFP    |PC.4 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PC5MFP    |PC.5 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PC6MFP    |PC.6 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PC7MFP    |PC.7 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPC_MFP2
+     * Offset: 0x328  GPIOC Multiple Function Control Register 2
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PC8MFP    |PC.8 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PC9MFP    |PC.9 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PC10MFP   |PC.10 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PC11MFP   |PC.11 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPC_MFP3
+     * Offset: 0x32C  GPIOC Multiple Function Control Register 3
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PC12MFP   |PC.12 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PC13MFP   |PC.13 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PC14MFP   |PC.14 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPD_MFP0
+     * Offset: 0x330  GPIOD Multiple Function Control Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PD0MFP    |PD.0 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PD1MFP    |PD.1 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PD2MFP    |PD.2 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PD3MFP    |PD.3 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPD_MFP1
+     * Offset: 0x334  GPIOD Multiple Function Control Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PD4MFP    |PD.4 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PD5MFP    |PD.5 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PD6MFP    |PD.6 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PD7MFP    |PD.7 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPD_MFP2
+     * Offset: 0x338  GPIOD Multiple Function Control Register 2
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PD8MFP    |PD.8 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PD9MFP    |PD.9 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PD10MFP   |PD.10 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PD11MFP   |PD.11 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPD_MFP3
+     * Offset: 0x33C  GPIOD Multiple Function Control Register 3
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PD12MFP   |PD.12 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PD13MFP   |PD.13 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PD14MFP   |PD.14 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPE_MFP0
+     * Offset: 0x340  GPIOE Multiple Function Control Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PE0MFP    |PE.0 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PE1MFP    |PE.1 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PE2MFP    |PE.2 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PE3MFP    |PE.3 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPE_MFP1
+     * Offset: 0x344  GPIOE Multiple Function Control Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PE4MFP    |PE.4 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PE5MFP    |PE.5 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PE6MFP    |PE.6 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PE7MFP    |PE.7 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPE_MFP2
+     * Offset: 0x348  GPIOE Multiple Function Control Register 2
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PE8MFP    |PE.8 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PE9MFP    |PE.9 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PE10MFP   |PE.10 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PE11MFP   |PE.11 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPE_MFP3
+     * Offset: 0x34C  GPIOE Multiple Function Control Register 3
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PE12MFP   |PE.12 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PE13MFP   |PE.13 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PE14MFP   |PE.14 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PE15MFP   |PE.15 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPF_MFP0
+     * Offset: 0x350  GPIOF Multiple Function Control Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PF0MFP    |PF.0 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PF1MFP    |PF.1 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PF2MFP    |PF.2 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PF3MFP    |PF.3 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPF_MFP1
+     * Offset: 0x354  GPIOF Multiple Function Control Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PF4MFP    |PF.4 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PF5MFP    |PF.5 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PF6MFP    |PF.6 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PF7MFP    |PF.7 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPF_MFP2
+     * Offset: 0x358  GPIOF Multiple Function Control Register 2
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PF8MFP    |PF.8 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PF9MFP    |PF.9 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PF10MFP   |PF.10 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PF11MFP   |PF.11 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPG_MFP0
+     * Offset: 0x360  GPIOG Multiple Function Control Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PG0MFP    |PG.0 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PG1MFP    |PG.1 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PG2MFP    |PG.2 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PG3MFP    |PG.3 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPG_MFP1
+     * Offset: 0x364  GPIOG Multiple Function Control Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PG4MFP    |PG.4 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PG5MFP    |PG.5 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PG6MFP    |PG.6 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PG7MFP    |PG.7 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPG_MFP2
+     * Offset: 0x368  GPIOG Multiple Function Control Register 2
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PG8MFP    |PG.8 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PG9MFP    |PG.9 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PG10MFP   |PG.10 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PG11MFP   |PG.11 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPG_MFP3
+     * Offset: 0x36C  GPIOG Multiple Function Control Register 3
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PG12MFP   |PG.12 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PG13MFP   |PG.13 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PG14MFP   |PG.14 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PG15MFP   |PG.15 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPH_MFP0
+     * Offset: 0x370  GPIOH Multiple Function Control Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PH0MFP    |PH.0 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PH1MFP    |PH.1 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PH2MFP    |PH.2 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PH3MFP    |PH.3 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPH_MFP1
+     * Offset: 0x374  GPIOH Multiple Function Control Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PH4MFP    |PH.4 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PH5MFP    |PH.5 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PH6MFP    |PH.6 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PH7MFP    |PH.7 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPH_MFP2
+     * Offset: 0x378  GPIOH Multiple Function Control Register 2
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PH8MFP    |PH.8 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PH9MFP    |PH.9 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PH10MFP   |PH.10 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PH11MFP   |PH.11 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPH_MFP3
+     * Offset: 0x37C  GPIOH Multiple Function Control Register 3
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PH12MFP   |PH.12 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PH13MFP   |PH.13 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PH14MFP   |PH.14 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PH15MFP   |PH.15 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPI_MFP1
+     * Offset: 0x384  GPIOI Multiple Function Control Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[20:16] |PI6MFP    |PI.6 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PI7MFP    |PI.7 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPI_MFP2
+     * Offset: 0x388  GPIOI Multiple Function Control Register 2
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PI8MFP    |PI.8 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PI9MFP    |PI.9 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PI10MFP   |PI.10 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PI11MFP   |PI.11 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPI_MFP3
+     * Offset: 0x38C  GPIOI Multiple Function Control Register 3
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PI12MFP   |PI.12 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PI13MFP   |PI.13 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PI14MFP   |PI.14 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PI15MFP   |PI.15 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPJ_MFP0
+     * Offset: 0x390  GPIOJ Multiple Function Control Register 0
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PJ0MFP    |PJ.0 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PJ1MFP    |PJ.1 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PJ2MFP    |PJ.2 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PJ3MFP    |PJ.3 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPJ_MFP1
+     * Offset: 0x394  GPIOJ Multiple Function Control Register 1
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PJ4MFP    |PJ.4 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PJ5MFP    |PJ.5 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PJ6MFP    |PJ.6 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PJ7MFP    |PJ.7 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPJ_MFP2
+     * Offset: 0x398  GPIOJ Multiple Function Control Register 2
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PJ8MFP    |PJ.8 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PJ9MFP    |PJ.9 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[20:16] |PJ10MFP   |PJ.10 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[28:24] |PJ11MFP   |PJ.11 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::GPJ_MFP3
+     * Offset: 0x39C  GPIOJ Multiple Function Control Register 3
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[4:0]   |PJ12MFP   |PJ.12 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * |[12:8]  |PJ13MFP   |PJ.13 Multi-function Pin Selection
+     * |        |          |Note: These bits are not retained when D2 power is turned off.
+     * @var SYS_T::NMIEN
+     * Offset: 0x500  NMI Source Interrupt Enable Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BODOUT    |BOD NMI Source Enable (Write Protect)
+     * |        |          |0 = BOD NMI source Disabled.
+     * |        |          |1 = BOD NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[1]     |IRCINT    |IRC TRIM NMI Source Enable (Write Protect)
+     * |        |          |0 = IRC TRIM NMI source Disabled.
+     * |        |          |1 = IRC TRIM NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D0 power is turned off.
+     * |[2]     |PWRWUINT  |Power-down Mode Wake-up NMI Source Enable (Write Protect)
+     * |        |          |0 = Power-down mode wake-up NMI source Disabled.
+     * |        |          |1 = Power-down mode wake-up NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[3]     |SRAMPERR  |SRAM Parity Check Error NMI Source Enable (Write Protect)
+     * |        |          |0 = SRAM parity check error NMI source Disabled.
+     * |        |          |1 = SRAM parity check error NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[4]     |CLKFAIL   |Clock Fail Detected NMI Source Enable (Write Protect)
+     * |        |          |0 = Clock fail detected interrupt NMI source Disabled.
+     * |        |          |1 = Clock fail detected interrupt NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[6]     |RTCINT    |RTC NMI Source Enable (Write Protect)
+     * |        |          |0 = RTC NMI source Disabled.
+     * |        |          |1 = RTC NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[7]     |RTCTMPINT |RTC Tamper Interrupt NMI Source Enable (Write Protect)
+     * |        |          |0 = Backup register tamper detected interrupt NMI source Disabled.
+     * |        |          |1 = Backup register tamper detected interrupt NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[8]     |EINT0     |External Interrupt From PA.6, or PB.5 Pin NMI Source Enable (Write Protect)
+     * |        |          |0 = External interrupt from PA.6, or PB.5 pin NMI source Disabled.
+     * |        |          |1 = External interrupt from PA.6, or PB.5 pin NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[9]     |EINT1     |External Interrupt From PA.7 or PB.4 Pin NMI Source Enable (Write Protect)
+     * |        |          |0 = External interrupt from PA.7 or PB.4 pin NMI source Disabled.
+     * |        |          |1 = External interrupt from PA.7 or P4.4 pin NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[10]    |EINT2     |External Interrupt From PB.3 or PC.6 Pin NMI Source Enable (Write Protect)
+     * |        |          |0 = External interrupt from PB.3 or PC.6 pin NMI source Disabled.
+     * |        |          |1 = External interrupt from PB.3 or PC.6 pin NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[11]    |EINT3     |External Interrupt From PB.2 or PC.7 Pin NMI Source Enable (Write Protect)
+     * |        |          |0 = External interrupt from PB.2 or PC.7pin NMI source Disabled.
+     * |        |          |1 = External interrupt from PB.2 or PC.7 pin NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[12]    |EINT4     |External Interrupt From PA.8 or PB.6 Pin NMI Source Enable (Write Protect)
+     * |        |          |0 = External interrupt from PA.8 or PB.6 pin NMI source Disabled.
+     * |        |          |1 = External interrupt from PA.8 or PB.6 pin NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[13]    |EINT5     |External Interrupt From PB.7 or PD.12 Pin NMI Source Enable (Write Protect)
+     * |        |          |0 = External interrupt from PB.7 or PD.12 pin NMI source Disabled.
+     * |        |          |1 = External interrupt from PB.7 or PD.12 pin NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[14]    |EINT6     |External Interrupt From PB.8 or PD.11 Pin NMI Source Enable (Write Protect)
+     * |        |          |0 = External interrupt from PB.8 or PD.11 pin NMI source Disabled.
+     * |        |          |1 = External interrupt from PB.8 or PD.11 pin NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[15]    |EINT7     |External Interrupt From PB.9 or PD.10 Pin NMI Source Enable (Write Protect)
+     * |        |          |0 = External interrupt from PB.9 or PD.10 pin NMI source Disabled.
+     * |        |          |1 = External interrupt from PB.9 or PD.10 pin NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[16]    |UART0INT  |UART0 NMI Source Enable (Write Protect)
+     * |        |          |0 = UART0 NMI source Disabled.
+     * |        |          |1 = UART0 NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * |[17]    |UART1INT  |UART1 NMI Source Enable (Write Protect)
+     * |        |          |0 = UART1 NMI source Disabled.
+     * |        |          |1 = UART1 NMI source Enabled.
+     * |        |          |Note 1: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |        |          |Note 2: This bit is not retained when D1 power is turned off.
+     * @var SYS_T::NMISTS
+     * Offset: 0x504  NMI Source Interrupt Status Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |BODOUT    |BOD Interrupt Flag (Read Only)
+     * |        |          |0 = BOD interrupt is deasserted.
+     * |        |          |1 = BOD interrupt is asserted.
+     * |[1]     |IRCINT    |IRC TRIM Interrupt Flag (Read Only)
+     * |        |          |0 = HIRC TRIM interrupt is deasserted.
+     * |        |          |1 = HIRC TRIM interrupt is asserted.
+     * |[2]     |PWRWUINT  |Power-down Mode Wake-up Interrupt Flag (Read Only)
+     * |        |          |0 = Power-down mode wake-up interrupt is deasserted.
+     * |        |          |1 = Power-down mode wake-up interrupt is asserted.
+     * |[3]     |SRAMPERR  |SRAM Parity Check Error Interrupt Flag (Read Only)
+     * |        |          |0 = SRAM parity check error interrupt is deasserted.
+     * |        |          |1 = SRAM parity check error interrupt is asserted.
+     * |[4]     |CLKFAIL   |Clock Fail Detected Interrupt Flag (Read Only)
+     * |        |          |0 = Clock fail detected interrupt is deasserted.
+     * |        |          |1 = Clock fail detected interrupt is asserted.
+     * |[6]     |RTCINT    |RTC Interrupt Flag (Read Only)
+     * |        |          |0 = RTC interrupt is deasserted.
+     * |        |          |1 = RTC interrupt is asserted.
+     * |[7]     |RTCTMPINT |RTC Tamper Interrupt Flag (Read Only)
+     * |        |          |0 = Backup register tamper detected interrupt is deasserted.
+     * |        |          |1 = Backup register tamper detected interrupt is asserted.
+     * |[8]     |EINT0     |External Interrupt From PA.6, or PB.5 Pin Interrupt Flag (Read Only)
+     * |        |          |0 = External Interrupt from PA.6, or PB.5 interrupt is deasserted.
+     * |        |          |1 = External Interrupt from PA.6, or PB.5 interrupt is asserted.
+     * |[9]     |EINT1     |External Interrupt From PA.7, or PB.4 Pin Interrupt Flag (Read Only)
+     * |        |          |0 = External Interrupt from PA.7, or PB.4 interrupt is deasserted.
+     * |        |          |1 = External Interrupt from PA.7, or PB.4 interrupt is asserted.
+     * |[10]    |EINT2     |External Interrupt From PB.3 or PC.6 Pin Interrupt Flag (Read Only)
+     * |        |          |0 = External Interrupt from PB.3 or PC.6 interrupt is deasserted.
+     * |        |          |1 = External Interrupt from PB.3 or PC.6 interrupt is asserted.
+     * |[11]    |EINT3     |External Interrupt From PB.2 or PC.7 Pin Interrupt Flag (Read Only)
+     * |        |          |0 = External Interrupt from PB.2 or PC.7 interrupt is deasserted.
+     * |        |          |1 = External Interrupt from PB.2 or PC.7 interrupt is asserted.
+     * |[12]    |EINT4     |External Interrupt From PA.8 or PB.6 Pin Interrupt Flag (Read Only)
+     * |        |          |0 = External Interrupt from PA.8 or PB.6 interrupt is deasserted.
+     * |        |          |1 = External Interrupt from PA.8 or PB.6 interrupt is asserted.
+     * |[13]    |EINT5     |External Interrupt From PB.7 or PD.12 Pin Interrupt Flag (Read Only)
+     * |        |          |0 = External Interrupt from PB.7 or PD.12 interrupt is deasserted.
+     * |        |          |1 = External Interrupt from PB.7 or PD.12 interrupt is asserted.
+     * |[14]    |EINT6     |External Interrupt From PB.8 or PD.11 Pin Interrupt Flag (Read Only)
+     * |        |          |0 = External Interrupt from PB.8 or PD.11 interrupt is deasserted.
+     * |        |          |1 = External Interrupt from PB.8 or PD.11 interrupt is asserted.
+     * |[15]    |EINT7     |External Interrupt From PB.9 or PD.10 Pin Interrupt Flag (Read Only)
+     * |        |          |0 = External Interrupt from PB.9 or PD.10 interrupt is deasserted.
+     * |        |          |1 = External Interrupt from PB.9 or PD.10 interrupt is asserted.
+     * |[16]    |UART0INT  |UART0 Interrupt Flag (Read Only)
+     * |        |          |0 = UART1 interrupt is deasserted.
+     * |        |          |1 = UART1 interrupt is asserted.
+     * |[17]    |UART1INT  |UART1 Interrupt Flag (Read Only)
+     * |        |          |0 = UART1 interrupt is deasserted.
+     * |        |          |1 = UART1 interrupt is asserted.
+     * @var SYS_T::SRAMBCTL
+     * Offset: 0xE90  System SRAM BIST Control Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SR0BIST   |System SRAM 0 BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables System SRAM 0 BIST function.
+     * |        |          |0 = System SRAM 0 BIST Disabled.
+     * |        |          |1 = System SRAM 0 BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[1]     |SR1BIST   |System SRAM 1 BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables System SRAM 1 BIST function.
+     * |        |          |0 = System SRAM 1 BIST Disabled.
+     * |        |          |1 = System SRAM 1 BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[2]     |SR2BIST   |System SRAM 2 BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables System SRAM 2 BIST function.
+     * |        |          |0 = System SRAM 2 BIST Disabled.
+     * |        |          |1 = System SRAM 2 BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[3]     |SR3BIST   |System SRAM 3 BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables System SRAM 3 BIST function.
+     * |        |          |0 = System SRAM 3 BIST Disabled.
+     * |        |          |1 = System SRAM 3 BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[4]     |LPSRBIST  |Low Power System SRAM BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables Low Power System SRAM BIST function.
+     * |        |          |0 = Low Power System SRAM BIST Disabled.
+     * |        |          |1 = Low Power System SRAM BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[8]     |CAN0BIST  |CAN0 SRAM BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables CAN0 SRAM BIST function.
+     * |        |          |0 = CAN0 SRAM BIST Disabled.
+     * |        |          |1 = CAN0 SRAM BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[9]     |CAN1BIST  |CAN1 SRAM BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables CAN1 SRAM BIST function.
+     * |        |          |0 = CAN1 SRAM BIST Disabled.
+     * |        |          |1 = CAN1 SRAM BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[10]    |SPIM0BIST |SPIM0 SRAM BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables SPIM0 SRAM BIST function.
+     * |        |          |0 = SPIM0 SRAM BIST Disabled.
+     * |        |          |1 = SPIM0 SRAM BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[12]    |CCAPBIST  |CCAP SRAM BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables CCAP SRAM BIST function.
+     * |        |          |0 = CCAP SRAM BIST Disabled.
+     * |        |          |1 = CCAP SRAM BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[13]    |I3CBIST   |I3C SRAM BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables I3C SRAM BIST function.
+     * |        |          |0 = I3C SRAM BIST Disabled.
+     * |        |          |1 = I3C SRAM BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[14]    |KSBIST    |KS SRAM BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables KS SRAM BIST function.
+     * |        |          |0 = KS SRAM BIST Disabled.
+     * |        |          |1 = KS SRAM BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[15]    |RSABIST   |RSA SRAM BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables RSA SRAM BIST function.
+     * |        |          |0 = RSA SRAM BIST Disabled.
+     * |        |          |1 = RSA SRAM BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[16]    |DMICBIST  |DMIC SRAM BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables DMIC SRAM BIST function.
+     * |        |          |0 = DMIC SRAM BIST Disabled.
+     * |        |          |1 = DMIC SRAM BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[17]    |EMACBIST  |EMAC SRAM BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables EMAC SRAM BIST function.
+     * |        |          |0 = EMAC SRAM BIST Disabled.
+     * |        |          |1 = EMAC SRAM BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[18]    |NPUBIST   |NPU SRAM BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables NPU SRAM BIST function.
+     * |        |          |0 = NPU SRAM BIST Disabled.
+     * |        |          |1 = NPU SRAM BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[24]    |USBDBIST  |USBD SRAM BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables USBD SRAM BIST function.
+     * |        |          |0 = USBD SRAM BIST Disabled.
+     * |        |          |1 = USBD SRAM BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[25]    |HSUSBDBIST|HSUSBD SRAM BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables HSUSBD SRAM BIST function.
+     * |        |          |0 = HSUSBD SRAM BIST Disabled.
+     * |        |          |1 = HSUSBD SRAM BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * |[26]    |HSUSBHBIST|HSUSBH SRAM BIST Enable Bit (Write Protect)
+     * |        |          |This bit enables HSUSBH SRAM BIST function.
+     * |        |          |0 = HSUSBH SRAM BIST Disabled.
+     * |        |          |1 = HSUSBH SRAM BIST Enabled.
+     * |        |          |Note: This bit is write protected. Refer to the SYS_REGLCTL register.
+     * @var SYS_T::SRAMBFF
+     * Offset: 0xE94  System SRAM BIST Finish Flag Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SR0BFF    |System SRAM 0 BIST Finish Flag (Read Only)
+     * |        |          |0 = System SRAM 0 BIST is active.
+     * |        |          |1 = System SRAM 0 BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when SR0BIST(SYS_SRAMBCTL[0]) set to 0.
+     * |[1]     |SR1BFF    |System SRAM 1 BIST Finish Flag (Read Only)
+     * |        |          |0 = System SRAM 1 BIST is active.
+     * |        |          |1 = System SRAM 1 BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when SR1BIST(SYS_SRAMBCTL[1]) set to 0.
+     * |[2]     |SR2BFF    |System SRAM 2 BIST Finish Flag (Read Only)
+     * |        |          |0 = System SRAM 2 BIST is active.
+     * |        |          |1 = System SRAM 2 BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when SR2BIST(SYS_SRAMBCTL[2]) set to 0.
+     * |[3]     |SR3BFF    |System SRAM 3 BIST Finish Flag (Read Only)
+     * |        |          |0 = System SRAM 3 BIST is active.
+     * |        |          |1 = System SRAM 3 BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when SR3BIST(SYS_SRAMBCTL[3]) set to 0.
+     * |[4]     |LPSRBFF   |Low Power System SRAM BIST Finish Flag (Read Only)
+     * |        |          |0 = Low Power System SRAM BIST is active.
+     * |        |          |1 = Low Power System SRAM BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when LPSRBIST(SYS_SRAMBCTL[4]) set to 0.
+     * |[8]     |CAN0BFF   |CAN0 SRAM BIST Finish Flag (Read Only)
+     * |        |          |0 = CAN0 SRAM BIST is active.
+     * |        |          |1 = CAN0 SRAM BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when CAN0BIST(SYS_SRAMBCTL[8]) set to 0.
+     * |[9]     |CAN1BFF   |CAN1 SRAM BIST Finish Flag (Read Only)
+     * |        |          |0 = CAN1 SRAM BIST is active.
+     * |        |          |1 = CAN1 SRAM BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when CAN1BIST(SYS_SRAMBCTL[9]) set to 0.
+     * |[10]    |SPIM0BFF  |SPIM0 SRAM BIST Finish Flag (Read Only)
+     * |        |          |0 = SPIM0 SRAM BIST is active.
+     * |        |          |1 = SPIM0 SRAM BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when SPIM0BIST(SYS_SRAMBCTL[10]) set to 0.
+     * |[12]    |CCAPBFF   |CCAP SRAM BIST Finish Flag (Read Only)
+     * |        |          |0 = CCAP SRAM BIST is active.
+     * |        |          |1 = CCAP SRAM BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when CCAPBIST(SYS_SRAMBCTL[12]) set to 0.
+     * |[13]    |I3CBFF    |I3C SRAM BIST Finish Flag (Read Only)
+     * |        |          |0 = I3C SRAM BIST is active.
+     * |        |          |1 = I3C SRAM BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when I3CBIST(SYS_SRAMBCTL[13]) set to 0.
+     * |[14]    |KSBFF     |KS SRAM BIST Finish Flag (Read Only)
+     * |        |          |0 = KS SRAM BIST is active.
+     * |        |          |1 = KS SRAM BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when KSBIST(SYS_SRAMBCTL[14]) set to 0.
+     * |[15]    |RSABFF    |RSA SRAM BIST Finish Flag (Read Only)
+     * |        |          |0 = RSA SRAM BIST is active.
+     * |        |          |1 = RSA SRAM BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when RSABIST(SYS_SRAMBCTL[15]) set to 0.
+     * |[16]    |DMICBFF   |DMIC SRAM BIST Finish Flag (Read Only)
+     * |        |          |0 = DMIC SRAM BIST is active.
+     * |        |          |1 = DMIC SRAM BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when DMICBIST(SYS_SRAMBCTL[16]) set to 0.
+     * |[17]    |EMACBFF   |EMAC SRAM BIST Finish Flag (Read Only)
+     * |        |          |0 = EMAC SRAM BIST is active.
+     * |        |          |1 = EMAC SRAM BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when EMACBIST(SYS_SRAMBCTL[17]) set to 0.
+     * |[18]    |NPUBFF    |NPU SRAM BIST Finish Flag (Read Only)
+     * |        |          |0 = NPU SRAM BIST is active.
+     * |        |          |1 = NPU SRAM BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when NPUBIST(SYS_SRAMBCTL[18]) set to 0.
+     * |[24]    |USBDBFF   |USBD SRAM BIST Finish Flag (Read Only)
+     * |        |          |0 = USBD SRAM BIST is active.
+     * |        |          |1 = USBD SRAM BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when USBDBIST(SYS_SRAMBCTL[24]) set to 0.
+     * |[25]    |HSUSBDBFF |HSUSBD SRAM BIST Finish Flag (Read Only)
+     * |        |          |0 = HSUSBD SRAM BIST is active.
+     * |        |          |1 = HSUSBD SRAM BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when HSUSBDBIST(SYS_SRAMBCTL[25]) set to 0.
+     * |[26]    |HSUSBHBFF |HSUSBH SRAM BIST Finish Flag (Read Only)
+     * |        |          |0 = HSUSBH SRAM BIST is active.
+     * |        |          |1 = HSUSBH SRAM BIST test finish.
+     * |        |          |Note 1: This bit will be clear to 0 when HSUSBHBIST(SYS_SRAMBCTL[26]) set to 0.
+     * @var SYS_T::SRAMBRF
+     * Offset: 0xE98  System SRAM BIST Result Flag Register
+     * ---------------------------------------------------------------------------------------------------
+     * |Bits    |Field     |Descriptions
+     * | :----: | :----:   | :---- |
+     * |[0]     |SR0BRF    |System SRAM 0 BIST Result Flag (Read Only)
+     * |        |          |0 = System SRAM 0 BIST test pass.
+     * |        |          |1 = System SRAM 0 BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when SR0BIST(SYS_SRAMBCTL[0]) set to 0.
+     * |[1]     |SR1BRF    |System SRAM 1 BIST Result Flag (Read Only)
+     * |        |          |0 = System SRAM 1 BIST test pass.
+     * |        |          |1 = System SRAM 1 BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when SR1BIST(SYS_SRAMBCTL[1]) set to 0.
+     * |[2]     |SR2BRF    |System SRAM 2 BIST Result Flag (Read Only)
+     * |        |          |0 = System SRAM 2 BIST test pass.
+     * |        |          |1 = System SRAM 2 BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when SR2BIST(SYS_SRAMBCTL[3]) set to 0.
+     * |[3]     |SR3BRF    |System SRAM 3 BIST Result Flag (Read Only)
+     * |        |          |0 = System SRAM 3 BIST test pass.
+     * |        |          |1 = System SRAM 3 BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when SR3BIST(SYS_SRAMBCTL[3]) set to 0.
+     * |[4]     |LPSRBRF   |Low Power System SRAM BIST Result Flag (Read Only)
+     * |        |          |0 = Low Power System SRAM BIST test pass.
+     * |        |          |1 = Low Power System SRAM BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when LPSRBIST(SYS_SRAMBCTL[4]) set to 0.
+     * |[8]     |CAN0BRF   |CAN0 SRAM BIST Result Flag (Read Only)
+     * |        |          |0 = CAN0 SRAM BIST test pass.
+     * |        |          |1 = CAN0 SRAM BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when CAN0BIST(SYS_SRAMBCTL[8]) set to 0.
+     * |[9]     |CAN1BRF   |CAN1 SRAM BIST Result Flag (Read Only)
+     * |        |          |0 = CAN1 SRAM BIST test pass.
+     * |        |          |1 = CAN1 SRAM BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when CAN1BIST(SYS_SRAMBCTL[9]) set to 0.
+     * |[10]    |SPIM0BRF  |SPIM0 SRAM BIST Result Flag (Read Only)
+     * |        |          |0 = SPIM0 SRAM BIST test pass.
+     * |        |          |1 = SPIM0 SRAM BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when SPIM0BIST(SYS_SRAMBCTL[10]) set to 0.
+     * |[12]    |CCAPBRF   |CCAP SRAM BIST Result Flag (Read Only)
+     * |        |          |0 = CCAP SRAM BIST test pass.
+     * |        |          |1 = CCAP SRAM BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when CCAPBIST(SYS_SRAMBCTL[12]) set to 0.
+     * |[13]    |I3CBRF    |I3C SRAM BIST Result Flag (Read Only)
+     * |        |          |0 = I3C SRAM BIST test pass.
+     * |        |          |1 = I3C SRAM BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when I3CBIST(SYS_SRAMBCTL[13]) set to 0.
+     * |[14]    |KSBRF     |KS SRAM BIST Result Flag (Read Only)
+     * |        |          |0 = KS SRAM BIST test pass.
+     * |        |          |1 = KS SRAM BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when KSBIST(SYS_SRAMBCTL[14]) set to 0.
+     * |[15]    |RSABRF    |RSA SRAM BIST Result Flag (Read Only)
+     * |        |          |0 = RSA SRAM BIST test pass.
+     * |        |          |1 = RSA SRAM BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when RSABIST(SYS_SRAMBCTL[15]) set to 0.
+     * |[16]    |DMICBRF   |DMIC SRAM BIST Result Flag (Read Only)
+     * |        |          |0 = DMIC SRAM BIST test pass.
+     * |        |          |1 = DMIC SRAM BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when DMICBIST(SYS_SRAMBCTL[16]) set to 0.
+     * |[17]    |EMACBRF   |EMAC SRAM BIST Result Flag (Read Only)
+     * |        |          |0 = EMAC SRAM BIST test pass.
+     * |        |          |1 = EMAC SRAM BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when EMACBIST(SYS_SRAMBCTL[17]) set to 0.
+     * |[18]    |NPUBRF    |NPU SRAM BIST Result Flag (Read Only)
+     * |        |          |0 = NPU SRAM BIST test pass.
+     * |        |          |1 = NPU SRAM BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when NPUBIST(SYS_SRAMBCTL[18]) set to 0.
+     * |[24]    |USBDBRF   |USBD SRAM BIST Result Flag (Read Only)
+     * |        |          |0 = USBD SRAM BIST test pass.
+     * |        |          |1 = USBD SRAM BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when USBDBIST(SYS_SRAMBCTL[24]) set to 0.
+     * |[25]    |HSUSBDBRF |HSUSBD SRAM BIST Result Flag (Read Only)
+     * |        |          |0 = HSUSBD SRAM BIST test pass.
+     * |        |          |1 = HSUSBD SRAM BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when HSUSBDBIST(SYS_SRAMBCTL[25]) set to 0.
+     * |[26]    |HSUSBHBRF |HSUSBH SRAM BIST Result Flag (Read Only)
+     * |        |          |0 = HSUSBH SRAM BIST test pass.
+     * |        |          |1 = HSUSBH SRAM BIST test fail.
+     * |        |          |Note 1: This bit will be clear to 0 when HSUSBHBIST(SYS_SRAMBCTL[26]) set to 0.
+     */
     __I  uint32_t PDID;                  /*!< [0x0000] Part Device Identification Number Register                       */
     __IO uint32_t RSTCTL;                /*!< [0x0004] System Reset Control Register                                    */
     __IO uint32_t RSTSTS;                /*!< [0x0008] System Reset Status Register                                     */

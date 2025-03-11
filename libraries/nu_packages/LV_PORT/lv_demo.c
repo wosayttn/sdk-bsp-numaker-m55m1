@@ -22,6 +22,13 @@ RT_WEAK void lv_user_gui_init(void)
     lv_draw_gdma_init();
 #endif
 
+#if defined(PKG_LVGL_USING_SQUARELINE)
+
+    extern void ui_init(void);
+    ui_init();
+
+#else
+
     /* display demo; you may replace with your LVGL application at here and disable related definitions. */
 #if LV_USE_DEMO_BENCHMARK
     void lv_demo_benchmark(void);
@@ -42,4 +49,5 @@ RT_WEAK void lv_user_gui_init(void)
 
 #endif
 
+#endif
 }

@@ -17,9 +17,9 @@ limitations under the License.
 
 // Set in micro/tools/make/targets/cortex_m_generic_makefile.inc.
 // Needed for the DWT and PMU counters.
-#ifdef CMSIS_DEVICE_ARM_CORTEX_M_XX_HEADER_FILE
-#include CMSIS_DEVICE_ARM_CORTEX_M_XX_HEADER_FILE
-#endif
+//#ifdef CMSIS_DEVICE_ARM_CORTEX_M_XX_HEADER_FILE
+#include "NuMicro.h"
+//#endif
 
 namespace tflite {
 

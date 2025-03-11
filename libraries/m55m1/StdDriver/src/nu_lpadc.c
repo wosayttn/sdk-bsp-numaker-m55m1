@@ -130,10 +130,19 @@ void LPADC_Close(LPADC_T *lpadc)
     /*Disable the LPADC Power on*/
     lpadc->ADCR &= ~LPADC_ADCR_ADEN_Msk;
 
-    /* Unlock protected registers */
-    SYS_UnlockReg();
-    SYS_ResetModule(SYS_LPADC0RST);
+    uint32_t u32RegLockLevel = SYS_IsRegLocked();
 
+    if (u32RegLockLevel)
+    {
+        /* Unlock protected registers */
+        SYS_UnlockReg();
+    }
+    SYS_ResetModule(SYS_LPADC0RST);
+    if (u32RegLockLevel)
+    {
+        /* Lock protected registers */
+        SYS_LockReg();
+    }
     return;
 }
 
@@ -289,3 +298,4 @@ void LPADC_SelectAutoOperationMode(LPADC_T *lpadc, uint32_t u32TrigSel)
 /** @} end of group LPADC_Driver */
 
 /** @} end of group Standard_Driver */
+

@@ -265,6 +265,9 @@ void nutool_modclkcfg_init_hsotg(void)
 {
     CLK_EnableModuleClock(HSOTG0_MODULE);
 
+    /* Select HSOTG PHY Reference clock frequency which is from HXT*/
+    HSOTG_SET_PHY_REF_CLK(HSOTG_PHYCTL_FSEL_24_0M);
+
     return;
 }
 

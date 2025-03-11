@@ -2,11 +2,22 @@ from building import *
 import rtconfig
 import os
 
-src = []
-inc = []
+MODEL_FLAGS=' -DACTIVATION_BUF_SZ=0x00082000 '
+
+# M55M1/TC8263
+CMSIS_FLAGS=' -DETHOSU55=1 -DARM_NPU -DETHOSU_ARCH=u55  -DCMSIS_NN=1 -DCMSIS_DSP=1 -DETHOSU_MACS=256 -DETHOSU=1 '
+NPU_FLAGS = CMSIS_FLAGS + ' -DETHOS_U_BASE_ADDR=0x40003000 -DETHOS_U_IRQN=13 -DETHOS_U_SEC_ENABLED=1 -DETHOS_U_PRIV_ENABLED=1 '
+
+MLEVK_FLAGS = NPU_FLAGS + MODEL_FLAGS
+
+LOCAL_CFLAGS = ' '
+LOCAL_CXXFLAGS = ' -std=c++14 -Wno-psabi -DARM_MATH_LOOPUNROLL -D__ARM_FEATURE_DSP=1 -DARM_MODEL_USE_PMU_COUNTERS=1 '
+
+LOCAL_CFLAGS = LOCAL_CFLAGS + MLEVK_FLAGS
+LOCAL_CXXFLAGS = LOCAL_CXXFLAGS + MLEVK_FLAGS
+
 group = []
 cwd = GetCurrentDir() # get current dir path
-
 
 def check_h_hpp_exists(path):
     file_dirs = os.listdir(path)
@@ -27,8 +38,7 @@ dependencies/core-driver/src/ethosu_device_u55_u65.c
 dependencies/core-driver/src/ethosu_driver.c
 dependencies/core-driver/src/ethosu_pmu.c
 """)
-src += npu_drv_SRCS
-inc += npu_drv_INCS
+group = group + DefineGroup('mlevk_npu_drv', npu_drv_SRCS, depend = ['NU_PKG_USING_MLEVK'], CPPPATH = npu_drv_INCS, LOCAL_CFLAGS = LOCAL_CFLAGS, LOCAL_CXXFLAGS = LOCAL_CXXFLAGS)
 
 dependencies_cmsis_nn_cwd = os.path.join(dependencies_cwd, 'cmsis-nn')
 cmsis_nn_INCS = [
@@ -144,13 +154,12 @@ dependencies/cmsis-nn/Source/SoftmaxFunctions/arm_softmax_u8.c
 dependencies/cmsis-nn/Source/SoftmaxFunctions/arm_softmax_s8_s16.c
 dependencies/cmsis-nn/Source/SoftmaxFunctions/arm_softmax_s16.c
 """)
-src += cmsis_nn_SRCS
-inc += cmsis_nn_INCS
-
+group = group + DefineGroup('mlevk_cmsis_nn', cmsis_nn_SRCS, depend = ['NU_PKG_USING_MLEVK'], CPPPATH = cmsis_nn_INCS, LOCAL_CFLAGS = LOCAL_CFLAGS, LOCAL_CXXFLAGS = LOCAL_CXXFLAGS)
 
 dependencies_cmsis_dsp_cwd = os.path.join(dependencies_cwd, 'cmsis-dsp')
 cmsis_dsp_INCS = [
     dependencies_cmsis_dsp_cwd,
+    dependencies_cmsis_dsp_cwd + '/PrivateInclude',
     dependencies_cmsis_dsp_cwd + '/Include',
 ]
 cmsis_dsp_SRCS = Split("""
@@ -213,10 +222,20 @@ dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix2_init_q31.c
 dependencies/cmsis-dsp/Source/TransformFunctions/arm_dct4_q15.c
 dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_conj_f32.c
 dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_dot_prod_f32.c
+dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_mag_q31.c
 dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_mag_f32.c
 dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_mult_real_f32.c
 dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_mag_squared_f32.c
 dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_f32.c
+dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_mag_q15.c
+dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_mag_f16.c
+dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_mult_real_q15.c
+dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_q15.c
+dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_q31.c
+dependencies/cmsis-dsp/Source/MatrixFunctions/arm_mat_vec_mult_q15.c
+dependencies/cmsis-dsp/Source/MatrixFunctions/arm_mat_vec_mult_f16.c
+dependencies/cmsis-dsp/Source/MatrixFunctions/arm_mat_vec_mult_f32.c
+dependencies/cmsis-dsp/Source/MatrixFunctions/arm_mat_vec_mult_q31.c
 dependencies/cmsis-dsp/Source/FastMathFunctions/arm_vlog_q31.c
 dependencies/cmsis-dsp/Source/FastMathFunctions/arm_sin_q31.c
 dependencies/cmsis-dsp/Source/FastMathFunctions/arm_cos_f32.c
@@ -408,8 +427,7 @@ dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_max_no_idx_f64.c
 dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_var_f16.c
 dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_min_q15.c
 """)
-src += cmsis_dsp_SRCS
-inc += cmsis_dsp_INCS
+group = group + DefineGroup('mlevk_cmsis_dsp', cmsis_dsp_SRCS, depend = ['NU_PKG_USING_MLEVK'], CPPPATH = cmsis_dsp_INCS, LOCAL_CFLAGS = LOCAL_CFLAGS, LOCAL_CXXFLAGS = LOCAL_CXXFLAGS)
 
 dependencies_tflm_cwd = os.path.join(dependencies_cwd, 'tensorflow')
 tflm_INCS = [
@@ -422,6 +440,7 @@ tflm_INCS = [
 
 tflm_SRCS = Split("""
 dependencies/tensorflow/tensorflow/compiler/mlir/lite/schema/schema_utils.cc
+dependencies/tensorflow/tensorflow/lite/array.cc
 dependencies/tensorflow/tensorflow/lite/core/c/common.cc
 dependencies/tensorflow/tensorflow/lite/core/api/tensor_utils.cc
 dependencies/tensorflow/tensorflow/lite/core/api/error_reporter.cc
@@ -612,9 +631,8 @@ dependencies/tensorflow/signal/micro/kernels/delay.cc
 dependencies/tensorflow/signal/micro/kernels/stacker.cc
 dependencies/tensorflow/signal/micro/kernels/filter_bank_spectral_subtraction.cc
 """)
-
-src += tflm_SRCS
-inc += tflm_INCS
+TF_CXXFLAGS = CMSIS_FLAGS + ' -DNDEBUG=1 -DFLATBUFFERS_LOCALE_INDEPENDENT=0 '
+group = group + DefineGroup('mlevk_tflm', tflm_SRCS, depend = ['NU_PKG_USING_MLEVK'], CPPPATH = tflm_INCS, LOCAL_CXXFLAGS = TF_CXXFLAGS)
 
 mlevk_source_cwd = os.path.join(cwd, 'source')
 mlevk_INCS = [
@@ -666,8 +684,7 @@ source/hal/source/platform/rtthread/source/timer_native.c
 source/math/PlatformMath.cc
 source/profiler/Profiler.cc
 """)
-src += mlevk_SRCS
-inc += mlevk_INCS
+group = group + DefineGroup('mlevk_core', mlevk_SRCS, depend = ['NU_PKG_USING_MLEVK'], CPPPATH = mlevk_INCS, LOCAL_CFLAGS = LOCAL_CFLAGS, LOCAL_CXXFLAGS = LOCAL_CXXFLAGS)
 
 #USE_CASE COMMON
 mlevk_uc_cwd = os.path.join(cwd, 'source', 'use_case')
@@ -721,32 +738,12 @@ mlevk_uc_SRCS = mlevk_uc_SRCS + Glob(os.path.join(mlevk_uc_cwd, mlevk_uc_name, '
 mlevk_uc_SRCS = mlevk_uc_SRCS + Glob(os.path.join(mlevk_uc_res_cwd, mlevk_uc_name, 'src','*.cc'))
 mlevk_uc_SRCS = mlevk_uc_SRCS + Glob(os.path.join(mlevk_uc_api_cwd, mlevk_uc_name, 'src','*.cc'))
 
-MODEL_FLAGS=' -DACTIVATION_BUF_SZ=0x00082000 '
-src += mlevk_uc_SRCS
-inc += mlevk_uc_INCS
+group = group + DefineGroup('mlevk_usecase', mlevk_uc_SRCS, depend = ['NU_PKG_USING_MLEVK'], CPPPATH = mlevk_uc_INCS, LOCAL_CFLAGS = LOCAL_CFLAGS, LOCAL_CXXFLAGS = LOCAL_CXXFLAGS)
 
-# M55M1/TC8263
-NPU_FLAGS=' -DETHOSU55=1 -DARM_NPU -DETHOSU_ARCH=u55  -DCMSIS_NN=1 -DETHOSU_MACS=256 -DETHOSU=1 -DETHOS_U_BASE_ADDR=0x40003000 -DETHOS_U_IRQN=13 -DETHOS_U_SEC_ENABLED=1 -DETHOS_U_PRIV_ENABLED=1 -DNDEBUG=1 -DFLATBUFFERS_LOCALE_INDEPENDENT=0 '
-MLVER = ' -DPRJ_VER_STR=\\\"24.08.0\\\" -DPRJ_DES_STR=\\\"ARM_ML_Embedded_Evaluation_Kit\\\" '
-
-MLCFLAGS = ''
-MLEVK_FLAGS = NPU_FLAGS + MODEL_FLAGS + MLVER + MLCFLAGS
-
-LOCAL_CFLAGS = ' -std=c99 '
-LOCAL_CXXFLAGS = ' -std=c++14 -Wno-psabi -DARM_MATH_LOOPUNROLL -D__ARM_FEATURE_DSP=1 -DARM_MODEL_USE_PMU_COUNTERS=1  -DCMSIS_DEVICE_ARM_CORTEX_M_XX_HEADER_FILE=\\\"NuMicro.h\\\"'
-
-LOCAL_CFLAGS = LOCAL_CFLAGS + MLEVK_FLAGS
-LOCAL_CXXFLAGS = LOCAL_CXXFLAGS + MLEVK_FLAGS
-
-group = group + DefineGroup('MLEVK', src, depend = ['NU_PKG_USING_MLEVK'], CPPPATH = inc, LOCAL_CFLAGS = LOCAL_CFLAGS, LOCAL_CXXFLAGS = LOCAL_CXXFLAGS)
-
-
-print(cwd)
 list = os.listdir(cwd)
 for d in list:
     path = os.path.join(cwd, d)
     if os.path.isfile(os.path.join(path, 'SConscript')):
-        print(os.path.join(d, 'SConscript'))
         group = group + SConscript(os.path.join(d, 'SConscript'))
 
 Return('group')

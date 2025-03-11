@@ -94,18 +94,18 @@ extern "C"
  * @details    User can write data directly to CRC Write Data Register(CRC_DAT) by this macro to perform CRC operation.
  * \hideinitializer
  */
-#define CRC_WRITE_DATA(crc, u32Data)   (crc->DAT = (u32Data))
-#define CRC_ENABLE_DMA_INT(crc)              ((crc)->DMACTL |= CRC_DMACTL_INTEN_Msk)
-#define CRC_DISABLE_DMA_INT(crc)             ((crc)->DMACTL &= ~(CRC_DMACTL_INTEN_Msk))
-#define CRC_DMA_ABORT(crc)                   ((crc)->DMACTL |= CRC_DMACTL_ABORT_Msk)
-#define CRC_DMA_PAUSE(crc)                   ((crc)->DMACTL |= CRC_DMACTL_PAUSE_Msk)
-#define CRC_DMA_RESUME(crc)                  ((crc)->DMACTL &= ~CRC_DMACTL_PAUSE_Msk)
-#define CRC_IS_DMA_PAUSE(crc)                ((crc)->DMACTL & CRC_DMACTL_PAUSE_Msk)
-#define CRC_DMA_START(crc)                   ((crc)->DMACTL |= CRC_DMACTL_START_Msk)
-#define CRC_SET_DMA_SADDR(crc, Addr)         ((crc)->SADDR = (Addr)) //less than 0xE0000000
-#define CRC_SET_DMACNT_WORD(crc, Word)       ((crc)->DMACNT = ((Word)<<CRC_DMACNT_DMACNT_Pos))
-#define CRC_GET_STATUS(crc)                  ((crc)->DMASTS)
-#define CRC_SET_POLYNOMIAL(u32Polynomial)   (CRC->POLYNOMIAL = (u32Polynomial))
+#define CRC_WRITE_DATA(crc, u32Data)           ((crc)->DAT = (u32Data))
+#define CRC_ENABLE_DMA_INT(crc)                ((crc)->DMACTL |= CRC_DMACTL_INTEN_Msk)
+#define CRC_DISABLE_DMA_INT(crc)               ((crc)->DMACTL &= ~(CRC_DMACTL_INTEN_Msk))
+#define CRC_DMA_ABORT(crc)                     ((crc)->DMACTL |= CRC_DMACTL_ABORT_Msk)
+#define CRC_DMA_PAUSE(crc)                     ((crc)->DMACTL |= CRC_DMACTL_PAUSE_Msk)
+#define CRC_DMA_RESUME(crc)                    ((crc)->DMACTL &= ~CRC_DMACTL_PAUSE_Msk)
+#define CRC_IS_DMA_PAUSE(crc)                  ((crc)->DMACTL & CRC_DMACTL_PAUSE_Msk)
+#define CRC_DMA_START(crc)                     ((crc)->DMACTL |= CRC_DMACTL_START_Msk)
+#define CRC_SET_DMA_SADDR(crc, Addr)           ((crc)->SADDR = (Addr)) //less than 0xE0000000
+#define CRC_SET_DMACNT_WORD(crc, Word)         ((crc)->DMACNT = ((Word)<<CRC_DMACNT_DMACNT_Pos))
+#define CRC_GET_STATUS(crc)                    ((crc)->DMASTS)
+#define CRC_SET_POLYNOMIAL(crc, u32Polynomial) ((crc)->POLYNOMIAL = (u32Polynomial))
 
 void CRC_Open(uint32_t u32Mode, uint32_t u32Attribute, uint32_t u32Seed, uint32_t u32DataLen);
 uint32_t CRC_GetChecksum(void);

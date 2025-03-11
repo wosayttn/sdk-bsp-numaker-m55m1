@@ -35,8 +35,8 @@ extern void main_loop();
 /* Print application information. */
 static void print_application_intro()
 {
-    info("%s\n", PRJ_DES_STR);
-    info("Version %s Build date: " __DATE__ " @ " __TIME__ "\n", PRJ_VER_STR);
+    info("ARM_ML_Embedded_Evaluation_Kit port on Nuvoton M55M1 Platform\n");
+    info("Version 24.08.0 Build date: " __DATE__ " @ " __TIME__ "\n");
     info("Copyright 2021-2024 Arm Limited and/or its affiliates <open-source-office@arm.com>\n\n");
 }
 
@@ -135,5 +135,7 @@ exit_mlevk_worker:
 
     return -1;
 }
-INIT_APP_EXPORT(mlevk_go);
+#if defined(MLEVK_UC_LIVE_DEMO)
+    INIT_APP_EXPORT(mlevk_go);
+#endif
 MSH_CMD_EXPORT(mlevk_go, Start MLEVK);

@@ -47,10 +47,6 @@ enum
 };
 
 /* Private typedef --------------------------------------------------------------*/
-struct nu_spi_cs
-{
-    rt_uint32_t pin;
-};
 
 /* Private functions ------------------------------------------------------------*/
 static void nu_spi_transmission_with_poll(struct nu_spi *spi_bus,
@@ -202,7 +198,11 @@ static rt_err_t nu_spi_bus_configure(struct rt_spi_device *device,
     {
         rt_memcpy(&spi_bus->configuration, configuration, sizeof(*configuration));
 
-        SPI_Open(spi_bus->spi_base, SPI_MASTER, u32SPIMode, configuration->data_width, u32BusClock);
+        SPI_Open(spi_bus->spi_base,
+                 (configuration->mode & RT_SPI_SLAVE) ? SPI_SLAVE : SPI_MASTER,
+                 u32SPIMode,
+                 configuration->data_width,
+                 configuration->max_hz);
 
         if (configuration->mode & RT_SPI_CS_HIGH)
         {
@@ -594,18 +594,26 @@ void nu_spi_transfer(struct nu_spi *spi_bus, uint8_t *tx, uint8_t *rx, int lengt
     RT_ASSERT(spi_bus != RT_NULL);
 
 #if defined(BSP_USING_SPI_PDMA)
-    /* DMA transfer constrains */
+    /* Slave role, always use PDMA to get higher performance. */
     if ((spi_bus->pdma_chanid_rx >= 0) &&
             !((uint32_t)tx % bytes_per_word) &&
             !((uint32_t)rx % bytes_per_word) &&
             (bytes_per_word != 3) &&
-            (length >= NU_SPI_USE_PDMA_MIN_THRESHOLD))
+            ((spi_bus->spi_base->CTL & SPI_CTL_SLAVE_Msk) || (length >= NU_SPI_USE_PDMA_MIN_THRESHOLD)))
+        /* DMA transfer constrains */
         nu_spi_pdma_transmit(spi_bus, tx, rx, length, bytes_per_word);
     else
-        nu_spi_transmission_with_poll(spi_bus, tx, rx, length, bytes_per_word);
-#else
-    nu_spi_transmission_with_poll(spi_bus, tx, rx, length, bytes_per_word);
 #endif
+    {
+        if (spi_bus->spi_base->CTL & SPI_CTL_SLAVE_Msk)
+        {
+            /* Slave role */
+            /* please use PDMA to get higher performance. */
+            RT_ASSERT(0);
+        }
+
+        nu_spi_transmission_with_poll(spi_bus, tx, rx, length, bytes_per_word);
+    }
 }
 
 static rt_uint32_t nu_spi_bus_xfer(struct rt_spi_device *device, struct rt_spi_message *message)
@@ -635,6 +643,7 @@ static rt_uint32_t nu_spi_bus_xfer(struct rt_spi_device *device, struct rt_spi_m
     {
         if (message->cs_take && !(configuration->mode & RT_SPI_NO_CS))
         {
+
             if (pvUserData != RT_NULL)
             {
                 if (configuration->mode & RT_SPI_CS_HIGH)
@@ -729,37 +738,5 @@ static int rt_hw_spi_init(void)
 }
 
 INIT_DEVICE_EXPORT(rt_hw_spi_init);
-
-/**
-  * Attach the spi device to SPI bus, this function must be used after initialization.
-  */
-rt_err_t rt_hw_spi_device_attach(const char *bus_name, const char *device_name, rt_base_t pin)
-{
-    RT_ASSERT(bus_name != RT_NULL);
-    RT_ASSERT(device_name != RT_NULL);
-
-    rt_err_t ret = RT_EOK;
-    struct rt_spi_device *spi_device = (struct rt_spi_device *)rt_malloc(sizeof(struct rt_spi_device));
-    RT_ASSERT(spi_device != RT_NULL);
-
-    struct nu_spi_cs *cs_pin = (struct nu_spi_cs *)rt_malloc(sizeof(struct nu_spi_cs));
-    RT_ASSERT(cs_pin != RT_NULL);
-
-    cs_pin->pin = pin;
-    rt_pin_mode(pin, PIN_MODE_OUTPUT);
-    rt_pin_write(pin, PIN_HIGH);
-
-    ret = rt_spi_bus_attach_device(spi_device, device_name, bus_name, (void *)cs_pin);
-    if (ret != RT_EOK)
-    {
-        LOG_E("%s attach to %s faild, %d\n", device_name, bus_name, ret);
-    }
-
-    RT_ASSERT(ret == RT_EOK);
-
-    LOG_D("%s attach to %s done", device_name, bus_name);
-
-    return ret;
-}
 
 #endif //#if defined(BSP_USING_SPI)

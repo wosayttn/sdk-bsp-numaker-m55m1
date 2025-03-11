@@ -962,35 +962,8 @@ config SOC_SERIES_M55M1
         endif
     endif
 
-    config BSP_USING_USBD
-        bool "Enable Full-Speed USB Device Controller(USBD)"
-        select RT_USING_USB_DEVICE
-
-    config BSP_USING_HSUSBD
-        bool "Enable High-Speed USB Device Controller(HSUSBD)"
-        select RT_USING_USB_DEVICE
-
-    config BSP_USING_USBH
-        bool "Enable Full-Speed USB Host Controller(USBH)"
-        select RT_USING_USB_HOST
-        select RT_USBH_MSTORAGE
-
-    config BSP_USING_HSUSBH
-        bool "Enable High-Speed USB Host Controller(HSUSBH)"
-        select RT_USING_USB_HOST
-        select RT_USBH_MSTORAGE
-
-    if BSP_USING_USBH || BSP_USING_HSUSBH
-        config NU_USBHOST_HUB_POLLING_INTERVAL
-            int "USB Root Hub Polling Interval(in Mili-seconds)"
-            range 100 2000
-            default 100
-    endif
-
     config BSP_USING_HSOTG
         bool "Enable High-Speed USB On-The-Go(HSOTG)"
-        select BSP_USING_HSUSBH
-        select BSP_USING_HSUSBD
 
     menuconfig BSP_USING_LPADC
         bool "Enable Low-Power Analog-to-Digital Converter(LPADC)"

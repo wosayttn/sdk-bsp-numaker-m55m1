@@ -847,8 +847,8 @@ extern "C"
 
 #define ST0_MODULE      (MODULE_CLKCTL_ENC(51ULL)|MODULE_CLKEN_Pos_ENC((uint64_t)CLK_STCTL_ST0CKEN_Pos)|\
                          MODULE_CLKSEL_ENC(   NA)|MODULE_CLKSEL_Msk_ENC(     NA)|MODULE_CLKSEL_Pos_ENC(NA)|\
-                         MODULE_CLKDIV_ENC(   NA)|MODULE_CLKDIV_Msk_ENC(     NA)|MODULE_CLKDIV_Pos_ENC(NA))            							   /*!< ST0 Module */
-						 
+                         MODULE_CLKDIV_ENC(   NA)|MODULE_CLKDIV_Msk_ENC(     NA)|MODULE_CLKDIV_Pos_ENC(NA))                                        /*!< ST0 Module */
+
 #define TMR0_MODULE     (MODULE_CLKCTL_ENC(53ULL)|MODULE_CLKEN_Pos_ENC((uint64_t)CLK_TMRCTL_TMR0CKEN_Pos)|\
                          MODULE_CLKSEL_ENC(22ULL)|MODULE_CLKSEL_Msk_ENC( 0x7ULL)|MODULE_CLKSEL_Pos_ENC((uint64_t)CLK_TMRSEL_TMR0SEL_Pos)|\
                          MODULE_CLKDIV_ENC(   NA)|MODULE_CLKDIV_Msk_ENC(     NA)|MODULE_CLKDIV_Pos_ENC(NA))                                        /*!< TMR0 Module */

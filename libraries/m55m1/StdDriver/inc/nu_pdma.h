@@ -6,6 +6,7 @@
  * @copyright SPDX-License-Identifier: Apache-2.0
  * @copyright Copyright (C) 2023 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
+
 #ifndef __NU_PDMA_H__
 #define __NU_PDMA_H__
 

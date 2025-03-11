@@ -16,15 +16,15 @@ extern "C"
 #endif
 
 /** @addtogroup Standard_Driver Standard Driver
-    @{
+  @{
 */
 
 /** @addtogroup SYS_Driver SYS Driver
-    @{
+  @{
 */
 
 /** @addtogroup SYS_EXPORTED_CONSTANTS SYS Exported Constants
-    @{
+  @{
 */
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -3886,8 +3886,11 @@ extern "C"
 #define SET_XT1_OUT_PF2()           SYS->GPF_MFP0 = ((SYS->GPF_MFP0 & (~SYS_GPF_MFP0_PF2MFP_Msk)) | SYS_GPF_MFP0_PF2MFP_XT1_OUT)                       /*!< Set PF2 function to XT1_OUT             */
 
 
+/** @} end of group SYS_EXPORTED_CONSTANTS */
 
-/*@}*/ /* end of group SYS_EXPORTED_CONSTANTS */
+/** @addtogroup SYS_EXPORTED_FUNCTIONS SYS Exported Functions
+  @{
+*/
 
 /**
   * @brief      Clear Brown-out detector interrupt flag
@@ -4048,7 +4051,7 @@ extern "C"
 
 /**
 * @brief      Set Brown-out detector output de-glitch time selection
-* @param[in]  u32Wakeup is Brown-out detector wake-up selection. Including :
+* @param[in]  u32Select is Brown-out detector wake-up selection. Including :
 *             - \ref SYS_BODCTL_BODDGSEL_LIRC
 *             - \ref SYS_BODCTL_BODDGSEL_4_SCLK
 *             - \ref SYS_BODCTL_BODDGSEL_8_SCLK

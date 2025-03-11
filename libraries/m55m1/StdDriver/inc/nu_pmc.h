@@ -53,26 +53,12 @@ enum
 /*---------------------------------------------------------------------------------------------------------*/
 #define PMC_PLCTL_PLSEL_PL0     (0x0UL<<PMC_PLCTL_PLSEL_Pos)   /*!< Set power level to power level 0. Supports system clock up to 220MHz. */
 #define PMC_PLCTL_PLSEL_PL1     (0x1UL<<PMC_PLCTL_PLSEL_Pos)   /*!< Set power level to power level 1. Supports system clock up to 200MHz. */
-#define PMC_PLCTL_PLSEL_PL2     (0x2UL<<PMC_PLCTL_PLSEL_Pos)   /*!< Set power level to power level 2. Supports system clock up to 12MHz. */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  PLSTS constant definitions. (Write-Protection Register)                                                */
 /*---------------------------------------------------------------------------------------------------------*/
 #define PMC_PLSTS_PLSTATUS_PL0  (0x0UL<<PMC_PLSTS_PLSTATUS_Pos) /*!< Power level is power level 0. Supports system clock up to 220MHz. */
 #define PMC_PLSTS_PLSTATUS_PL1  (0x1UL<<PMC_PLSTS_PLSTATUS_Pos) /*!< Power level is power level 1. Supports system clock up to 200MHz. */
-#define PMC_PLSTS_PLSTATUS_PL2  (0x2UL<<PMC_PLSTS_PLSTATUS_Pos) /*!< Power level is power level 2. Supports system clock up to 12MHz. */
-
-/*---------------------------------------------------------------------------------------------------------*/
-/*  VRCTL constant definitions. (Write-Protection Register)                                                */
-/*---------------------------------------------------------------------------------------------------------*/
-#define PMC_VRCTL_MVRS_LDO      (0x0UL<<PMC_VRCTL_MVRS_Pos)    /*!< Set main voltage regulator type to LDO */
-#define PMC_VRCTL_MVRS_DCDC     (0x1UL<<PMC_VRCTL_MVRS_Pos)    /*!< Set main voltage regulator type to DCDC */
-
-/*---------------------------------------------------------------------------------------------------------*/
-/*  VRSTS constant definitions. (Write-Protection Register)                                                */
-/*---------------------------------------------------------------------------------------------------------*/
-#define PMC_VRSTS_CURMVR_LDO    (0x0UL<<PMC_VRSTS_CURMVR_Pos)   /*!< Main voltage regulator type is LDO */
-#define PMC_VRSTS_CURMVR_DCDC   (0x1UL<<PMC_VRSTS_CURMVR_Pos)   /*!< Main voltage regulator type is DCDC */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  SYSRB constant definitions. (Write-Protection Register)                                             */
@@ -133,8 +119,6 @@ enum
 #define PMC_PWRCTL_BUSY_FLAG        (PMC_BASE+0x000UL)  /*!< Select PWRCTL busy flag \hideinitializer */
 #define PMC_PLCTL_BUSY_FLAG         (PMC_BASE+0x010UL)  /*!< Select PLCTL busy flag \hideinitializer */
 #define PMC_PLSTS_BUSY_FLAG         (PMC_BASE+0x014UL)  /*!< Select PLSTS busy flag \hideinitializer */
-#define PMC_VRCTL_BUSY_FLAG         (PMC_BASE+0x018UL)  /*!< Select VRCTL busy flag \hideinitializer */
-#define PMC_VRSTS_BUSY_FLAG         (PMC_BASE+0x01CUL)  /*!< Select VRSTS busy flag \hideinitializer */
 #define PMC_IOTGDBCTL_BUSY_FLAG     (PMC_BASE+0x030UL)  /*!< Select IOTGDBCTL busy flag \hideinitializer */
 #define PMC_GPATGCTL_BUSY_FLAG      (PMC_BASE+0x034UL)  /*!< Select GPATGCTL busy flag \hideinitializer */
 #define PMC_GPBTGCTL_BUSY_FLAG      (PMC_BASE+0x038UL)  /*!< Select GPBTGCTL busy flag \hideinitializer */
@@ -214,6 +198,12 @@ enum
 #define PMC_WKPIN5_RISING     (0x1UL << PMC_PINWKCTL_WKPINEN5_Pos)    /*!< Enable Wake-up pin4 (GPA.12) rising edge at Deep Power-down mode \hideinitializer */
 #define PMC_WKPIN5_FALLING    (0x2UL << PMC_PINWKCTL_WKPINEN5_Pos)    /*!< Enable Wake-up pin4 (GPA.12) falling edge at Deep Power-down mode \hideinitializer */
 #define PMC_WKPIN5_BOTHEDGE   (0x3UL << PMC_PINWKCTL_WKPINEN5_Pos)    /*!< Enable Wake-up pin4 (GPA.12) both edge at Deep Power-down mode \hideinitializer */
+
+/** @} end of group PMC_EXPORTED_CONSTANTS */
+
+/** @addtogroup PMC_EXPORTED_FUNCTIONS PMC Exported Functions
+  @{
+*/
 
 /**
   * @brief      Disable Wake-up Pin 0

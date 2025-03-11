@@ -39,6 +39,11 @@ extern "C"
 #define AWF_BOTHWK_DISABLE      (0x0UL)
 #define AWF_CLOSE               (0x0UL)
 
+/** @} end of group AWF_EXPORTED_CONSTANTS */
+
+/** @addtogroup AWF_EXPORTED_FUNCTIONS AWF Exported Functions
+  @{
+*/
 
 /**
   * @brief      This macro is used to set accumulation count.

@@ -158,8 +158,8 @@ uint8_t isConsecutive(uint8_t au8Src[], uint32_t size)
         }
     }
 
-    return (u8MaxRang >= 2) ?
-           au8Src[((u8StartIdx + u8MaxRang / 2) + (((u8MaxRang % 2) != 0) ? 1 : 0))] - 1 :
+    return (u8MaxRang > 2) ?
+           au8Src[((u8StartIdx + u8MaxRang / 2) + (((u8MaxRang % 2) != 0) ? 1 : 0)) - 1] :
            au8Src[u8StartIdx];
 }
 
@@ -181,8 +181,6 @@ static uint32_t HyperRAM_TrimDLLDelayNumber(SPIM_T *spim)
     uint8_t *pu8TrimPattern = (uint8_t *)au64TrimPattern;
     uint8_t *pu8VerfiyBuf = (uint8_t *)au64VerifyBuf;
     uint32_t u32DMMAddr = SPIM_HYPER_GET_DMMADDR(spim);
-
-    SPIM_HYPER_DISABLE_CACHE(spim);
 
     /* Create Trim Pattern */
     for (u32k = 0; u32k < sizeof(au64TrimPattern); u32k++)
@@ -207,12 +205,6 @@ static uint32_t HyperRAM_TrimDLLDelayNumber(SPIM_T *spim)
             SPIM_HYPER_SetDLLDelayNum(spim, u8RdDelay);
 
             memset(pu8VerfiyBuf, 0, sizeof(au64VerifyBuf));
-
-            if (u32ReTrimCnt == 5)
-            {
-                SPIM_HYPER_ENABLE_CACHE(spim);
-                SPIM_HYPER_INVALID_CACHE(spim);
-            }
 
 #if (NVT_DCACHE_ON == 1)
             SCB_InvalidateDCache_by_Addr((volatile uint32_t *)((u32ReTrimCnt == 1) ? u32SrcAddr : (u32DMMAddr + u32SrcAddr)), (int32_t)TRIM_PAT_SIZE * 2);
@@ -239,8 +231,6 @@ static uint32_t HyperRAM_TrimDLLDelayNumber(SPIM_T *spim)
 
                     /* Read 8 bytes of data from the HyperRAM */
                     *(volatile uint64_t *)&pu8VerfiyBuf[u32k] = *(volatile uint64_t *)(u32DMMAddr + u32SrcAddr + u32LoopAddr);
-
-                    SPIM_HYPER_ExitDirectMapMode(spim);
                 }
 
                 if ((u32i = memcmp(&pu8TrimPattern[u32LoopAddr], &pu8VerfiyBuf[u32k], 0x08)) != 0)
@@ -252,12 +242,11 @@ static uint32_t HyperRAM_TrimDLLDelayNumber(SPIM_T *spim)
             }
 
             u8RdDelayRes[u8RdDelay] += ((u32i == 0) ? 1 : 0);
-
-            SPIM_HYPER_DISABLE_CACHE(spim);
         }
     }
 
     u32j = 0;
+
     for (u32i = 0; u32i < SPIM_HYPER_MAX_LATENCY; u32i++)
     {
         if (u8RdDelayRes[u32i] == u32ReTrimMaxCnt)
@@ -283,9 +272,6 @@ uint32_t HyperRAM_Init(SPIM_T *spim)
 
     /* SPIM Def. Enable Cipher, First Disable the test. */
     SPIM_HYPER_DISABLE_CIPHER(spim);
-
-    /* SPIM Def. Enable cache, First Disable the test. */
-    SPIM_HYPER_DISABLE_CACHE(spim);
 
     /* Set R/W Latency Number */
     SPIM_Hyper_DefaultConfig(spim, HYPERRAM_CSM_TIME, HYPERRAM_RD_LTCY, HYPERRAM_WR_LTCY);

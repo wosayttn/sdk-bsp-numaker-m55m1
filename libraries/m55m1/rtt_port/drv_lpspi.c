@@ -37,10 +37,6 @@ enum
 };
 
 /* Private typedef --------------------------------------------------------------*/
-struct nu_spi_cs
-{
-    rt_uint32_t pin;
-};
 
 /* Private functions ------------------------------------------------------------*/
 static void nu_spi_transmission_with_poll(struct nu_spi *spi_bus,
@@ -617,37 +613,5 @@ static int rt_hw_lpspi_init(void)
 }
 
 INIT_DEVICE_EXPORT(rt_hw_lpspi_init);
-
-/**
-  * Attach the spi device to SPI bus, this function must be used after initialization.
-  */
-rt_err_t rt_hw_spi_device_attach(const char *bus_name, const char *device_name, rt_base_t pin)
-{
-    RT_ASSERT(bus_name != RT_NULL);
-    RT_ASSERT(device_name != RT_NULL);
-
-    rt_err_t ret = RT_EOK;
-    struct rt_spi_device *spi_device = (struct rt_spi_device *)rt_malloc(sizeof(struct rt_spi_device));
-    RT_ASSERT(spi_device != RT_NULL);
-
-    struct nu_spi_cs *cs_pin = (struct nu_spi_cs *)rt_malloc(sizeof(struct nu_spi_cs));
-    RT_ASSERT(cs_pin != RT_NULL);
-
-    cs_pin->pin = pin;
-    rt_pin_mode(pin, PIN_MODE_OUTPUT);
-    rt_pin_write(pin, PIN_HIGH);
-
-    ret = rt_spi_bus_attach_device(spi_device, device_name, bus_name, (void *)cs_pin);
-    if (ret != RT_EOK)
-    {
-        LOG_E("%s attach to %s faild, %d\n", device_name, bus_name, ret);
-    }
-
-    RT_ASSERT(ret == RT_EOK);
-
-    LOG_D("%s attach to %s done", device_name, bus_name);
-
-    return ret;
-}
 
 #endif //#if defined(BSP_USING_LPSPI)

@@ -18,11 +18,11 @@
   @{
 */
 
+int32_t g_FMC_i32ErrCode = FMC_OK; /*!< FMC global error code */
+
 /** @addtogroup FMC_EXPORTED_FUNCTIONS FMC Exported Functions
   @{
 */
-
-int32_t g_FMC_i32ErrCode = FMC_OK; /*!< FMC global error code */
 
 /**
   * @brief Execute FMC_ISPCMD_READ command to read a word from flash.
@@ -538,6 +538,21 @@ int32_t FMC_RemapBank(uint32_t u32Bank)
         FMC->ISPCTL |= FMC_ISPCTL_ISPFF_Msk;
         g_FMC_i32ErrCode = FMC_ERR_PROG_FAILED;
         i32RetCode = FMC_ERR_PROG_FAILED;
+    }
+
+    if (i32RetCode == FMC_OK)
+    {
+        /* Because bank remap takes effect immediately after FMC_ISPCMD_BANK_REMAP command is done,
+         * invalidate I-Cache after bank remap to ensure instruction consistency.
+         */
+        SCB_InvalidateICache();
+#if (NVT_DCACHE_ON == 1)
+        // Invalidate D-Cache after bank remap to ensure data consistency when D-Cache is enabled.
+        SCB_InvalidateDCache_by_Addr((void *)FMC_APROM_BASE, FMC_APROM_SIZE);
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+        SCB_InvalidateDCache_by_Addr((void *)(FMC_APROM_BASE + NS_OFFSET), FMC_APROM_SIZE);
+#endif
+#endif
     }
 
     return i32RetCode;

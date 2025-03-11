@@ -120,6 +120,10 @@ void nu_pin_set_function(rt_base_t pin, int data)
 
 void nu_read_uid(uint32_t *id)
 {
+    uint32_t u32RegLockBackup = SYS_IsRegLocked();
+
+    SYS_UnlockReg();
+
     /* Enable FMC ISP function */
     FMC_Open();
 
@@ -131,6 +135,9 @@ void nu_read_uid(uint32_t *id)
 
     /* Disable FMC ISP function */
     FMC_Close();
+
+    if (u32RegLockBackup)
+        SYS_LockReg();
 }
 
 /**
@@ -161,6 +168,33 @@ int reboot(int argc, char **argv)
     return 0;
 }
 MSH_CMD_EXPORT(reboot, Reboot System);
+
+#if defined(RT_USING_SPI)
+/**
+  * Attach the spi device to SPI bus, this function must be used after initialization.
+  */
+rt_err_t rt_hw_spi_device_attach(const char *bus_name, const char *device_name, rt_base_t pin)
+{
+    RT_ASSERT(bus_name != RT_NULL);
+    RT_ASSERT(device_name != RT_NULL);
+
+    rt_err_t ret = RT_EOK;
+    struct rt_spi_device *spi_device = (struct rt_spi_device *)rt_malloc(sizeof(struct rt_spi_device));
+    RT_ASSERT(spi_device != RT_NULL);
+
+    rt_uint32_t *cs_pin = (rt_uint32_t *)rt_malloc(sizeof(rt_uint32_t));
+    RT_ASSERT(cs_pin != RT_NULL);
+
+    *cs_pin = pin;
+    rt_pin_mode(pin, PIN_MODE_OUTPUT);
+    rt_pin_write(pin, PIN_HIGH);
+
+    ret = rt_spi_bus_attach_device(spi_device, device_name, bus_name, (void *)cs_pin);
+    RT_ASSERT(ret == RT_EOK);
+
+    return ret;
+}
+#endif
 
 void devmem(int argc, char *argv[])
 {

@@ -167,7 +167,7 @@ extern "C"
   *             - \ref HSOTG_PHYCTL_FSEL_19_2M
   *             - \ref HSOTG_PHYCTL_FSEL_20_0M
   *             - \ref HSOTG_PHYCTL_FSEL_24_0M
-  *             - \ref HSOTG_PHYCTL_FSEL_16_2M
+  *             - \ref HSOTG_PHYCTL_FSEL_16_0M
   *             - \ref HSOTG_PHYCTL_FSEL_26_0M
   *             - \ref HSOTG_PHYCTL_FSEL_32_0M
   * @return     None

@@ -24,7 +24,7 @@ limitations under the License.
 
 // This is set in micro/tools/make/targets/cortex_m_corstone_300_makefile.inc.
 // It is needed for the calls to NVIC_SetVector()/NVIC_EnableIR(),
-#include CMSIS_DEVICE_ARM_CORTEX_M_XX_HEADER_FILE
+#include "NuMicro.h"
 
 #include "tensorflow/lite/micro/micro_log.h"
 #include "tensorflow/lite/micro/micro_time.h"

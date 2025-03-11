@@ -226,7 +226,7 @@ bool ClassifyImageHandlerLive(ApplicationContext &ctx)
     sViewInfo_Packet.u32Width    = nRows;
     sViewInfo_Packet.u32Height   = nCols;
     sViewInfo_Packet.pu8FarmAddr = NULL;  /* Allocated in camera driver. */
-    sViewInfo_Packet.u32PixFmt   = CCAP_PAR_OUTFMT_RGB888_U8;
+    sViewInfo_Packet.u32PixFmt   = CCAP_PKT_OUTFMT_RGB888_U8;
 
     /* Initialise CAMERA - use packet/planar pipes */
     if (0 != hal_camera_init(&sViewInfo_Packet, NULL))

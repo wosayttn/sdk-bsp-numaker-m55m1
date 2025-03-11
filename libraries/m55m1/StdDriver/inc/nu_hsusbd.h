@@ -121,6 +121,9 @@ typedef struct HSUSBD_CMD_STRUCT
 
 } S_HSUSBD_CMD_T; /*!<USB Setup Packet Structure */
 
+
+
+
 typedef struct s_hsusbd_info
 {
     const uint8_t *gu8DevDesc;            /*!< Device descriptor */
@@ -188,6 +191,9 @@ extern volatile uint8_t g_hsusbd_RemoteWakeupEn;
 #define HSUSBD_DISABLE_BCD()              ((uint32_t)(HSUSBD->BCDC &= ~HSUSBD_BCDC_BCDEN_Msk)) /*!<Disable BCD  \hideinitializer */
 #define HSUSBD_ENABLE_LPM()               ((uint32_t)(HSUSBD->LPMCSR |= HSUSBD_LPMCSR_LPMEN_Msk)) /*!<Enable LPM  \hideinitializer */
 #define HSUSBD_DISABLE_LPM()              ((uint32_t)(HSUSBD->LPMCSR &= ~HSUSBD_LPMCSR_LPMEN_Msk)) /*!<Disable LPM  \hideinitializer */
+#define HSUSBD_ENABLE_LPMSLEEP()          ((uint32_t)(HSUSBD->LPMCSR |= HSUSBD_LPMCSR_LPMSLEEPEN_Pos)) /*!<Enable LPMSLEEP  \hideinitializer */
+#define HSUSBD_DISABLE_LPMSLEEP()         ((uint32_t)(HSUSBD->LPMCSR &= ~HSUSBD_LPMCSR_LPMSLEEPEN_Pos)) /*!<Disable LPMSLEEP  \hideinitializer */
+#define SET_HSUSBDROLE()                  ((uint32_t)(SYS->USBPHY &= ~SYS_USBPHY_HSUSBROLE_Msk)) /*!<Set HSUSB role to HSUSBD  \hideinitializer */
 
 /**
   * @brief  HSUSBD_memcpy, Copy bytes hardware limitation
@@ -396,6 +402,8 @@ void HSUSBD_CtrlIn(void);
 int32_t HSUSBD_CtrlOut(uint8_t pu8Buf[], uint32_t u32Size);
 void HSUSBD_SwReset(void);
 void HSUSBD_SetVendorRequest(HSUSBD_VENDOR_REQ pfnVendorReq);
+void SYS_Enable_HSUSB_PHY(void);
+int32_t HSUSBD_Enable_PHY(void);
 
 /** @} end of group HSUSBD_EXPORTED_FUNCTIONS */
 

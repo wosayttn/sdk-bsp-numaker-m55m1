@@ -36,6 +36,8 @@ int32_t g_EADC_i32ErrCode = 0;   /*!< EADC global error code */
   */
 void EADC_Open(EADC_T *eadc, uint32_t u32InputMode)
 {
+    /* Add one cycle in the decode trigger event is used to improve EADC accuracy.*/
+    outpw((uint32_t)eadc + 0xFF0, inpw((uint32_t)eadc + 0xFF0) | BIT8);
 
     eadc->CTL &= (~EADC_CTL_DIFFEN_Msk);
 
@@ -156,13 +158,13 @@ void EADC_Close(EADC_T *eadc)
   *                            - \ref EADC_BPWM1TG_TRIGGER               : BPWM1TG trigger
   *                            - \ref EADC_ACMP0_INT_TRIGGER             : ACMP0 interrupt trigger
   *                            - \ref EADC_ACMP1_INT_TRIGGER             : ACMP1 interrupt trigger
-    *                          - \ref EADC_ACMP2_INT_TRIGGER             : ACMP2 interrupt trigger
+  *                            - \ref EADC_ACMP2_INT_TRIGGER             : ACMP2 interrupt trigger
   *                            - \ref EADC_ACMP3_INT_TRIGGER             : ACMP3 interrupt trigger
 
   * @param[in] u32Channel Specifies the sample module channel, valid value are from 0 to 27.
   * @return None
-  * @details Each of ADC control logic modules 0~18 which is configurable for ADC converter channel EADC_CH0~18 and trigger source.
-  *         sample module 19~21 is fixed for ADC channel 19, 20, 21 input sources as band-gap voltage, temperature sensor, and DAC0 output.
+  * @details Each of ADC control logic modules 0~23 which is configurable for ADC converter channel EADC_CH0~23 and trigger source.
+  *         sample module 24~27 is fixed for ADC channel 24, 25, 26, 27 input sources as band-gap voltage, temperature sensor, VBAT/4, and AVDD/4.
   */
 void EADC_ConfigSampleModule(EADC_T *eadc, uint32_t u32ModuleNum, uint32_t u32TriggerSrc, uint32_t u32Channel)
 {

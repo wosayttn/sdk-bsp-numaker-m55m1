@@ -143,7 +143,7 @@ typedef struct
      * |        |          |0 = Set SPIM_RESETn pin to low.
      * |        |          |1 = Set SPIM_RESETn to high (Default).
      * @var SPIM_T::CTL1
-     * Offset: 0x04  Control Register 1
+     * Offset: 0x04  Control and Status Register 1
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
@@ -157,15 +157,6 @@ typedef struct
      * |        |          |1 = The transfer has not finished yet.
      * |        |          |Note: All registers should be set before writing 1 to the SPIMEN bit
      * |        |          |When a transfer is in progress, user should not write to any register of this peripheral.
-     * |[1]     |CACHEOFF  |Cache Memory Function Disable Bit
-     * |        |          |0 = Cache memory function Enabled. (Default)
-     * |        |          |1 = Cache memory function Disabled.
-     * |[3]     |CDINVAL   |Cache Data Invalid Enable Bit
-     * |        |          |Write Operation:
-     * |        |          |0 = No effect.
-     * |        |          |1 = Set all cache data to be invalid. This bit is cleared by hardware automatically.
-     * |        |          |Read Operation: No effect
-     * |        |          |Note: When Flash memory is page erasing or chip erasing, please set CDINVAL to 0x1.
      * |[4]     |SS        |Slave Select Active Enable Bit
      * |        |          |0 = SPIM_SS is in active level.
      * |        |          |1 = SPIM_SS is in inactive level (Default).
@@ -189,7 +180,7 @@ typedef struct
      * |        |          |Note 3: Each SPI Flash command has the limitation of the maximum operation frequency of SCLK
      * |        |          |Please check the specification of the used SPI Flash component to decide the frequency of SPI Flash clock for different command operations of SPI Flash.
      * |        |          |Note 4: For DTR (Double Transfer Rate) commands, the setting values of DIVIDER are only 1,2,4,8,16,32,...
-     * |        |          |Note 5: For commands of Hyper bus device, the setting values of DIVIDER are only 1 and 2.
+     * |        |          |Note 5: For commands of HyperBus device, the setting values of DIVIDER are only 1 and 2.
      * @var SPIM_T::RXCLKDLY
      * Offset: 0x0C  RX Clock Delay Control Register
      * ---------------------------------------------------------------------------------------------------
@@ -225,7 +216,7 @@ typedef struct
      * |        |          |If DWIDTH is 16, 24, or 32, received data are held in the least significant byte of RXDAT register first.
      * |        |          |In a byte, received data are held in the most significant bit of RXDAT register first.
      * |        |          |Example1: If SPIM_CTL0[BURSTNUM] = 0x3 and SPIM_CTL1[DWIDTH] = 0x17, received data will be held in the order SPIM_RX3[23:0], SPIM_RX2[23:0], SPIM_RX1[23:0], SPIM_RX0[23:0].
-     * |        |          |Example2: If SPIM_CTL0[BURSTNUM = 0x0 and SPIM_CTL0[DWIDTH] = 0x07, received data will be held in the order SPIM_RX0[7], SPIM_RX0[6], .....,
+     * |        |          |Example2: If SPIM_CTL0[BURSTNUM] = 0x0 and SPIM_CTL0[DWIDTH] = 0x07, received data will be held in the order SPIM_RX0[7], SPIM_RX0[6], .....,
      * |        |          |SPIM_RX0[0].
      * @var SPIM_T::TX[4]
      * Offset: 0x20 ~ 0x2C Data Transmit Register 0 ~ 3
@@ -251,7 +242,7 @@ typedef struct
      * |[31:0]  |ADDR      |SRAM Memory Address
      * |        |          |For DMA Read mode, this is the destination address for DMA transfer.
      * |        |          |For DMA Write mode, this is the source address for DMA transfer.
-     * |        |          |Note : This address must be 8bytes aligned.
+     * |        |          |Note: This address must be 8bytes aligned.
      * @var SPIM_T::DMACNT
      * Offset: 0x34  DMA Transfer Byte Count Register
      * ---------------------------------------------------------------------------------------------------
@@ -292,10 +283,7 @@ typedef struct
      * |[23:16] |DESELTIM  |SPI Flash Deselect Time for Direct Memory Mapping Mode Only
      * |        |          |Set the minimum time width of SPI Flash deselect time (i.e
      * |        |          |Minimum SPIM_SS deselect time), as shown in Figure 1.1-5.
-     * |        |          |(1) Cache function disable:
      * |        |          |Minimum time width of SPIM_SS deselect time = (DESELTIM + 1) * AHB clock cycle time.
-     * |        |          |(2) Cache function enable:
-     * |        |          |Minimum time width of SPIM_SS deselect time = (DESELTIM + 4) * AHB clock cycle time.
      * |        |          |Note 1: AHB clock cycle time = 1/AHB clock frequency.
      * |        |          |Note 2: When cipher encryption/decryption is enabled, please set this register value >= 0x10
      * |        |          |When cipher encryption/decryption is disabled, please set this register value >= 0x8.
@@ -303,7 +291,6 @@ typedef struct
      * |[24]    |BWEN      |16 Bytes Burst Wrap Mode Enable Bit for Direct Memory Mapping Mode, and Read Command Code 0xEB, and 0xE7 Only
      * |        |          |0 = Burst Wrap Mode Disabled. (Default)
      * |        |          |1 = Burst Wrap Mode Enabled.
-     * |        |          |In direct memory mapping mode, both of quad read commands "0xEB" and "0xE7" support burst wrap mode for cache application.
      * |[25]    |CREN      |Continuous Read Mode Enable Bit for Direct Memory Mapping Mode, Read Command Codes 0xBB, 0xEB, 0xE7, 0x0D, 0xBD, and 0xED Only
      * |        |          |0 = Continuous Read Mode Disabled. (Default)
      * |        |          |1 = Continuous Read Mode Enabled.
@@ -320,14 +307,13 @@ typedef struct
      * |        |          |This bit is cleared by hardware automatically.
      * |        |          |Note 1: User must set this bit to 1 after all read/write operations are done in DMM mode for HYPER device, and wait this bit to 0 to indicate that finish process of all read/write operations is done in DMM mode for HYPER device.
      * |        |          |Note 2: User must set this bit to 1 before user switches SPIM operation mode (SPIM_CTL0[23:22]) from DMM mode to Normal I/O mode, DMA write mode, or DMA read mode.
-     * |        |          |Note 3: In SPIM DMM mode, user must set this bit to 1 before user switches SPIM cache function from enable to disable, or from disable to enable.
      * |[31]    |DMMIDLE   |DMM Mode Idle State for DMM mode only
      * |        |          |0 = DMM mode is in busy state.
      * |        |          |1 = DMM mode is in idle state.
-     * |        |          |Note 1: User can polling this status register to know DMM mode is in idle state or busy state when user wants to change OPMODE (SPIM_CTL0[23:22]) from DMM mode to Normal I/O mode/DMA write mode/DMA read mode, SPIM cipher enable/disable switch (SPIM_CTL[0]), SPIM cache enable/disable switch (SPIM_CTL1[1]).
+     * |        |          |Note 1: User can polling this status register to know DMM mode is in idle state or busy state when user wants to change OPMODE (SPIM_CTL0[23:22]) from DMM mode to Normal I/O mode/DMA write mode/DMA read mode, SPIM cipher enable/disable switch (SPIM_CTL[0]).
      * |        |          |Note 2: This status register keep to 1 when SPIM is in Normal I/O mode, DMA write mode, and DMA read mode.
      * @var SPIM_T::CTL2
-     * Offset: 0x48  Control Register 2
+     * Offset: 0x48  Control and Status Register 2
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
@@ -625,7 +611,7 @@ typedef struct
      * |        |          |1 = HYPERDLL output valid counter is reseted to 0x0 and it starts to count from 0x0 to DLLOVNUM (SPIM_DLL1[15:0]).
      * |        |          |Note 1: This bit will be cleared automatically.
      * |        |          |Note 2: User only writes 1u2019b1 to DLLOVRST once before user starts to trim delay step number of HYPERDLL
-     * |        |          |User needs to set DLLOVRST again to wait HYPERDLL output valid when one of frequencies of SPI output bus clock/hyper bus clock, HYPERDLL reference clock, or RWDS/DS clock are changed.
+     * |        |          |User needs to set DLLOVRST again to wait HYPERDLL output valid when one of frequencies of SPI output bus clock/HyperBus clock, HYPERDLL reference clock, or RWDS/DS clock are changed.
      * |[2]     |DLLCLKON  |HYPERDLL Clock Divider Circuit Status Bit (Read Only)
      * |        |          |0 = HYPERDLL clock divider circuit is disabled after HYPERDLL OLDO is enabled.
      * |        |          |1 = HYPERDLL clock divider circuit is enabled after HYPERDLL OLDO is enabled.
@@ -707,30 +693,30 @@ typedef struct
      * |        |          |Note 2: The unit of this CLKONNUM is cycle number of HYPERDLL reference clock that its frequency equals to frequency of SPIM output bus clock.
      * |        |          |Note 3: The default value is 0x07D0 when frequency of HYPERDLL reference clock is 100 MHz and HYPERDLL lock time is 20us.
      * @var SPIM_T::HYPER_CMD
-     * Offset: 0x80  Hyper Bus Command and Status Register
+     * Offset: 0x80  HyperBus Command and Status Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[3:0]   |HYPCMD    |Hyper Bus Command and Status
+     * |[3:0]   |HYPCMD    |HyperBus Command and Status
      * |        |          |Write
      * |        |          |0001 = Reset Hyper RAM.
      * |        |          |0010 = Read Hyper RAM regsiter (16-Bit, Read Data[15:0].
      * |        |          |0101 = Exit From Hybrid Sleep and deep power down.
      * |        |          |0111 = Write Hyper RAM regsiter (16-Bit, Write Data[15:0].
-     * |        |          |1000 = Read 2 Bytes (Read Data[15:0]) from memory space of Hyper Bus device.
-     * |        |          |1001 = Read 4 Bytes (Read Data[31:0]) from memory space of Hyper Bus device.
-     * |        |          |1100 = Write 1 Byte (Write Data[7:0]) to memory space of Hyper Bus device.
-     * |        |          |1101 = Write 2 Bytes (Write Data[15:0]) to memory space of Hyper Bus device.
-     * |        |          |1110 = Write 3 Bytes (Write Data[23:0]) to memory space of Hyper Bus device.
-     * |        |          |1111 = Write 4 Bytes (Write Data[31:0]) to memory space of Hyper Bus device.
+     * |        |          |1000 = Read 2 Bytes (Read Data[15:0]) from memory space of HyperBus device.
+     * |        |          |1001 = Read 4 Bytes (Read Data[31:0]) from memory space of HyperBus device.
+     * |        |          |1100 = Write 1 Byte (Write Data[7:0]) to memory space of HyperBus device.
+     * |        |          |1101 = Write 2 Bytes (Write Data[15:0]) to memory space of HyperBus device.
+     * |        |          |1110 = Write 3 Bytes (Write Data[23:0]) to memory space of HyperBus device.
+     * |        |          |1111 = Write 4 Bytes (Write Data[31:0]) to memory space of HyperBus device.
      * |        |          |Other value = reserved.
      * |        |          |Read
-     * |        |          |0000 = Hyper Bus interface is Idle.
-     * |        |          |Other value = Hyper Bus interface is busy.
+     * |        |          |0000 = HyperBus interface is Idle.
+     * |        |          |Other value = HyperBus interface is busy.
      * |        |          |Note 1: When an operation is Done, the read value automatically return to 4u2019b0000.
-     * |        |          |Note 2: The encryption and decryption of cipher are not supported, and it only uses to send command to Hyper Bus device, write control register to Hyper Bus device, and read status register from Hyper Bus device.
+     * |        |          |Note 2: The encryption and decryption of cipher are not supported, and it only uses to send command to HyperBus device, write control register to HyperBus device, and read status register from HyperBus device.
      * @var SPIM_T::HYPER_CONFIG1
-     * Offset: 0x84  Hyper Bus Configuration Register 1
+     * Offset: 0x84  HyperBus Configuration Register 1
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
@@ -741,19 +727,17 @@ typedef struct
      * |        |          |Others = Reserved.
      * |[5:4]   |CSH       |Chip Select Hold Time After CK Falling Edge
      * |        |          |This field indicates the hold time between the last CK falling edge and chip select
-     * |        |          |00 = 0.5 HCLK cycles.
-     * |        |          |01 = 1.5 HCLK cycles.
      * |        |          |10 = 2.5 HCLK cycles.
      * |        |          |11 = 3.5 HCLK cycles.
+     * |        |          |Others = Reserved.
      * |        |          |Note: Please set this register to 2u2019b11 when user uses control register SPIM_HYPER_CMD to read register/memory data from Hyper device.
      * |[11:8]  |CSHI      |Chip Select High between Transaction
-     * |        |          |This field indicates the inactive period between two Hyper Bus transactions
-     * |        |          |0010 = 2 HCLK cycles.
-     * |        |          |0011 = 3 HCLK cycles.
+     * |        |          |This field indicates the inactive period between two HyperBus transactions
+     * |        |          |0011 = 4 HCLK cycles.
      * |        |          |....
-     * |        |          |1111 = 15 HCLK cycles.
+     * |        |          |1111 = 16 HCLK cycles.
      * |        |          |Others = Reserved.
-     * |        |          |Note: This field must meet the Hyper bus deviceu2019s specification of tCSHI.
+     * |        |          |Note: This field must meet the HyperBus deviceu2019s specification of tCSHI.
      * |[31:12] |CSMAXLT   |Chip Select Maximum Low Time
      * |        |          |This field indicates the maximum Low period of the chip select (CS#) in one transaction
      * |        |          |0 = 1 HCLK cycle.
@@ -773,12 +757,12 @@ typedef struct
      * |        |          |Note2 : This register must be set to 0x000FFFFF for Hyper Flash device.
      * |        |          |Note3 : User needs to check specification of used HYPER RAM device to know the value of timing parameter tCSM with unit "nano second" (ns).
      * @var SPIM_T::HYPER_CONFIG2
-     * Offset: 0x88  Hyper Bus Configuration Register 2
+     * Offset: 0x88  HyperBus Configuration Register 2
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
      * |[12:8]  |ACCTWR    |Initial Access Time for Write Data to HYPER Device
-     * |        |          |This field indicates the initial access cycles for write transaction of the Hyper Bus
+     * |        |          |This field indicates the initial access cycles for write transaction of the HyperBus
      * |        |          |00001 = 1 CK cycles.
      * |        |          |00010 = 2 CK cycles.
      * |        |          |00011 = 3 CK cycles.
@@ -791,16 +775,16 @@ typedef struct
      * |        |          |Others = Reserved.
      * |        |          |Note1 : This field must be set to the same value as "Initial Latency" for write operations in Configuration Register 0 in HYPER device.
      * |        |          |Note2 : If user sets value to 0000, the hardware will modify it to 0001 automatically.
-     * |[23:16] |RSTNLT    |HYPER Bus Device RESETN Low Time
-     * |        |          |This field indicates the low period of HYPER bus device RESETN (RESET#)
+     * |[23:16] |RSTNLT    |HyperBus Device RESETN Low Time
+     * |        |          |This field indicates the low period of HyperBus device RESETN (RESET#)
      * |        |          |1 = 2 HCLK cycles.
      * |        |          |2 = 3 HCLK cycles.
      * |        |          |3 = 4 HCLK cycles.
      * |        |          |....
      * |        |          |255 = 255 HCLK cycles.
-     * |        |          |Note: This field inidcates the timing of Hyper bus device RESET# specification so that it has to relative the frequency of HCLK.
+     * |        |          |Note: This field inidcates the timing of HyperBus device RESET# specification so that it has to relative the frequency of HCLK.
      * |[28:24] |ACCTRD    |Initial Access Time for Read Data from HYPER Device
-     * |        |          |This field indicates the initial access cycles for read transaction of the Hyper Bus
+     * |        |          |This field indicates the initial access cycles for read transaction of the HyperBus
      * |        |          |00001 = 1 CK cycles.
      * |        |          |00010 = 2 CK cycles.
      * |        |          |00011 = 3 CK cycles.
@@ -814,11 +798,11 @@ typedef struct
      * |        |          |Note1 : This field must be set to the same value as "Initial Latency" for read operations in Configuration Register 0 in HYPER device.
      * |        |          |Note2 : If user sets value to 0000, the hardware will modify it to 0001 automatically.
      * @var SPIM_T::HYPER_ADR
-     * Offset: 0x8C  Hyper Bus Address Register
+     * Offset: 0x8C  HyperBus Address Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[24:0]  |HBADDR    |Hyper Bus Register Address
+     * |[24:0]  |HBADDR    |HyperBus Register Address
      * |        |          |Memory Space Range:
      * |        |          | 0x0000_0000 ~ 0x01FF_FFFF
      * |        |          |Register Space Range:
@@ -829,39 +813,39 @@ typedef struct
      * |        |          |Note 1: It is "Byte" address.
      * |        |          |Note 2: Up to 32 Mbytesytes of memory space is supported.
      * @var SPIM_T::HYPER_WDATA
-     * Offset: 0x90  Hyper Bus 32-Bits Write Data Register
+     * Offset: 0x90  HyperBus 32-Bits Write Data Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[31:0]  |HBWDATA   |Hyper Bus 32-Bits Write Data
-     * |        |          |To write 1 Byte to Hyper bus device, Byte 0 (Data[7:0]) is used
-     * |        |          |To write 2 Bytes to Hyper bus device, Byte 1~0 (Data[15:0]) is used
-     * |        |          |To write 3 Bytes to Hyper bus device, Byte 2~0 (Data[23:0]) is used
-     * |        |          |To write 4 Bytes to Hyper bus device, Byte 3~0 (Data[31:0]) is used
+     * |[31:0]  |HBWDATA   |HyperBus 32-Bits Write Data
+     * |        |          |To write 1 Byte to HyperBus device, Byte 0 (Data[7:0]) is used
+     * |        |          |To write 2 Bytes to HyperBus device, Byte 1~0 (Data[15:0]) is used
+     * |        |          |To write 3 Bytes to HyperBus device, Byte 2~0 (Data[23:0]) is used
+     * |        |          |To write 4 Bytes to HyperBus device, Byte 3~0 (Data[31:0]) is used
      * @var SPIM_T::HYPER_RDATA
-     * Offset: 0x94  Hyper Bus 32-Bits Read Data Register
+     * Offset: 0x94  HyperBus 32-Bits Read Data Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[31:0]  |HBRDATA   |Hyper Bus 32-bits Read Data
-     * |        |          |32-Bits data read from Hyper bus device
+     * |[31:0]  |HBRDATA   |HyperBus 32-bits Read Data
+     * |        |          |32-Bits data read from HyperBus device
      * |        |          |Note 1: The byte order of read data is little endian only.
      * @var SPIM_T::HYPER_INTEN
-     * Offset: 0x98  Hyper Bus Interrupt Enable Register
+     * Offset: 0x98  HyperBus Interrupt Enable Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |OPINTEN   |Hyper Bus Operation Done Interrupt Enable
+     * |[0]     |OPINTEN   |HyperBus Operation Done Interrupt Enable
      * |        |          |0 = Operation done interrupt is Disabled.
      * |        |          |1 = Operation done interrupt is Enabled.
      * @var SPIM_T::HYPER_INTSTS
-     * Offset: 0x9C  Hyper Bus Interrupt Status Register
+     * Offset: 0x9C  HyperBus Interrupt Status Register
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[0]     |OPDONE    |Hyper Bus Operation Done Interrupt
-     * |        |          |0 = Hyper Bus operation is busy.
-     * |        |          |1 = Hyper Bus operation is done.
+     * |[0]     |OPDONE    |HyperBus Operation Done Interrupt
+     * |        |          |0 = HyperBus operation is busy.
+     * |        |          |1 = HyperBus operation is done.
      * @var SPIM_T::DMM_TIMEOUT_INTERVAL
      * Offset: 0xA0  SPIM DMM Time-out Interval Register
      * ---------------------------------------------------------------------------------------------------
@@ -879,28 +863,20 @@ typedef struct
      * |[0]     |DMMTOF    |Time-out Flag for DMM Read Mode only
      * |        |          |0 = There is no time-out event when SPIM is in DMM read mode.
      * |        |          |1 = There is time-out event when SPIM is in DMM read mode.
-     * |        |          |Note: Write one to clear to zero for this time-out event flag of DMM mode.
+     * |        |          |Note: Write 1 to clear to zero for this time-out event flag of DMM mode.
      */
     __IO uint32_t CTL0;                  /*!< [0x0000] Control and Status Register 0                                    */
-    __IO uint32_t CTL1;                  /*!< [0x0004] Control Register 1                                               */
+    __IO uint32_t CTL1;                  /*!< [0x0004] Control and Status Register 1                                    */
     __I  uint32_t RESERVE0[1];
     __IO uint32_t RXCLKDLY;              /*!< [0x000c] RX Clock Delay Control Register                                  */
-    __I  uint32_t RX[4];                 /*!< [0x0010 ~ 0x001C] Data Receive Register 0                                          */
-    //__I  uint32_t RX0;                   /*!< [0x0010] Data Receive Register 0                                          */
-    //__I  uint32_t RX1;                   /*!< [0x0014] Data Receive Register 1                                          */
-    //__I  uint32_t RX2;                   /*!< [0x0018] Data Receive Register 2                                          */
-    //__I  uint32_t RX3;                   /*!< [0x001c] Data Receive Register 3                                          */
-    __IO uint32_t TX[4];                 /*!< [0x0020 ~ 0x002C] Data Transmit Register 0                                         */
-    //__IO uint32_t TX0;                   /*!< [0x0020] Data Transmit Register 0                                         */
-    //__IO uint32_t TX1;                   /*!< [0x0024] Data Transmit Register 1                                         */
-    //__IO uint32_t TX2;                   /*!< [0x0028] Data Transmit Register 2                                         */
-    //__IO uint32_t TX3;                   /*!< [0x002c] Data Transmit Register 3                                         */
+    __I  uint32_t RX[4];                 /*!< [0x0010 ~ 0x001C] Data Receive Register 0 ~ 3                             */
+    __IO uint32_t TX[4];                 /*!< [0x0020 ~ 0x002C] Data Transmit Register 0 ~ 3                            */
     __IO uint32_t SRAMADDR;              /*!< [0x0030] SRAM Memory Address Register                                     */
     __IO uint32_t DMACNT;                /*!< [0x0034] DMA Transfer Byte Count Register                                 */
     __IO uint32_t FADDR;                 /*!< [0x0038] Address Register for SPI Flash and Hyper Device                  */
     __I  uint32_t RESERVE1[2];
     __IO uint32_t DMMCTL;                /*!< [0x0044] Direct Memory Mapping Mode Control Register                      */
-    __IO uint32_t CTL2;                  /*!< [0x0048] Control Register 2                                               */
+    __IO uint32_t CTL2;                  /*!< [0x0048] Control and Status Register 2                                    */
     __IO uint32_t CMDCODE;               /*!< [0x004c] Command Code Register                                            */
     __IO uint32_t MODE;                  /*!< [0x0050] Mode Data Register                                               */
     __IO uint32_t PHDMAW;                /*!< [0x0054] Phase Setting Register for DMA Write Mode                        */
@@ -911,14 +887,14 @@ typedef struct
     __IO uint32_t DLL1;                  /*!< [0x006c] HYPERDLL Control and Status Register 1                           */
     __IO uint32_t DLL2;                  /*!< [0x0070] HYPERDLL Control and Status Register 2                           */
     __I  uint32_t RESERVE3[3];
-    __IO uint32_t HYPER_CMD;             /*!< [0x0080] Hyper Bus Command and Status Register                            */
-    __IO uint32_t HYPER_CONFIG1;         /*!< [0x0084] Hyper Bus Configuration Register 1                               */
-    __IO uint32_t HYPER_CONFIG2;         /*!< [0x0088] Hyper Bus Configuration Register 2                               */
-    __IO uint32_t HYPER_ADR;             /*!< [0x008c] Hyper Bus Address Register                                       */
-    __IO uint32_t HYPER_WDATA;           /*!< [0x0090] Hyper Bus 32-Bits Write Data Register                            */
-    __I  uint32_t HYPER_RDATA;           /*!< [0x0094] Hyper Bus 32-Bits Read Data Register                             */
-    __IO uint32_t HYPER_INTEN;           /*!< [0x0098] Hyper Bus Interrupt Enable Register                              */
-    __IO uint32_t HYPER_INTSTS;          /*!< [0x009c] Hyper Bus Interrupt Status Register                              */
+    __IO uint32_t HYPER_CMD;             /*!< [0x0080] HyperBus Command and Status Register                             */
+    __IO uint32_t HYPER_CONFIG1;         /*!< [0x0084] HyperBus Configuration Register 1                                */
+    __IO uint32_t HYPER_CONFIG2;         /*!< [0x0088] HyperBus Configuration Register 2                                */
+    __IO uint32_t HYPER_ADR;             /*!< [0x008c] HyperBus Address Register                                        */
+    __IO uint32_t HYPER_WDATA;           /*!< [0x0090] HyperBus 32-Bits Write Data Register                             */
+    __I  uint32_t HYPER_RDATA;           /*!< [0x0094] HyperBus 32-Bits Read Data Register                              */
+    __IO uint32_t HYPER_INTEN;           /*!< [0x0098] HyperBus Interrupt Enable Register                               */
+    __IO uint32_t HYPER_INTSTS;          /*!< [0x009c] HyperBus Interrupt Status Register                               */
     __IO uint32_t DMM_TIMEOUT_INTERVAL;  /*!< [0x00a0] SPIM DMM Time-out Interval Register                              */
     __IO uint32_t DMM_TIMEOUT_FLAG_STS;  /*!< [0x00a4] SPIM DMM Time-out Flag Status Register                           */
 } SPIM_T;
@@ -975,12 +951,6 @@ typedef struct
 
 #define SPIM_CTL1_SPIMEN_Pos             (0)                                               /*!< SPIM_T::CTL1: SPIMEN Position          */
 #define SPIM_CTL1_SPIMEN_Msk             (0x1ul << SPIM_CTL1_SPIMEN_Pos)                   /*!< SPIM_T::CTL1: SPIMEN Mask              */
-
-#define SPIM_CTL1_CACHEOFF_Pos           (1)                                               /*!< SPIM_T::CTL1: CACHEOFF Position        */
-#define SPIM_CTL1_CACHEOFF_Msk           (0x1ul << SPIM_CTL1_CACHEOFF_Pos)                 /*!< SPIM_T::CTL1: CACHEOFF Mask            */
-
-#define SPIM_CTL1_CDINVAL_Pos            (3)                                               /*!< SPIM_T::CTL1: CDINVAL Position         */
-#define SPIM_CTL1_CDINVAL_Msk            (0x1ul << SPIM_CTL1_CDINVAL_Pos)                  /*!< SPIM_T::CTL1: CDINVAL Mask             */
 
 #define SPIM_CTL1_SS_Pos                 (4)                                               /*!< SPIM_T::CTL1: SS Position              */
 #define SPIM_CTL1_SS_Msk                 (0x1ul << SPIM_CTL1_SS_Pos)                       /*!< SPIM_T::CTL1: SS Mask                  */
@@ -1056,12 +1026,6 @@ typedef struct
 
 #define SPIM_CTL2_DC_DMM_Pos             (16)                                              /*!< SPIM_T::CTL2: DC_DMM Position          */
 #define SPIM_CTL2_DC_DMM_Msk             (0xfful << SPIM_CTL2_DC_DMM_Pos)                  /*!< SPIM_T::CTL2: DC_DMM Mask              */
-
-#define SPIM_CTL2_CAPSMOFF_Pos           (25)                                              /*!< SPIM_T::CTL2: CAPSMOFF Position        */
-#define SPIM_CTL2_CAPSMOFF_Msk           (0x1ul << SPIM_CTL2_CAPSMOFF_Pos)                 /*!< SPIM_T::CTL2: CAPSMOFF Mask            */
-
-#define SPIM_CTL2_CAENST_Pos             (26)                                              /*!< SPIM_T::CTL2: CAENST Position          */
-#define SPIM_CTL2_CAENST_Msk             (0x1ul << SPIM_CTL2_CAENST_Pos)                   /*!< SPIM_T::CTL2: CAENST Mask              */
 
 #define SPIM_CMDCODE_CMDCODE_Pos         (0)                                               /*!< SPIM_T::CMDCODE: CMDCODE Position      */
 #define SPIM_CMDCODE_CMDCODE_Msk         (0xfffffffful << SPIM_CMDCODE_CMDCODE_Pos)        /*!< SPIM_T::CMDCODE: CMDCODE Mask          */
@@ -1264,11 +1228,11 @@ typedef struct
 #define SPIM_HYPER_INTSTS_OPDONE_Pos     (0)                                               /*!< SPIM_T::HYPER_INTSTS: OPDONE Position  */
 #define SPIM_HYPER_INTSTS_OPDONE_Msk     (0x1ul << SPIM_HYPER_INTSTS_OPDONE_Pos)           /*!< SPIM_T::HYPER_INTSTS: OPDONE Mask      */
 
-#define SPIM_DMM_TIMEOUT_INTERVAL_TOCNTDMM_Pos (0)                                         /*!< SPIM_T::DMM_TIMEOUT_INTERVAL: TOCNTDMM Position*/
-#define SPIM_DMM_TIMEOUT_INTERVAL_TOCNTDMM_Msk (0xfffffffful << SPIM_DMM_TIMEOUT_INTERVAL_TOCNTDMM_Pos) /*!< SPIM_T::DMM_TIMEOUT_INTERVAL: TOCNTDMM Mask*/
+#define SPIM_DMM_TIMEOUT_TOCNT_Pos       (0)                                               /*!< SPIM_T::DMM_TIMEOUT_INTERVAL: TOCNTDMM Position*/
+#define SPIM_DMM_TIMEOUT_TOCNT_Msk       (0xfffffffful << SPIM_DMM_TIMEOUT_TOCNT_Pos)      /*!< SPIM_T::DMM_TIMEOUT_INTERVAL: TOCNTDMM Mask*/
 
-#define SPIM_DMM_TIMEOUT_FLAG_STS_DMMTOF_Pos (0)                                           /*!< SPIM_T::DMM_TIMEOUT_FLAG_STS: DMMTOF Position*/
-#define SPIM_DMM_TIMEOUT_FLAG_STS_DMMTOF_Msk (0x1ul << SPIM_DMM_TIMEOUT_FLAG_STS_DMMTOF_Pos) /*!< SPIM_T::DMM_TIMEOUT_FLAG_STS: DMMTOF Mask*/
+#define SPIM_DMM_TIMEOUT_STS_TOF_Pos     (0)                                                  /*!< SPIM_T::DMM_TIMEOUT_FLAG_STS: DMMTOF Position*/
+#define SPIM_DMM_TIMEOUT_STS_TOF_Msk     (0x1ul << SPIM_DMM_TIMEOUT_STS_TOF_Pos)               /*!< SPIM_T::DMM_TIMEOUT_FLAG_STS: DMMTOF Mask*/
 
 /** @} SPIM_CONST */
 /** @} end of SPIM register group */

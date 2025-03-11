@@ -29,6 +29,14 @@ static uint32_t SPII2S_GetSourceClockFreq(SPI_T *i2s);
  */
 static void SPI_SetPCLKSrc(SPI_T *spi)
 {
+    uint32_t u32RegLockLevel = SYS_IsRegLocked();
+
+    if (u32RegLockLevel)
+    {
+        /* Unlock protected registers */
+        SYS_UnlockReg();
+    }
+
     /* Select PCLK as the clock source of SPI */
     if (spi == SPI0)
     {
@@ -49,6 +57,12 @@ static void SPI_SetPCLKSrc(SPI_T *spi)
     {
         /* Set the peripheral clock rate to equal APB clock rate */
         CLK->SPISEL = (CLK->SPISEL & (~CLK_SPISEL_SPI3SEL_Msk)) | CLK_SPISEL_SPI3SEL_PCLK2;
+    }
+
+    if (u32RegLockLevel)
+    {
+        /* Lock protected registers */
+        SYS_LockReg();
     }
 }
 
@@ -278,6 +292,14 @@ uint32_t SPI_Open(SPI_T *spi, uint32_t u32MasterSlave, uint32_t u32SPIMode, uint
   */
 void SPI_Close(SPI_T *spi)
 {
+    uint32_t u32RegLockLevel = SYS_IsRegLocked();
+
+    if (u32RegLockLevel)
+    {
+        /* Unlock protected registers */
+        SYS_UnlockReg();
+    }
+
     /* Reset SPI */
     if (spi == SPI0)
     {
@@ -294,6 +316,12 @@ void SPI_Close(SPI_T *spi)
     else
     {
         SYS_ResetModule(SYS_SPI3RST);
+    }
+
+    if (u32RegLockLevel)
+    {
+        /* Lock protected registers */
+        SYS_LockReg();
     }
 }
 
