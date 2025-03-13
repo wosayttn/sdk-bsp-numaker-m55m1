@@ -1,4 +1,0 @@
-ethos-u-vela
-pillow
-pyelftools
-tensorflow==2.17

@@ -265,18 +265,6 @@
 
 /* CYW43439 WiFi */
 
-#define PKG_USING_NETUTILS
-#define PKG_NETUTILS_IPERF
-#define IPERF_THREAD_STACK_SIZE 2048
-#define PKG_NETUTILS_NTP
-#define NTP_USING_AUTO_SYNC
-#define NTP_AUTO_SYNC_FIRST_DELAY 5
-#define NTP_AUTO_SYNC_PERIOD 3600
-#define NETUTILS_NTP_HOSTNAME "time.stdtime.gov.tw"
-#define NETUTILS_NTP_HOSTNAME2 "tick.stdtime.gov.tw"
-#define NETUTILS_NTP_HOSTNAME3 "tock.stdtime.gov.tw"
-#define PKG_USING_NETUTILS_LATEST_VERSION
-#define PKG_NETUTILS_VER_NUM 0x99999
 
 /* IoT Cloud */
 
@@ -300,9 +288,9 @@
 #define PKG_LVGL_THREAD_PRIO 20
 #define PKG_LVGL_THREAD_STACK_SIZE 4096
 #define PKG_LVGL_DISP_REFR_PERIOD 33
-#define PKG_LVGL_USING_SQUARELINE
+#define PKG_LVGL_USING_DEMOS
 #define PKG_LVGL_USING_V09010
-#define PKG_LVGL_VER_NUM 0x009010
+#define PKG_LVGL_VER_NUM 0x090100
 
 /* u8g2: a monochrome graphic library */
 
@@ -345,7 +333,16 @@
 /* STM32 HAL & SDK Drivers */
 
 
+/* Infineon HAL Packages */
+
+
 /* Kendryte SDK */
+
+
+/* WCH HAL & SDK Drivers */
+
+
+/* AT32 HAL & SDK Drivers */
 
 
 /* sensors drivers */
@@ -492,16 +489,5 @@
 #define NU_PKG_EBI_I80_DATA 0x2
 #define NU_PKG_USING_TPC
 #define NU_PKG_USING_TPC_FT5446
-
-/* ml-embedded-evaluation-kit */
-
-#define NU_PKG_USING_MLEVK
-#define MLEVK_UC_OBJECT_DETECTION
-#define MLEVK_UC_LIVE_DEMO
-#define MLEVK_UC_AREANA_DYNAMIC_ALLOCATE
-#define MLEVK_UC_AREANA_PLACE_SRAM
-#define MLEVK_UC_LCD_RENDERING_DEVICE "lcd"
-#define MLEVK_UC_AUDIO_CAPTURE_DEVICE "dmic0"
-#define MLEVK_UC_AUDIO_PLAYBACK_DEVICE "sound0"
 
 #endif

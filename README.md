@@ -2,7 +2,7 @@
 
 ## 1. Introduction
 
-The NuMicro® M55M1/M5531 series microcontrollers stand out for their exceptional performance in digital signal processing and in-device machine learning inference. They are equipped with an Arm® Cortex®-M55 processor running up to 220 MHz. In addition to the Cortex-M55 core, they integrate an Arm® Ethos™-U55 Neural Processing Unit (NPU) as a coprocessor for accelerating neural network operations. The M55M1 series MCU has up to 1.5 MB of SRAM and 2 MB of flash memory for on-chip storage and adopts OctoSPI and HyperBus interfaces to support the expansion of RAM and flash memory capacity. It supports a low power supply voltage range from 1.6V to 3.6V and can operate within a temperature range of -40°C to +105°C.
+The NuMicro® M55M1 series microcontrollers stand out for their exceptional performance in digital signal processing and in-device machine learning inference. They are equipped with an Arm® Cortex®-M55 processor running up to 220 MHz. In addition to the Cortex-M55 core, they integrate an Arm® Ethos™-U55 Neural Processing Unit (NPU) as a coprocessor for accelerating neural network operations. The M55M1 series MCU has up to 1.5 MB of SRAM and 2 MB of flash memory for on-chip storage and adopts OctoSPI and HyperBus interfaces to support the expansion of RAM and flash memory capacity. It supports a low power supply voltage range from 1.6V to 3.6V and can operate within a temperature range of -40°C to +105°C.
 
 ### 1.1 MCU specification
 
@@ -49,15 +49,17 @@ The NuMicro® M55M1/M5531 series microcontrollers stand out for their exceptiona
 
 ## 2. Supported compiler
 
-Support GCC. More information of these compiler version as following:
+Support GCC, MDK5 IDE/compilers. More information of these compiler version as following:
 
-| IDE/Compiler  | Tested version            |
-| ---------- | ---------------------------- |
-| GCC        | GCC 10.3.1 20210824 (release) |
+| IDE/Compiler  | Tested version                    |
+| ---------- | ------------------------------------ |
+| MDK5       | 5.40                                 |
+| GCC        | Arm Embedded Toolchain 10.3-2021.10 (Env 1.3.5 embedded version)|
+
+Notice:
+(1) Please install Nu-Link_Keil_Driver for development.
 
 ## 3. Drag & Drop Program Firmware
-
-Notice: Function WIP, please use the ICP Program as a substitute
 
 ### Step 1
 

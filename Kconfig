@@ -21,4 +21,3 @@ config PKGS_DIR
 source "$RTT_DIR/Kconfig"
 source "$PKGS_DIR/Kconfig"
 source "$BSP_DIR/board/Kconfig"
-source "$BSP_DIR/packages/ml-embedded-evaluation-kit/Kconfig"

@@ -44,7 +44,7 @@ static struct rt_thread lvgl_thread;
 static rt_uint8_t lvgl_thread_stack[PKG_LVGL_THREAD_STACK_SIZE];
 
 #if LV_USE_LOG
-void lv_rt_log( lv_log_level_t level, const char * buf )
+static void lv_rt_log(const char *buf)
 {
     LOG_I(buf);
 }

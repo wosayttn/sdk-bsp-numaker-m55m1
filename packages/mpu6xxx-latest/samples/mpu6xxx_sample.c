@@ -12,7 +12,7 @@
 #include "mpu6xxx.h"
 
 /* Default configuration, please change according to the actual situation, support i2c and spi device name */
-#define MPU6XXX_DEVICE_NAME  "lpi2c0"
+#define MPU6XXX_DEVICE_NAME  "i2c2"
 
 /* Test function */
 static int mpu6xxx_test()
@@ -31,7 +31,7 @@ static int mpu6xxx_test()
     }
     rt_kprintf("mpu6xxx init succeed\n");
 
-    for (i = 0; i < 100; i++)
+    for (i = 0; i < 5; i++)
     {
         mpu6xxx_get_accel(dev, &accel);
         mpu6xxx_get_gyro(dev, &gyro);

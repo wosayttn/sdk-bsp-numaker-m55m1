@@ -953,7 +953,7 @@ config SOC_SERIES_M55M1
 
         if BSP_USING_SPIM0
             config SPIM_HYPER_DMM0_SIZE
-            int "SPIM0: Specify the HyperRam memory size(MByte)"
+            hex "SPIM0: Specify the HyperRam memory size(MByte)"
             range  0x100000 0x2000000
             default 0x800000
 
