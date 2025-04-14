@@ -1,4 +1,4 @@
-#include "M55M1.h"
+#include "NuMicro.h"
 #include "rtconfig.h"
 
 void nutool_modclkcfg_init_acmp01(void)

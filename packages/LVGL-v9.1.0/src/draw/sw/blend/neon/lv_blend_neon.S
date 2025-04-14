@@ -7,9 +7,9 @@
 #define __ASSEMBLY__
 #endif
 
-#include "lv_blend_neon.h"
+//#include "lv_blend_neon.h"
 
-#if LV_USE_DRAW_SW_ASM == LV_DRAW_SW_ASM_NEON
+//#if LV_USE_DRAW_SW_ASM == LV_DRAW_SW_ASM_NEON
 
 .text
 .fpu neon
@@ -681,4 +681,4 @@ export_set rgb888, argb8888, 24, 32, normal
 export_set xrgb8888, argb8888, 31, 32, normal
 export_set argb8888, argb8888, 32, 32, normal
 
-#endif /*LV_USE_DRAW_SW_ASM == LV_DRAW_SW_ASM_NEON*/
+//#endif /*LV_USE_DRAW_SW_ASM == LV_DRAW_SW_ASM_NEON*/

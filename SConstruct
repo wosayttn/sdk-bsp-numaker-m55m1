@@ -83,7 +83,7 @@ def ourspawn(sh, escape, cmd, args, e):
 if platform.system() == 'Windows':
     env['SPAWN'] = ourspawn
 
-nuvoton_library = 'm55m1'
+nuvoton_library = 'm5531'
 rtconfig.BSP_LIBRARY_TYPE = nuvoton_library
 
 # include libraries

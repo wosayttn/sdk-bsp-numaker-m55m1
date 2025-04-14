@@ -22,11 +22,9 @@ RT_WEAK void lv_user_gui_init(void)
     lv_draw_gdma_init();
 #endif
 
-#if defined(PKG_LVGL_USING_SQUARELINE) || defined(PKG_USING_LVGL_SQUARELINE)
-
+#if defined(PKG_USING_LVGL_SQUARELINE)
     extern void ui_init(void);
     ui_init();
-
 #else
 
     /* display demo; you may replace with your LVGL application at here and disable related definitions. */

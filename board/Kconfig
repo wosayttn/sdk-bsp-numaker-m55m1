@@ -1,7 +1,7 @@
 menu "Hardware Drivers Config"
 
     menu "On-chip Peripheral Drivers"
-        source "./libraries/m55m1/rtt_port/Kconfig"
+        source "./libraries/m5531/rtt_port/Kconfig"
     endmenu
 
     menu "On-board Peripheral Drivers"

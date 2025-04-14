@@ -12,6 +12,7 @@
 #include "board.h"
 #include <string.h>
 #include "drv_ramdisk.h"
+#include <stdlib.h>
 
 //#define DRV_DEBUG
 

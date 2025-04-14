@@ -32,7 +32,6 @@ for root, dirs, files in os.walk(lvgl_src_cwd):
         if check_h_hpp_exists(current_path): # add .h and .hpp path
             inc = inc + [current_path]
 
-
 if GetDepend('PKG_LVGL_USING_EXAMPLES'):
     lvgl_src_cwd = lvgl_cwd + 'examples/'
     inc = inc + [lvgl_src_cwd]

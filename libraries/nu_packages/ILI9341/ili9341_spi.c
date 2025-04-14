@@ -69,6 +69,12 @@ void ili9341_send_pixels(rt_uint16_t *pixels, int len)
     rt_spi_transfer(&ili9341_spi_device, (const void *)pixels, NULL, len);
 }
 
+void ili9341_send_pixels_byte(rt_uint8_t *pixels, int len)
+{
+    ili9341_change_datawidth(8);
+    rt_spi_transfer(&ili9341_spi_device, (const void *)pixels, NULL, len);
+}
+
 static rt_err_t ili9341_spi_send_then_recv(struct rt_spi_device *device,
         const void           *send_buf,
         rt_size_t             send_length,

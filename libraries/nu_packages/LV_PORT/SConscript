@@ -6,6 +6,7 @@ group = []
 LVVersion = GetDepend('PKG_LVGL_VER_NUM')
 
 if LVVersion:
+    CPPPATH = []
     cwd = GetCurrentDir()
     CPPPATH = [cwd]
 
@@ -26,15 +27,14 @@ if LVVersion:
             src += Glob('lv_gpu_n9h30_2dge.c')
         else:
             src += Glob('draw_2dge/*.c')
-            CPPPATH += os.path.join(cwd, 'draw_2dge')
-
+            CPPPATH += [os.path.join(cwd, 'draw_2dge')]
     else:
 
         src += Glob('lv_port_disp.c')
 
-        if GetDepend('SOC_SERIES_M55M1') and (LVVersion >= 0x000900):
+        if GetDepend('BSP_USING_GDMA') and (LVVersion >= 0x000900):
             src += Glob('draw_gdma/*.c')
-            CPPPATH += os.path.join(cwd, 'draw_gdma')
+            CPPPATH += [os.path.join(cwd, 'draw_gdma')]
 
     group = DefineGroup('LVGL-port', src, depend = ['PKG_USING_LVGL'], CPPPATH = CPPPATH)
 

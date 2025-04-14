@@ -1,0 +1,1523 @@
+INFO:root:Downloading resources.
+INFO:root:Using Python version: sys.version_info(major=3, minor=10, micro=12, releaselevel='final', serial=0)
+INFO:root:'resources_downloaded' directory exists.
+INFO:root:/home/ml-embedded-evaluation-kit/resources_downloaded/env/bin/python3.10 -m pip install -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt
+INFO:root:Requirement already satisfied: cffi==1.15.0 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 1)) (1.15.0)
+Requirement already satisfied: cmake==3.25.2 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 2)) (3.25.2)
+Collecting flatbuffers==2.0.7 (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 3))
+  Using cached flatbuffers-2.0.7-py2.py3-none-any.whl.metadata (872 bytes)
+Requirement already satisfied: importlib-metadata==6.0.0 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 4)) (6.0.0)
+Requirement already satisfied: Jinja2==3.1.4 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 5)) (3.1.4)
+Requirement already satisfied: llvmlite==0.39.1 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 6)) (0.39.1)
+Requirement already satisfied: lxml==4.9.2 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 7)) (4.9.2)
+Requirement already satisfied: MarkupSafe==2.0.1 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 8)) (2.0.1)
+Requirement already satisfied: numba==0.56.4 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 9)) (0.56.4)
+Requirement already satisfied: numpy==1.23.5 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 10)) (1.23.5)
+Requirement already satisfied: Pillow==10.3.0 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 11)) (10.3.0)
+Requirement already satisfied: pycparser==2.20 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 12)) (2.20)
+Requirement already satisfied: resampy==0.4.2 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 13)) (0.4.2)
+Requirement already satisfied: scipy==1.10.1 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 14)) (1.10.1)
+Requirement already satisfied: six==1.16.0 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 15)) (1.16.0)
+Requirement already satisfied: SoundFile==0.10.3.post1 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 16)) (0.10.3.post1)
+Requirement already satisfied: zipp==3.15.0 in ./resources_downloaded/env/lib/python3.10/site-packages (from -r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 17)) (3.15.0)
+Requirement already satisfied: setuptools in ./resources_downloaded/env/lib/python3.10/site-packages (from numba==0.56.4->-r /home/ml-embedded-evaluation-kit/scripts/py/requirements.txt (line 9)) (75.1.0)
+Using cached flatbuffers-2.0.7-py2.py3-none-any.whl (26 kB)
+Installing collected packages: flatbuffers
+  Attempting uninstall: flatbuffers
+    Found existing installation: flatbuffers 24.3.25
+    Uninstalling flatbuffers-24.3.25:
+      Successfully uninstalled flatbuffers-24.3.25
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+ethos-u-vela 4.0.0 requires flatbuffers==24.3.25, but you have flatbuffers 2.0.7 which is incompatible.
+Successfully installed flatbuffers-2.0.7
+
+INFO:root:/home/ml-embedded-evaluation-kit/resources_downloaded/env/bin/python3.10 -m pip freeze
+INFO:root:cffi==1.15.0
+cmake==3.25.2
+ethos-u-vela==4.0.0
+flatbuffers==2.0.7
+importlib-metadata==6.0.0
+Jinja2==3.1.4
+llvmlite==0.39.1
+lxml==4.9.2
+MarkupSafe==2.0.1
+numba==0.56.4
+numpy==1.23.5
+pillow==10.3.0
+pycparser==2.20
+resampy==0.4.2
+scipy==1.10.1
+six==1.16.0
+SoundFile==0.10.3.post1
+zipp==3.15.0
+
+INFO:root:Downloading resources.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/ad/ad_medium_int8.tflite exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/ad/ifm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/ad/ofm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/asr/wav2letter_pruned_int8.tflite exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/asr/ifm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/asr/ofm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/img_class/mobilenet_v2_1.0_224_INT8.tflite exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/img_class/ifm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/img_class/ofm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/object_detection/yolo-fastest_192_face_v4.tflite exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws/ifm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws/ofm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws/kws_micronet_m.tflite exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/vww/vww4_128_128_INT8.tflite exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/vww/ifm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/vww/ofm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/wav2letter_pruned_int8.tflite exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/asr/ifm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/asr/ofm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/kws/ifm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/kws/ofm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/kws_micronet_m.tflite exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/rnnoise_INT8.tflite exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/ifm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/ifm1.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/ifm2.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/ifm3.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/ofm0.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/ofm1.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/ofm2.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/ofm3.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/ofm4.npy exists, skipping download.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/inference_runner/dnn_s_quantized.tflite exists, skipping download.
+INFO:root:All models will be optimised for these configs:
+INFO:root:NpuConfig(name_prefix='ethos-u65', macs=256, processor_id='U65', prefix_id='Y', memory_mode='Dedicated_Sram', system_config='Ethos_U65_High_End', arena_cache_size=None)
+INFO:root:NpuConfig(name_prefix='ethos-u55', macs=128, processor_id='U55', prefix_id='H', memory_mode='Shared_Sram', system_config='Ethos_U55_High_End_Embedded', arena_cache_size=2097152)
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/asr/wav2letter_pruned_int8_vela_Y256.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/asr/wav2letter_pruned_int8_vela_H128.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/inference_runner/dnn_s_quantized_vela_Y256.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/inference_runner/dnn_s_quantized_vela_H128.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/kws_micronet_m_vela_Y256.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/kws_micronet_m_vela_H128.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/wav2letter_pruned_int8_vela_Y256.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/wav2letter_pruned_int8_vela_H128.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws/kws_micronet_m_vela_Y256.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/kws/kws_micronet_m_vela_H128.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/vww/vww4_128_128_INT8_vela_Y256.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/vww/vww4_128_128_INT8_vela_H128.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/ad/ad_medium_int8_vela_Y256.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/ad/ad_medium_int8_vela_H128.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/img_class/mobilenet_v2_1.0_224_INT8_vela_Y256.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/img_class/mobilenet_v2_1.0_224_INT8_vela_H128.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/rnnoise_INT8_vela_Y256.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/rnnoise_INT8_vela_H128.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/object_detection/yolo-fastest_192_face_v4_vela_Y256.tflite exists, skipping optimisation.
+INFO:root:File /home/ml-embedded-evaluation-kit/resources_downloaded/object_detection/yolo-fastest_192_face_v4_vela_H128.tflite exists, skipping optimisation.
+WARNING:root:One or more optimisations were skipped.
+WARNING:root:To optimise all the models, please remove the directory /home/ml-embedded-evaluation-kit/resources_downloaded.
+INFO:root:Collecting and write metadata.
+INFO:root:Building default configuration.
+INFO:root:
+
+
+/home/ml-embedded-evaluation-kit/resources_downloaded/env/bin/cmake -B /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu -DTARGET_PLATFORM=mps3 -DTARGET_SUBSYSTEM=sse-300 -DCMAKE_TOOLCHAIN_FILE=/home/ml-embedded-evaluation-kit/scripts/cmake/toolchains/bare-metal-gcc.cmake -DETHOS_U_NPU_ID=U55 -DETHOS_U_NPU_CONFIG_ID=H128 -DTENSORFLOW_LITE_MICRO_CLEAN_DOWNLOADS=ON
+
+
+
+INFO:root:-- Build type is set to Release
+INFO:root:-- Source directory: /home/ml-embedded-evaluation-kit
+INFO:root:-- Binary directory: /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu
+INFO:root:-- Assessing common user options...
+INFO:root:-- User option LOG_LEVEL is set to LOG_LEVEL_INFO
+INFO:root:-- User option TENSORFLOW_SRC_PATH is set to /home/ml-embedded-evaluation-kit/dependencies/tensorflow
+INFO:root:-- User option TENSORFLOW_LITE_MICRO_BUILD_TYPE is set to $<IF:$<CONFIG:RELEASE>,release_with_logs,debug>
+INFO:root:-- User option TENSORFLOW_LITE_MICRO_CLEAN_DOWNLOADS is set to ON
+INFO:root:-- User option TENSORFLOW_LITE_MICRO_CLEAN_BUILD is set to ON
+INFO:root:-- User option TARGET_PLATFORM is set to mps3
+INFO:root:-- User option USE_CASE_BUILD is set to all
+INFO:root:-- User option CPU_PROFILE_ENABLED is set to OFF
+INFO:root:-- User option USE_SINGLE_INPUT is set to OFF
+INFO:root:-- User option RESOURCES_PATH is set to /home/ml-embedded-evaluation-kit/resources_downloaded
+INFO:root:-- Searching for mps3 build configuration
+INFO:root:-- Found build configuration: /home/ml-embedded-evaluation-kit/scripts/cmake/platforms/mps3
+INFO:root:-- Platform: Arm MPS3 FPGA Prototyping Board or FVP
+INFO:root:-- User option TARGET_SUBSYSTEM is set to sse-300
+INFO:root:-- User option ETHOS_U_NPU_ID is set to U55
+INFO:root:-- User option ETHOS_U_NPU_ENABLED is set to ON
+INFO:root:-- Assessing NPU configuration options...
+INFO:root:-- User option ETHOS_U_NPU_TIMING_ADAPTER_SRC_PATH is set to /home/ml-embedded-evaluation-kit/dependencies/core-platform/drivers/timing_adapter
+INFO:root:-- User option ETHOS_U_NPU_DRIVER_SRC_PATH is set to /home/ml-embedded-evaluation-kit/dependencies/core-driver
+INFO:root:-- User option ETHOS_U_NPU_ID is set to U55
+INFO:root:-- User option ETHOS_U_NPU_MEMORY_MODE is set to Shared_Sram
+INFO:root:-- User option ETHOS_U_NPU_CONFIG_ID is set to H128
+INFO:root:-- User option ETHOS_U_NPU_TIMING_ADAPTER_ENABLED is set to ON
+INFO:root:-- User option TA_CONFIG_FILE is set to ta_config_u55_high_end
+INFO:root:-- Assessing FVP test configuration options...
+INFO:root:-- User option BUILD_FVP_TESTS is set to OFF
+INFO:root:-- Assessing CMSIS configuration options...
+INFO:root:-- User option CMSIS_SRC_PATH is set to /home/ml-embedded-evaluation-kit/dependencies/cmsis
+INFO:root:-- User option CMSIS_DSP_SRC_PATH is set to /home/ml-embedded-evaluation-kit/dependencies/cmsis-dsp
+INFO:root:-- User option CMSIS_NN_SRC_PATH is set to /home/ml-embedded-evaluation-kit/dependencies/cmsis-nn
+INFO:root:-- Using CMAKE_TOOLCHAIN_FILE: /home/ml-embedded-evaluation-kit/scripts/cmake/toolchains/bare-metal-gcc.cmake
+INFO:root:-- The C compiler identification is GNU 13.2.1
+INFO:root:-- The CXX compiler identification is GNU 13.2.1
+INFO:root:-- The ASM compiler identification is GNU
+INFO:root:-- Found assembler: /opt/gcc-arm-none-eabi/bin/arm-none-eabi-gcc
+INFO:root:-- Detecting C compiler ABI info
+INFO:root:-- Detecting C compiler ABI info - failed
+INFO:root:-- Detecting C compile features
+INFO:root:-- Detecting C compile features - done
+INFO:root:-- Detecting CXX compiler ABI info
+INFO:root:-- Detecting CXX compiler ABI info - failed
+INFO:root:-- Detecting CXX compile features
+INFO:root:-- Detecting CXX compile features - done
+INFO:root:-- Using existing python at /home/ml-embedded-evaluation-kit/resources_downloaded/env/bin/python3
+INFO:root:-- Setting log level to LOG_LEVEL_INFO
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : log
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- CMSIS_DSP_LIB set to be generated here: /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/lib/libcmsis-dsp.a
+INFO:root:-- CMAKE_CURRENT_SOURCE_DIR: /home/ml-embedded-evaluation-kit/source/math
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : cmsis-dsp
+INFO:root:-- Build type                             : Release
+INFO:root:-- TARGET_PLATFORM                        : mps3
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- *******************************************************
+INFO:root:-- Library                    : arm_math
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR     : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- CMAKE_CURRENT_SOURCE_DIR: /home/ml-embedded-evaluation-kit/source/hal/source/components/cmsis_device
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : cmsis_device
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- CMAKE_CURRENT_SOURCE_DIR: /home/ml-embedded-evaluation-kit/source/hal/source/components/stdout
+INFO:root:-- *******************************************************
+INFO:root:-- Library:                  stdout_retarget_cmsdk
+INFO:root:-- Library:                  stdout_retarget_pl011
+INFO:root:-- *******************************************************
+INFO:root:-- CMAKE_CURRENT_SOURCE_DIR: /home/ml-embedded-evaluation-kit/source/hal/source/components/lcd
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : lcd_mps3
+INFO:root:-- *******************************************************
+INFO:root:-- CMAKE_CURRENT_SOURCE_DIR: /home/ml-embedded-evaluation-kit/source/hal/source/components/lcd
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : lcd_stubs
+INFO:root:-- *******************************************************
+INFO:root:-- *******************************************************
+INFO:root:-- PROJECT_NAME                           : ethosu_core_driver
+INFO:root:-- ETHOSU_TARGET_NPU_CONFIG               : ethos-u55-128
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- CMSIS_PATH                             : /home/ml-embedded-evaluation-kit/dependencies/cmsis
+INFO:root:-- ETHOSU_LOG_ENABLE                      : ON
+INFO:root:-- ETHOSU_LOG_SEVERITY                    : warning
+INFO:root:-- ETHOSU_INFERENCE_TIMEOUT               : Default (no timeout)
+INFO:root:-- *******************************************************
+INFO:root:-- CMAKE_CURRENT_SOURCE_DIR: /home/ml-embedded-evaluation-kit/source/hal/source/components/npu
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : ethos_u_npu
+INFO:root:-- *******************************************************
+INFO:root:-- using TA0_BASE @ 0x58103000; TA1_BASE @ 0x58103200.
+INFO:root:-- CMAKE_CURRENT_SOURCE_DIR: /home/ml-embedded-evaluation-kit/source/hal/source/components/npu_ta
+INFO:root:-- *******************************************************
+INFO:root:-- Library                  : ethos_u_ta
+INFO:root:-- *******************************************************
+INFO:root:-- CMAKE_CURRENT_SOURCE_DIR: /home/ml-embedded-evaluation-kit/source/hal/source/platform/mps3
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : platform_drivers
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- CMAKE_CURRENT_SOURCE_DIR: /home/ml-embedded-evaluation-kit/source/hal
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : hal
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- CMAKE_CURRENT_SOURCE_DIR: /home/ml-embedded-evaluation-kit/source/profiler
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : profiler
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- Refreshing TensorFlow Lite Micro's third party downloads...
+INFO:root:--2024-09-25 05:06:40--  https://github.com/google/flatbuffers/archive/v23.5.26.zip
+INFO:root:Resolving github.com (github.com)... 20.27.177.113
+INFO:root:Connecting to github.com (github.com)|20.27.177.113|:443... connected.
+INFO:root:HTTP request sent, awaiting response... 302 Found
+INFO:root:Location: https://codeload.github.com/google/flatbuffers/zip/refs/tags/v23.5.26 [following]
+INFO:root:--2024-09-25 05:06:41--  https://codeload.github.com/google/flatbuffers/zip/refs/tags/v23.5.26
+INFO:root:Resolving codeload.github.com (codeload.github.com)... 20.27.177.114
+INFO:root:Connecting to codeload.github.com (codeload.github.com)|20.27.177.114|:443... connected.
+INFO:root:HTTP request sent, awaiting response... 200 OK
+INFO:root:Length: 3209602 (3.1M) [application/zip]
+INFO:root:Saving to: ‘/tmp/tmp.e7bMrcfmnA/v23.5.26.zip’
+INFO:root:
+INFO:root:     0K .......... .......... .......... .......... ..........  1%  623K 5s
+INFO:root:    50K .......... .......... .......... .......... ..........  3% 1.24M 4s
+INFO:root:   100K .......... .......... .......... .......... ..........  4% 5.22M 3s
+INFO:root:   150K .......... .......... .......... .......... ..........  6% 9.59M 2s
+INFO:root:   200K .......... .......... .......... .......... ..........  7% 1.51M 2s
+INFO:root:   250K .......... .......... .......... .......... ..........  9% 8.82M 2s
+INFO:root:   300K .......... .......... .......... .......... .......... 11% 9.80M 1s
+INFO:root:   350K .......... .......... .......... .......... .......... 12% 11.6M 1s
+INFO:root:   400K .......... .......... .......... .......... .......... 14% 2.05M 1s
+INFO:root:   450K .......... .......... .......... .......... .......... 15% 10.0M 1s
+INFO:root:   500K .......... .......... .......... .......... .......... 17% 7.87M 1s
+INFO:root:   550K .......... .......... .......... .......... .......... 19% 10.1M 1s
+INFO:root:   600K .......... .......... .......... .......... .......... 20% 9.79M 1s
+INFO:root:   650K .......... .......... .......... .......... .......... 22% 9.60M 1s
+INFO:root:   700K .......... .......... .......... .......... .......... 23% 10.9M 1s
+INFO:root:   750K .......... .......... .......... .......... .......... 25% 10.1M 1s
+INFO:root:   800K .......... .......... .......... .......... .......... 27% 15.0M 1s
+INFO:root:   850K .......... .......... .......... .......... .......... 28% 8.39M 1s
+INFO:root:   900K .......... .......... .......... .......... .......... 30% 11.2M 1s
+INFO:root:   950K .......... .......... .......... .......... .......... 31% 11.2M 1s
+INFO:root:  1000K .......... .......... .......... .......... .......... 33% 10.9M 1s
+INFO:root:  1050K .......... .......... .......... .......... .......... 35% 11.2M 0s
+INFO:root:  1100K .......... .......... .......... .......... .......... 36% 10.9M 0s
+INFO:root:  1150K .......... .......... .......... .......... .......... 38% 10.9M 0s
+INFO:root:  1200K .......... .......... .......... .......... .......... 39% 11.2M 0s
+INFO:root:  1250K .......... .......... .......... .......... .......... 41% 9.10M 0s
+INFO:root:  1300K .......... .......... .......... .......... .......... 43% 13.6M 0s
+INFO:root:  1350K .......... .......... .......... .......... .......... 44% 11.2M 0s
+INFO:root:  1400K .......... .......... .......... .......... .......... 46% 11.2M 0s
+INFO:root:  1450K .......... .......... .......... .......... .......... 47% 10.9M 0s
+INFO:root:  1500K .......... .......... .......... .......... .......... 49% 11.2M 0s
+INFO:root:  1550K .......... .......... .......... .......... .......... 51% 10.9M 0s
+INFO:root:  1600K .......... .......... .......... .......... .......... 52%  589K 0s
+INFO:root:  1650K .......... .......... .......... .......... .......... 54% 12.4M 0s
+INFO:root:  1700K .......... .......... .......... .......... .......... 55% 20.9M 0s
+INFO:root:  1750K .......... .......... .......... .......... .......... 57% 19.6M 0s
+INFO:root:  1800K .......... .......... .......... .......... .......... 59% 25.0M 0s
+INFO:root:  1850K .......... .......... .......... .......... .......... 60% 17.0M 0s
+INFO:root:  1900K .......... .......... .......... .......... .......... 62% 17.0M 0s
+INFO:root:  1950K .......... .......... .......... .......... .......... 63% 17.6M 0s
+INFO:root:  2000K .......... .......... .......... .......... .......... 65% 20.6M 0s
+INFO:root:  2050K .......... .......... .......... .......... .......... 66% 23.0M 0s
+INFO:root:  2100K .......... .......... .......... .......... .......... 68% 20.9M 0s
+INFO:root:  2150K .......... .......... .......... .......... .......... 70% 21.3M 0s
+INFO:root:  2200K .......... .......... .......... .......... .......... 71% 22.1M 0s
+INFO:root:  2250K .......... .......... .......... .......... .......... 73% 21.8M 0s
+INFO:root:  2300K .......... .......... .......... .......... .......... 74% 21.9M 0s
+INFO:root:  2350K .......... .......... .......... .......... .......... 76% 22.9M 0s
+INFO:root:  2400K .......... .......... .......... .......... .......... 78% 22.0M 0s
+INFO:root:  2450K .......... .......... .......... .......... .......... 79% 20.0M 0s
+INFO:root:  2500K .......... .......... .......... .......... .......... 81% 20.9M 0s
+INFO:root:  2550K .......... .......... .......... .......... .......... 82% 24.8M 0s
+INFO:root:  2600K .......... .......... .......... .......... .......... 84% 27.0M 0s
+INFO:root:  2650K .......... .......... .......... .......... .......... 86% 27.3M 0s
+INFO:root:  2700K .......... .......... .......... .......... .......... 87% 33.3M 0s
+INFO:root:  2750K .......... .......... .......... .......... .......... 89% 44.3M 0s
+INFO:root:  2800K .......... .......... .......... .......... .......... 90% 48.0M 0s
+INFO:root:  2850K .......... .......... .......... .......... .......... 92% 46.8M 0s
+INFO:root:  2900K .......... .......... .......... .......... .......... 94% 47.3M 0s
+INFO:root:  2950K .......... .......... .......... .......... .......... 95% 52.5M 0s
+INFO:root:  3000K .......... .......... .......... .......... .......... 97% 52.6M 0s
+INFO:root:  3050K .......... .......... .......... .......... .......... 98% 48.9M 0s
+INFO:root:  3100K .......... .......... .......... ....                 100% 53.3M=0.5s
+INFO:root:
+INFO:root:2024-09-25 05:06:42 (6.72 MB/s) - ‘/tmp/tmp.e7bMrcfmnA/v23.5.26.zip’ saved [3209602/3209602]
+INFO:root:
+INFO:root:hint: Using 'master' as the name for the initial branch. This default branch name
+INFO:root:hint: is subject to change. To configure the initial branch name to use in all
+INFO:root:hint: of your new repositories, which will suppress this warning, call:
+INFO:root:hint: 
+INFO:root:hint: 	git config --global init.defaultBranch <name>
+INFO:root:hint: 
+INFO:root:hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+INFO:root:hint: 'development'. The just-created branch can be renamed via this command:
+INFO:root:hint: 
+INFO:root:hint: 	git branch -m <name>
+INFO:root:Switched to a new branch 'tflm'
+INFO:root:Applying /home/ml-embedded-evaluation-kit/dependencies/tensorflow/tensorflow/lite/micro/tools/make/downloads/flatbuffers/.//../../flatbuffers.patch to /home/ml-embedded-evaluation-kit/dependencies/tensorflow/tensorflow/lite/micro/tools/make/downloads/flatbuffers/./
+INFO:root:--2024-09-25 05:06:43--  https://github.com/mborgerding/kissfft/archive/refs/tags/v130.zip
+INFO:root:Resolving github.com (github.com)... 20.27.177.113
+INFO:root:Connecting to github.com (github.com)|20.27.177.113|:443... connected.
+INFO:root:HTTP request sent, awaiting response... 302 Found
+INFO:root:Location: https://codeload.github.com/mborgerding/kissfft/zip/refs/tags/v130 [following]
+INFO:root:--2024-09-25 05:06:44--  https://codeload.github.com/mborgerding/kissfft/zip/refs/tags/v130
+INFO:root:Resolving codeload.github.com (codeload.github.com)... 20.27.177.114
+INFO:root:Connecting to codeload.github.com (codeload.github.com)|20.27.177.114|:443... connected.
+INFO:root:HTTP request sent, awaiting response... 200 OK
+INFO:root:Length: unspecified [application/zip]
+INFO:root:Saving to: ‘/tmp/tmp.jsRpks1sG9/v130.zip’
+INFO:root:
+INFO:root:     0K .......... .......... .......... .......... ..........  616K
+INFO:root:    50K .........                                              3.53M=0.08s
+INFO:root:
+INFO:root:2024-09-25 05:06:44 (706 KB/s) - ‘/tmp/tmp.jsRpks1sG9/v130.zip’ saved [60513]
+INFO:root:
+INFO:root:hint: Using 'master' as the name for the initial branch. This default branch name
+INFO:root:hint: is subject to change. To configure the initial branch name to use in all
+INFO:root:hint: of your new repositories, which will suppress this warning, call:
+INFO:root:hint: 
+INFO:root:hint: 	git config --global init.defaultBranch <name>
+INFO:root:hint: 
+INFO:root:hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+INFO:root:hint: 'development'. The just-created branch can be renamed via this command:
+INFO:root:hint: 
+INFO:root:hint: 	git branch -m <name>
+INFO:root:Switched to a new branch 'tflm'
+INFO:root:Applying /home/ml-embedded-evaluation-kit/dependencies/tensorflow/tensorflow/lite/micro/tools/make/downloads/kissfft/.//../../../../../../../third_party/kissfft/kissfft.patch to /home/ml-embedded-evaluation-kit/dependencies/tensorflow/tensorflow/lite/micro/tools/make/downloads/kissfft/./
+INFO:root:Cloning into 'tensorflow/lite/micro/tools/make/downloads/pigweed'...
+INFO:root:Note: switching to '47268dff45019863e20438ca3746c6c62df6ef09'.
+INFO:root:
+INFO:root:You are in 'detached HEAD' state. You can look around, make experimental
+INFO:root:changes and commit them, and you can discard any commits you make in this
+INFO:root:state without impacting any branches by switching back to a branch.
+INFO:root:
+INFO:root:If you want to create a new branch to retain commits you create, you may
+INFO:root:do so (now or later) by using -c with the switch command. Example:
+INFO:root:
+INFO:root:  git switch -c <new-branch-name>
+INFO:root:
+INFO:root:Or undo this operation with:
+INFO:root:
+INFO:root:  git switch -
+INFO:root:
+INFO:root:Turn off this advice by setting config variable advice.detachedHead to false
+INFO:root:
+INFO:root:HEAD is now at 47268dff4 pw_hdlc_lite: Client I/O improvements
+INFO:root:Switched to a new branch 'tflm'
+INFO:root:Applying /home/ml-embedded-evaluation-kit/dependencies/tensorflow/tensorflow/lite/micro/tools/make/downloads/pigweed/.//../../pigweed.patch to /home/ml-embedded-evaluation-kit/dependencies/tensorflow/tensorflow/lite/micro/tools/make/downloads/pigweed/./
+INFO:root:rm -rf tensorflow/lite/micro/tools/make/downloads
+INFO:root:tensorflow/lite/micro/tools/make/download_and_extract.sh "https://github.com/google/gemmlowp/archive/719139ce755a0f31cbf1c37f7f98adcc7fc9f425.zip" "7e8191b24853d75de2af87622ad293ba" tensorflow/lite/micro/tools/make/downloads/gemmlowp  
+INFO:root:downloading https://github.com/google/gemmlowp/archive/719139ce755a0f31cbf1c37f7f98adcc7fc9f425.zip
+INFO:root:+ [[ 0 -eq 0 ]]
+INFO:root:+ break
+INFO:root:++ openssl dgst -md5 /tmp/tmp.SD33M1uQ9l/temp_file
+INFO:root:++ sed 's/.* //g'
+INFO:root:+ DOWNLOADED_MD5=7e8191b24853d75de2af87622ad293ba
+INFO:root:+ '[' 7e8191b24853d75de2af87622ad293ba '!=' 7e8191b24853d75de2af87622ad293ba ']'
+INFO:root:++ echo https://github.com/google/gemmlowp/archive/719139ce755a0f31cbf1c37f7f98adcc7fc9f425.zip
+INFO:root:++ sed 's/\?.*//'
+INFO:root:+ url=https://github.com/google/gemmlowp/archive/719139ce755a0f31cbf1c37f7f98adcc7fc9f425.zip
+INFO:root:+ [[ https://github.com/google/gemmlowp/archive/719139ce755a0f31cbf1c37f7f98adcc7fc9f425.zip == *gz ]]
+INFO:root:+ [[ https://github.com/google/gemmlowp/archive/719139ce755a0f31cbf1c37f7f98adcc7fc9f425.zip == *tar.xz ]]
+INFO:root:+ [[ https://github.com/google/gemmlowp/archive/719139ce755a0f31cbf1c37f7f98adcc7fc9f425.zip == *bz2 ]]
+INFO:root:+ [[ https://github.com/google/gemmlowp/archive/719139ce755a0f31cbf1c37f7f98adcc7fc9f425.zip == *zip ]]
+INFO:root:+ unzip /tmp/tmp.SD33M1uQ9l/temp_file -d /tmp/tmp.1RXJR9gOOJ
+INFO:root:++ find /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425 -maxdepth 0
+INFO:root:++ wc -l
+INFO:root:+ '[' 1 = 1 ']'
+INFO:root:+ '[' -d /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425 ']'
+INFO:root:+ cp -R /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/AUTHORS /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/BUILD /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/CONTRIBUTING /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/CONTRIBUTORS /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/LICENSE /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/Makefile.travis /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/README.md /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/WORKSPACE /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/contrib /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/doc /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/eight_bit_int_gemm /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/fixedpoint /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/flags.bzl /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/internal /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/jni /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/meta /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/profiling /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/public /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/scripts /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/standalone /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/test /tmp/tmp.1RXJR9gOOJ/gemmlowp-719139ce755a0f31cbf1c37f7f98adcc7fc9f425/todo tensorflow/lite/micro/tools/make/downloads/gemmlowp/
+INFO:root:+ rm -rf /tmp/tmp.SD33M1uQ9l /tmp/tmp.1RXJR9gOOJ
+INFO:root:+ find tensorflow/lite/micro/tools/make/downloads/gemmlowp -type f -name '*BUILD' -delete
+INFO:root:+ [[ '' == \p\a\t\c\h\_\a\m\_\s\d\k ]]
+INFO:root:+ [[ '' == \p\a\t\c\h\_\c\i\f\a\r\1\0\_\d\a\t\a\s\e\t ]]
+INFO:root:+ [[ '' == \b\u\i\l\d\_\e\m\b\a\r\c\_\m\l\i ]]
+INFO:root:+ [[ -n '' ]]
+INFO:root:tensorflow/lite/micro/tools/make/download_and_extract.sh "https://github.com/google/ruy/archive/d37128311b445e758136b8602d1bbd2a755e115d.zip" "abf7a91eb90d195f016ebe0be885bb6e" tensorflow/lite/micro/tools/make/downloads/ruy  
+INFO:root:downloading https://github.com/google/ruy/archive/d37128311b445e758136b8602d1bbd2a755e115d.zip
+INFO:root:+ [[ 0 -eq 0 ]]
+INFO:root:+ break
+INFO:root:++ openssl dgst -md5 /tmp/tmp.o82k94JHdw/temp_file
+INFO:root:++ sed 's/.* //g'
+INFO:root:+ DOWNLOADED_MD5=abf7a91eb90d195f016ebe0be885bb6e
+INFO:root:+ '[' abf7a91eb90d195f016ebe0be885bb6e '!=' abf7a91eb90d195f016ebe0be885bb6e ']'
+INFO:root:++ echo https://github.com/google/ruy/archive/d37128311b445e758136b8602d1bbd2a755e115d.zip
+INFO:root:++ sed 's/\?.*//'
+INFO:root:+ url=https://github.com/google/ruy/archive/d37128311b445e758136b8602d1bbd2a755e115d.zip
+INFO:root:+ [[ https://github.com/google/ruy/archive/d37128311b445e758136b8602d1bbd2a755e115d.zip == *gz ]]
+INFO:root:+ [[ https://github.com/google/ruy/archive/d37128311b445e758136b8602d1bbd2a755e115d.zip == *tar.xz ]]
+INFO:root:+ [[ https://github.com/google/ruy/archive/d37128311b445e758136b8602d1bbd2a755e115d.zip == *bz2 ]]
+INFO:root:+ [[ https://github.com/google/ruy/archive/d37128311b445e758136b8602d1bbd2a755e115d.zip == *zip ]]
+INFO:root:+ unzip /tmp/tmp.o82k94JHdw/temp_file -d /tmp/tmp.7436AEu9zL
+INFO:root:++ find /tmp/tmp.7436AEu9zL/ruy-d37128311b445e758136b8602d1bbd2a755e115d -maxdepth 0
+INFO:root:++ wc -l
+INFO:root:+ '[' 1 = 1 ']'
+INFO:root:+ '[' -d /tmp/tmp.7436AEu9zL/ruy-d37128311b445e758136b8602d1bbd2a755e115d ']'
+INFO:root:+ cp -R /tmp/tmp.7436AEu9zL/ruy-d37128311b445e758136b8602d1bbd2a755e115d/BUILD /tmp/tmp.7436AEu9zL/ruy-d37128311b445e758136b8602d1bbd2a755e115d/CMakeLists.txt /tmp/tmp.7436AEu9zL/ruy-d37128311b445e758136b8602d1bbd2a755e115d/CONTRIBUTING.md /tmp/tmp.7436AEu9zL/ruy-d37128311b445e758136b8602d1bbd2a755e115d/LICENSE /tmp/tmp.7436AEu9zL/ruy-d37128311b445e758136b8602d1bbd2a755e115d/README.md /tmp/tmp.7436AEu9zL/ruy-d37128311b445e758136b8602d1bbd2a755e115d/WORKSPACE /tmp/tmp.7436AEu9zL/ruy-d37128311b445e758136b8602d1bbd2a755e115d/cmake /tmp/tmp.7436AEu9zL/ruy-d37128311b445e758136b8602d1bbd2a755e115d/doc /tmp/tmp.7436AEu9zL/ruy-d37128311b445e758136b8602d1bbd2a755e115d/example /tmp/tmp.7436AEu9zL/ruy-d37128311b445e758136b8602d1bbd2a755e115d/ruy /tmp/tmp.7436AEu9zL/ruy-d37128311b445e758136b8602d1bbd2a755e115d/third_party tensorflow/lite/micro/tools/make/downloads/ruy/
+INFO:root:+ rm -rf /tmp/tmp.o82k94JHdw /tmp/tmp.7436AEu9zL
+INFO:root:+ find tensorflow/lite/micro/tools/make/downloads/ruy -type f -name '*BUILD' -delete
+INFO:root:+ [[ '' == \p\a\t\c\h\_\a\m\_\s\d\k ]]
+INFO:root:+ [[ '' == \p\a\t\c\h\_\c\i\f\a\r\1\0\_\d\a\t\a\s\e\t ]]
+INFO:root:+ [[ '' == \b\u\i\l\d\_\e\m\b\a\r\c\_\m\l\i ]]
+INFO:root:+ [[ -n '' ]]
+INFO:root:-- Refresh completed.
+INFO:root:-- TensorFlow Lite Micro build to be called for these targets: clean;microlite
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : common_api
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- Use-cases source paths: /home/ml-embedded-evaluation-kit/source/use_case.
+INFO:root:-- Use-cases excluded by platform configuration: 
+INFO:root:-- Building use-cases: ad;asr;img_class;inference_runner;kws;kws_asr;noise_reduction;object_detection;vww.
+INFO:root:-- Found sources for use-case ad
+INFO:root:-- Variable of PATH type
+INFO:root:-- User option ad_FILE_PATH is set to /home/ml-embedded-evaluation-kit/resources/ad/samples
+INFO:root:-- User option ad_AUDIO_RATE is set to 16000
+INFO:root:-- User option ad_AUDIO_MONO is set to ON
+INFO:root:-- User option ad_AUDIO_OFFSET is set to 0
+INFO:root:-- User option ad_AUDIO_DURATION is set to 0
+INFO:root:-- User option ad_AUDIO_RES_TYPE is set to kaiser_best
+INFO:root:-- User option ad_AUDIO_MIN_SAMPLES is set to 33280
+INFO:root:-- User option ad_MODEL_SCORE_THRESHOLD is set to -0.8
+INFO:root:-- Generating audio files from /home/ml-embedded-evaluation-kit/resources/ad/samples
+INFO:root:++ Converting random_id_00_000000.wav to random_id_00_000000.cc
+INFO:root:++ Generating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/ad/include/InputFiles.hpp
+INFO:root:++ Generating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/ad/src/InputFiles.cc
+INFO:root:-- User option ad_ACTIVATION_BUF_SZ is set to 0x00200000
+INFO:root:-- User option ad_MODEL_TFLITE_PATH is set to /home/ml-embedded-evaluation-kit/resources_downloaded/ad/ad_medium_int8_vela_H128.tflite
+INFO:root:-- Using /home/ml-embedded-evaluation-kit/resources_downloaded/ad/ad_medium_int8_vela_H128.tflite
+INFO:root:++ Converting ad_medium_int8_vela_H128.tflite to    ad_medium_int8_vela_H128.tflite.cc
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : ad_api
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- Using ad_api for ad
+INFO:root:-- Using linker script: /home/ml-embedded-evaluation-kit/scripts/cmake/platforms/mps3/sse-300/mps3-sse-300-release.ld
+INFO:root:-- arm-none-eabi-objcopy requested to generate 2 bin files.
+INFO:root:-- Found sources for use-case asr
+INFO:root:-- Variable of PATH type
+INFO:root:-- User option asr_FILE_PATH is set to /home/ml-embedded-evaluation-kit/resources/asr/samples
+INFO:root:-- User option asr_LABELS_TXT_FILE is set to /home/ml-embedded-evaluation-kit/resources/asr/labels/labels_wav2letter.txt
+INFO:root:-- User option asr_AUDIO_RATE is set to 16000
+INFO:root:-- User option asr_AUDIO_MONO is set to ON
+INFO:root:-- User option asr_AUDIO_OFFSET is set to 0
+INFO:root:-- User option asr_AUDIO_DURATION is set to 0
+INFO:root:-- User option asr_AUDIO_RES_TYPE is set to kaiser_best
+INFO:root:-- User option asr_AUDIO_MIN_SAMPLES is set to 16000
+INFO:root:-- User option asr_MODEL_SCORE_THRESHOLD is set to 0.5
+INFO:root:-- Generating audio files from /home/ml-embedded-evaluation-kit/resources/asr/samples
+INFO:root:++ Converting another_door.wav to another_door.cc
+INFO:root:++ Converting another_engineer.wav to another_engineer.cc
+INFO:root:++ Converting i_tell_you.wav to i_tell_you.cc
+INFO:root:++ Converting testing_routine.wav to testing_routine.cc
+INFO:root:++ Generating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/asr/include/InputFiles.hpp
+INFO:root:++ Generating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/asr/src/InputFiles.cc
+INFO:root:-- Generating labels file from /home/ml-embedded-evaluation-kit/resources/asr/labels/labels_wav2letter.txt
+INFO:root:-- writing to /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/asr/include/Labels.hpp and /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/asr/src/Labels.cc
+INFO:root:-- User option asr_ACTIVATION_BUF_SZ is set to 0x00200000
+INFO:root:-- User option asr_MODEL_TFLITE_PATH is set to /home/ml-embedded-evaluation-kit/resources_downloaded/asr/wav2letter_pruned_int8_vela_H128.tflite
+INFO:root:-- Using /home/ml-embedded-evaluation-kit/resources_downloaded/asr/wav2letter_pruned_int8_vela_H128.tflite
+INFO:root:++ Converting wav2letter_pruned_int8_vela_H128.tflite to    wav2letter_pruned_int8_vela_H128.tflite.cc
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : asr_api
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- Using asr_api for asr
+INFO:root:-- Using linker script: /home/ml-embedded-evaluation-kit/scripts/cmake/platforms/mps3/sse-300/mps3-sse-300-release.ld
+INFO:root:-- arm-none-eabi-objcopy requested to generate 2 bin files.
+INFO:root:-- Found sources for use-case img_class
+INFO:root:-- Variable of PATH type
+INFO:root:-- User option img_class_FILE_PATH is set to /home/ml-embedded-evaluation-kit/resources/img_class/samples
+INFO:root:-- User option img_class_IMAGE_SIZE is set to 224
+INFO:root:-- User option img_class_LABELS_TXT_FILE is set to /home/ml-embedded-evaluation-kit/resources/img_class/labels/labels_mobilenet_v2_1.0_224.txt
+INFO:root:-- Generating image files from /home/ml-embedded-evaluation-kit/resources/img_class/samples
+INFO:root:++ Converting cat.bmp to cat.cc
+INFO:root:++ Converting dog.bmp to dog.cc
+INFO:root:-- Skipping file /home/ml-embedded-evaluation-kit/resources/img_class/samples/files.md due to unsupported image format.
+INFO:root:++ Converting kimono.bmp to kimono.cc
+INFO:root:++ Converting tiger.bmp to tiger.cc
+INFO:root:++ Generating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/img_class/include/InputFiles.hpp
+INFO:root:-- Generating labels file from /home/ml-embedded-evaluation-kit/resources/img_class/labels/labels_mobilenet_v2_1.0_224.txt
+INFO:root:-- writing to /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/img_class/include/Labels.hpp and /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/img_class/src/Labels.cc
+INFO:root:-- User option img_class_ACTIVATION_BUF_SZ is set to 0x00200000
+INFO:root:-- User option img_class_MODEL_TFLITE_PATH is set to /home/ml-embedded-evaluation-kit/resources_downloaded/img_class/mobilenet_v2_1.0_224_INT8_vela_H128.tflite
+INFO:root:-- Using /home/ml-embedded-evaluation-kit/resources_downloaded/img_class/mobilenet_v2_1.0_224_INT8_vela_H128.tflite
+INFO:root:++ Converting mobilenet_v2_1.0_224_INT8_vela_H128.tflite to    mobilenet_v2_1.0_224_INT8_vela_H128.tflite.cc
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : img_class_api
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- Using img_class_api for img_class
+INFO:root:-- Using linker script: /home/ml-embedded-evaluation-kit/scripts/cmake/platforms/mps3/sse-300/mps3-sse-300-release.ld
+INFO:root:-- arm-none-eabi-objcopy requested to generate 2 bin files.
+INFO:root:-- Found sources for use-case inference_runner
+INFO:root:-- User option inference_runner_ACTIVATION_BUF_SZ is set to 0x00200000
+INFO:root:-- Generating default input files
+INFO:root:++ Generating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/inference_runner/include/InputFiles.hpp
+INFO:root:-- User option inference_runner_DYNAMIC_MEM_LOAD_ENABLED is set to OFF
+INFO:root:-- User option inference_runner_MODEL_TFLITE_PATH is set to /home/ml-embedded-evaluation-kit/resources_downloaded/inference_runner/dnn_s_quantized_vela_H128.tflite
+INFO:root:-- Using /home/ml-embedded-evaluation-kit/resources_downloaded/inference_runner/dnn_s_quantized_vela_H128.tflite
+INFO:root:++ Converting dnn_s_quantized_vela_H128.tflite to    dnn_s_quantized_vela_H128.tflite.cc
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : inference_runner_api
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- Using inference_runner_api for inference_runner
+INFO:root:-- Using linker script: /home/ml-embedded-evaluation-kit/scripts/cmake/platforms/mps3/sse-300/mps3-sse-300-release.ld
+INFO:root:-- arm-none-eabi-objcopy requested to generate 2 bin files.
+INFO:root:-- Found sources for use-case kws
+INFO:root:-- Variable of PATH type
+INFO:root:-- User option kws_FILE_PATH is set to /home/ml-embedded-evaluation-kit/resources/kws/samples
+INFO:root:-- User option kws_LABELS_TXT_FILE is set to /home/ml-embedded-evaluation-kit/resources/kws/labels/micronet_kws_labels.txt
+INFO:root:-- User option kws_AUDIO_RATE is set to 16000
+INFO:root:-- User option kws_AUDIO_MONO is set to ON
+INFO:root:-- User option kws_AUDIO_OFFSET is set to 0
+INFO:root:-- User option kws_AUDIO_DURATION is set to 0
+INFO:root:-- User option kws_AUDIO_RES_TYPE is set to kaiser_best
+INFO:root:-- User option kws_AUDIO_MIN_SAMPLES is set to 16000
+INFO:root:-- User option kws_MODEL_SCORE_THRESHOLD is set to 0.7
+INFO:root:-- Generating audio files from /home/ml-embedded-evaluation-kit/resources/kws/samples
+INFO:root:++ Converting down.wav to down.cc
+INFO:root:++ Converting right_left_up.wav to right_left_up.cc
+INFO:root:++ Converting yes.wav to yes.cc
+INFO:root:++ Converting yes_no_go_stop.wav to yes_no_go_stop.cc
+INFO:root:++ Generating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/kws/include/InputFiles.hpp
+INFO:root:++ Generating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/kws/src/InputFiles.cc
+INFO:root:-- Generating labels file from /home/ml-embedded-evaluation-kit/resources/kws/labels/micronet_kws_labels.txt
+INFO:root:-- writing to /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/kws/include/Labels.hpp and /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/kws/src/Labels.cc
+INFO:root:-- User option kws_ACTIVATION_BUF_SZ is set to 0x00100000
+INFO:root:-- User option kws_MODEL_TFLITE_PATH is set to /home/ml-embedded-evaluation-kit/resources_downloaded/kws/kws_micronet_m_vela_H128.tflite
+INFO:root:-- Using /home/ml-embedded-evaluation-kit/resources_downloaded/kws/kws_micronet_m_vela_H128.tflite
+INFO:root:++ Converting kws_micronet_m_vela_H128.tflite to    kws_micronet_m_vela_H128.tflite.cc
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : kws_api
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- Using kws_api for kws
+INFO:root:-- Using linker script: /home/ml-embedded-evaluation-kit/scripts/cmake/platforms/mps3/sse-300/mps3-sse-300-release.ld
+INFO:root:-- arm-none-eabi-objcopy requested to generate 2 bin files.
+INFO:root:-- Found sources for use-case kws_asr
+INFO:root:-- Variable of PATH type
+INFO:root:-- User option kws_asr_FILE_PATH is set to /home/ml-embedded-evaluation-kit/resources/kws_asr/samples
+INFO:root:-- User option kws_asr_AUDIO_RATE is set to 16000
+INFO:root:-- User option kws_asr_AUDIO_MONO is set to ON
+INFO:root:-- User option kws_asr_AUDIO_OFFSET is set to 0
+INFO:root:-- User option kws_asr_AUDIO_DURATION is set to 0
+INFO:root:-- User option kws_asr_AUDIO_RES_TYPE is set to kaiser_best
+INFO:root:-- User option kws_asr_AUDIO_MIN_SAMPLES is set to 16000
+INFO:root:-- User option kws_asr_LABELS_TXT_FILE_KWS is set to /home/ml-embedded-evaluation-kit/resources/kws_asr/labels/micronet_kws_labels.txt
+INFO:root:-- User option kws_asr_LABELS_TXT_FILE_ASR is set to /home/ml-embedded-evaluation-kit/resources/kws_asr/labels/labels_wav2letter.txt
+INFO:root:-- User option kws_asr_ACTIVATION_BUF_SZ is set to 0x00200000
+INFO:root:-- User option kws_asr_MODEL_SCORE_THRESHOLD_KWS is set to 0.7
+INFO:root:-- User option kws_asr_MODEL_SCORE_THRESHOLD_ASR is set to 0.5
+INFO:root:-- User option kws_asr_MODEL_TFLITE_PATH_KWS is set to /home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/kws_micronet_m_vela_H128.tflite
+INFO:root:-- User option kws_asr_MODEL_TFLITE_PATH_ASR is set to /home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/wav2letter_pruned_int8_vela_H128.tflite
+INFO:root:-- Using /home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/kws_micronet_m_vela_H128.tflite
+INFO:root:++ Converting kws_micronet_m_vela_H128.tflite to    kws_micronet_m_vela_H128.tflite.cc
+INFO:root:-- Using /home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/wav2letter_pruned_int8_vela_H128.tflite
+INFO:root:++ Converting wav2letter_pruned_int8_vela_H128.tflite to    wav2letter_pruned_int8_vela_H128.tflite.cc
+INFO:root:-- Generating labels file from /home/ml-embedded-evaluation-kit/resources/kws_asr/labels/labels_wav2letter.txt
+INFO:root:-- writing to /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/kws_asr/include/Labels_wav2letter.hpp and /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/kws_asr/src/Labels_wav2letter.cc
+INFO:root:-- Generating labels file from /home/ml-embedded-evaluation-kit/resources/kws_asr/labels/micronet_kws_labels.txt
+INFO:root:-- writing to /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/kws_asr/include/Labels_micronetkws.hpp and /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/kws_asr/src/Labels_micronetkws.cc
+INFO:root:-- Generating audio files from /home/ml-embedded-evaluation-kit/resources/kws_asr/samples
+INFO:root:++ Converting yes_no_go_stop.wav to yes_no_go_stop.cc
+INFO:root:++ Generating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/kws_asr/include/InputFiles.hpp
+INFO:root:++ Generating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/kws_asr/src/InputFiles.cc
+INFO:root:-- Using kws_api for kws_asr
+INFO:root:-- Using asr_api for kws_asr
+INFO:root:-- Using linker script: /home/ml-embedded-evaluation-kit/scripts/cmake/platforms/mps3/sse-300/mps3-sse-300-release.ld
+INFO:root:-- arm-none-eabi-objcopy requested to generate 2 bin files.
+INFO:root:-- Found sources for use-case noise_reduction
+INFO:root:-- User option noise_reduction_ACTIVATION_BUF_SZ is set to 0x00200000
+INFO:root:-- User option noise_reduction_MODEL_TFLITE_PATH is set to /home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/rnnoise_INT8_vela_H128.tflite
+INFO:root:-- Variable of PATH type
+INFO:root:-- User option noise_reduction_FILE_PATH is set to /home/ml-embedded-evaluation-kit/resources/noise_reduction/samples
+INFO:root:-- User option noise_reduction_AUDIO_RATE is set to 48000
+INFO:root:-- User option noise_reduction_AUDIO_MONO is set to ON
+INFO:root:-- User option noise_reduction_AUDIO_OFFSET is set to 0
+INFO:root:-- User option noise_reduction_AUDIO_DURATION is set to 0
+INFO:root:-- User option noise_reduction_AUDIO_RES_TYPE is set to kaiser_best
+INFO:root:-- User option noise_reduction_AUDIO_MIN_SAMPLES is set to 512
+INFO:root:-- Generating audio files from /home/ml-embedded-evaluation-kit/resources/noise_reduction/samples
+INFO:root:++ Converting p232_113.wav to p232_113.cc
+INFO:root:++ Converting p232_208.wav to p232_208.cc
+INFO:root:++ Converting p257_031.wav to p257_031.cc
+INFO:root:++ Generating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/noise_reduction/include/InputFiles.hpp
+INFO:root:++ Generating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/noise_reduction/src/InputFiles.cc
+INFO:root:-- Using /home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/rnnoise_INT8_vela_H128.tflite
+INFO:root:++ Converting rnnoise_INT8_vela_H128.tflite to    rnnoise_INT8_vela_H128.tflite.cc
+INFO:root:-- User option noise_reduction_MEM_DUMP_BASE_ADDR is set to 0x80000000
+INFO:root:-- User option noise_reduction_MEM_DUMP_LEN is set to 0x00100000
+INFO:root:-- Additional compilation flags for noise_reduction: MEM_DUMP_BASE_ADDR=0x80000000;MEM_DUMP_LEN=0x00100000
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : noise_reduction_api
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- Using noise_reduction_api for noise_reduction
+INFO:root:-- Using linker script: /home/ml-embedded-evaluation-kit/scripts/cmake/platforms/mps3/sse-300/mps3-sse-300-release.ld
+INFO:root:-- arm-none-eabi-objcopy requested to generate 2 bin files.
+INFO:root:-- Found sources for use-case object_detection
+INFO:root:-- Variable of PATH type
+INFO:root:-- User option object_detection_FILE_PATH is set to /home/ml-embedded-evaluation-kit/resources/object_detection/samples
+INFO:root:-- User option object_detection_IMAGE_SIZE is set to 192
+INFO:root:-- User option object_detection_ANCHOR_1 is set to {38, 77, 47, 97, 61, 126}
+INFO:root:-- User option object_detection_ANCHOR_2 is set to {14, 26, 19, 37, 28, 55 }
+INFO:root:-- User option object_detection_CHANNELS_IMAGE_DISPLAYED is set to 3
+INFO:root:-- Generating image files from /home/ml-embedded-evaluation-kit/resources/object_detection/samples
+INFO:root:++ Converting couple.bmp to couple.cc
+INFO:root:-- Skipping file /home/ml-embedded-evaluation-kit/resources/object_detection/samples/files.md due to unsupported image format.
+INFO:root:++ Converting glasses.bmp to glasses.cc
+INFO:root:++ Converting man_and_baby.bmp to man_and_baby.cc
+INFO:root:++ Converting pitch_and_roll.bmp to pitch_and_roll.cc
+INFO:root:++ Generating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/object_detection/include/InputFiles.hpp
+INFO:root:-- User option object_detection_ACTIVATION_BUF_SZ is set to 0x00082000
+INFO:root:-- User option object_detection_MODEL_TFLITE_PATH is set to /home/ml-embedded-evaluation-kit/resources_downloaded/object_detection/yolo-fastest_192_face_v4_vela_H128.tflite
+INFO:root:-- Using /home/ml-embedded-evaluation-kit/resources_downloaded/object_detection/yolo-fastest_192_face_v4_vela_H128.tflite
+INFO:root:++ Converting yolo-fastest_192_face_v4_vela_H128.tflite to    yolo-fastest_192_face_v4_vela_H128.tflite.cc
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : object_detection_api
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- Using object_detection_api for object_detection
+INFO:root:-- Using linker script: /home/ml-embedded-evaluation-kit/scripts/cmake/platforms/mps3/sse-300/mps3-sse-300-release.ld
+INFO:root:-- arm-none-eabi-objcopy requested to generate 2 bin files.
+INFO:root:-- Found sources for use-case vww
+INFO:root:-- Variable of PATH type
+INFO:root:-- User option vww_FILE_PATH is set to /home/ml-embedded-evaluation-kit/resources/vww/samples
+INFO:root:-- User option vww_IMAGE_SIZE is set to 128
+INFO:root:-- User option vww_LABELS_TXT_FILE is set to /home/ml-embedded-evaluation-kit/resources/vww/labels/visual_wake_word_labels.txt
+INFO:root:-- User option vww_ACTIVATION_BUF_SZ is set to 0x00200000
+INFO:root:-- User option vww_MODEL_TFLITE_PATH is set to /home/ml-embedded-evaluation-kit/resources_downloaded/vww/vww4_128_128_INT8_vela_H128.tflite
+INFO:root:-- Using /home/ml-embedded-evaluation-kit/resources_downloaded/vww/vww4_128_128_INT8_vela_H128.tflite
+INFO:root:++ Converting vww4_128_128_INT8_vela_H128.tflite to    vww4_128_128_INT8_vela_H128.tflite.cc
+INFO:root:-- Generating labels file from /home/ml-embedded-evaluation-kit/resources/vww/labels/visual_wake_word_labels.txt
+INFO:root:-- writing to /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/vww/include/Labels.hpp and /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/vww/src/Labels.cc
+INFO:root:-- Generating image files from /home/ml-embedded-evaluation-kit/resources/vww/samples
+INFO:root:-- Skipping file /home/ml-embedded-evaluation-kit/resources/vww/samples/files.md due to unsupported image format.
+INFO:root:++ Converting man_in_red_jacket.png to man_in_red_jacket.cc
+INFO:root:++ Converting st_paul_s_cathedral.png to st_paul_s_cathedral.cc
+INFO:root:++ Generating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/generated/vww/include/InputFiles.hpp
+INFO:root:-- *******************************************************
+INFO:root:-- Library                                : vww_api
+INFO:root:-- CMAKE_SYSTEM_PROCESSOR                 : cortex-m55
+INFO:root:-- *******************************************************
+INFO:root:-- Using vww_api for vww
+INFO:root:-- Using linker script: /home/ml-embedded-evaluation-kit/scripts/cmake/platforms/mps3/sse-300/mps3-sse-300-release.ld
+INFO:root:-- arm-none-eabi-objcopy requested to generate 2 bin files.
+INFO:root:-- --------------------------------------------------------------------------------------------------
+INFO:root:-- Defined build user options:
+INFO:root:-- 
+INFO:root:--     LOG_LEVEL=LOG_LEVEL_INFO
+INFO:root:--     TENSORFLOW_SRC_PATH=/home/ml-embedded-evaluation-kit/dependencies/tensorflow
+INFO:root:--     TENSORFLOW_LITE_MICRO_BUILD_TYPE=$<IF:$<CONFIG:RELEASE>,release_with_logs,debug>
+INFO:root:--     TENSORFLOW_LITE_MICRO_CLEAN_DOWNLOADS=ON
+INFO:root:--     TENSORFLOW_LITE_MICRO_CLEAN_BUILD=ON
+INFO:root:--     TARGET_PLATFORM=mps3
+INFO:root:--     USE_CASE_BUILD=all
+INFO:root:--     CPU_PROFILE_ENABLED=OFF
+INFO:root:--     USE_SINGLE_INPUT=OFF
+INFO:root:--     RESOURCES_PATH=/home/ml-embedded-evaluation-kit/resources_downloaded
+INFO:root:--     TARGET_SUBSYSTEM=sse-300
+INFO:root:--     ETHOS_U_NPU_ID=U55
+INFO:root:--     ETHOS_U_NPU_ENABLED=ON
+INFO:root:--     ETHOS_U_NPU_TIMING_ADAPTER_SRC_PATH=/home/ml-embedded-evaluation-kit/dependencies/core-platform/drivers/timing_adapter
+INFO:root:--     ETHOS_U_NPU_DRIVER_SRC_PATH=/home/ml-embedded-evaluation-kit/dependencies/core-driver
+INFO:root:--     ETHOS_U_NPU_ID=U55
+INFO:root:--     ETHOS_U_NPU_MEMORY_MODE=Shared_Sram
+INFO:root:--     ETHOS_U_NPU_CONFIG_ID=H128
+INFO:root:--     ETHOS_U_NPU_TIMING_ADAPTER_ENABLED=ON
+INFO:root:--     TA_CONFIG_FILE=ta_config_u55_high_end
+INFO:root:--     BUILD_FVP_TESTS=OFF
+INFO:root:--     CMSIS_SRC_PATH=/home/ml-embedded-evaluation-kit/dependencies/cmsis
+INFO:root:--     CMSIS_DSP_SRC_PATH=/home/ml-embedded-evaluation-kit/dependencies/cmsis-dsp
+INFO:root:--     CMSIS_NN_SRC_PATH=/home/ml-embedded-evaluation-kit/dependencies/cmsis-nn
+INFO:root:--     ad_FILE_PATH=/home/ml-embedded-evaluation-kit/resources/ad/samples
+INFO:root:--     ad_AUDIO_RATE=16000
+INFO:root:--     ad_AUDIO_MONO=ON
+INFO:root:--     ad_AUDIO_OFFSET=0
+INFO:root:--     ad_AUDIO_DURATION=0
+INFO:root:--     ad_AUDIO_RES_TYPE=kaiser_best
+INFO:root:--     ad_AUDIO_MIN_SAMPLES=33280
+INFO:root:--     ad_MODEL_SCORE_THRESHOLD=-0.8
+INFO:root:--     ad_ACTIVATION_BUF_SZ=0x00200000
+INFO:root:--     ad_MODEL_TFLITE_PATH=/home/ml-embedded-evaluation-kit/resources_downloaded/ad/ad_medium_int8_vela_H128.tflite
+INFO:root:--     asr_FILE_PATH=/home/ml-embedded-evaluation-kit/resources/asr/samples
+INFO:root:--     asr_LABELS_TXT_FILE=/home/ml-embedded-evaluation-kit/resources/asr/labels/labels_wav2letter.txt
+INFO:root:--     asr_AUDIO_RATE=16000
+INFO:root:--     asr_AUDIO_MONO=ON
+INFO:root:--     asr_AUDIO_OFFSET=0
+INFO:root:--     asr_AUDIO_DURATION=0
+INFO:root:--     asr_AUDIO_RES_TYPE=kaiser_best
+INFO:root:--     asr_AUDIO_MIN_SAMPLES=16000
+INFO:root:--     asr_MODEL_SCORE_THRESHOLD=0.5
+INFO:root:--     asr_ACTIVATION_BUF_SZ=0x00200000
+INFO:root:--     asr_MODEL_TFLITE_PATH=/home/ml-embedded-evaluation-kit/resources_downloaded/asr/wav2letter_pruned_int8_vela_H128.tflite
+INFO:root:--     img_class_FILE_PATH=/home/ml-embedded-evaluation-kit/resources/img_class/samples
+INFO:root:--     img_class_IMAGE_SIZE=224
+INFO:root:--     img_class_LABELS_TXT_FILE=/home/ml-embedded-evaluation-kit/resources/img_class/labels/labels_mobilenet_v2_1.0_224.txt
+INFO:root:--     img_class_ACTIVATION_BUF_SZ=0x00200000
+INFO:root:--     img_class_MODEL_TFLITE_PATH=/home/ml-embedded-evaluation-kit/resources_downloaded/img_class/mobilenet_v2_1.0_224_INT8_vela_H128.tflite
+INFO:root:--     inference_runner_ACTIVATION_BUF_SZ=0x00200000
+INFO:root:--     inference_runner_DYNAMIC_MEM_LOAD_ENABLED=OFF
+INFO:root:--     inference_runner_MODEL_TFLITE_PATH=/home/ml-embedded-evaluation-kit/resources_downloaded/inference_runner/dnn_s_quantized_vela_H128.tflite
+INFO:root:--     kws_FILE_PATH=/home/ml-embedded-evaluation-kit/resources/kws/samples
+INFO:root:--     kws_LABELS_TXT_FILE=/home/ml-embedded-evaluation-kit/resources/kws/labels/micronet_kws_labels.txt
+INFO:root:--     kws_AUDIO_RATE=16000
+INFO:root:--     kws_AUDIO_MONO=ON
+INFO:root:--     kws_AUDIO_OFFSET=0
+INFO:root:--     kws_AUDIO_DURATION=0
+INFO:root:--     kws_AUDIO_RES_TYPE=kaiser_best
+INFO:root:--     kws_AUDIO_MIN_SAMPLES=16000
+INFO:root:--     kws_MODEL_SCORE_THRESHOLD=0.7
+INFO:root:--     kws_ACTIVATION_BUF_SZ=0x00100000
+INFO:root:--     kws_MODEL_TFLITE_PATH=/home/ml-embedded-evaluation-kit/resources_downloaded/kws/kws_micronet_m_vela_H128.tflite
+INFO:root:--     kws_asr_FILE_PATH=/home/ml-embedded-evaluation-kit/resources/kws_asr/samples
+INFO:root:--     kws_asr_AUDIO_RATE=16000
+INFO:root:--     kws_asr_AUDIO_MONO=ON
+INFO:root:--     kws_asr_AUDIO_OFFSET=0
+INFO:root:--     kws_asr_AUDIO_DURATION=0
+INFO:root:--     kws_asr_AUDIO_RES_TYPE=kaiser_best
+INFO:root:--     kws_asr_AUDIO_MIN_SAMPLES=16000
+INFO:root:--     kws_asr_LABELS_TXT_FILE_KWS=/home/ml-embedded-evaluation-kit/resources/kws_asr/labels/micronet_kws_labels.txt
+INFO:root:--     kws_asr_LABELS_TXT_FILE_ASR=/home/ml-embedded-evaluation-kit/resources/kws_asr/labels/labels_wav2letter.txt
+INFO:root:--     kws_asr_ACTIVATION_BUF_SZ=0x00200000
+INFO:root:--     kws_asr_MODEL_SCORE_THRESHOLD_KWS=0.7
+INFO:root:--     kws_asr_MODEL_SCORE_THRESHOLD_ASR=0.5
+INFO:root:--     kws_asr_MODEL_TFLITE_PATH_KWS=/home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/kws_micronet_m_vela_H128.tflite
+INFO:root:--     kws_asr_MODEL_TFLITE_PATH_ASR=/home/ml-embedded-evaluation-kit/resources_downloaded/kws_asr/wav2letter_pruned_int8_vela_H128.tflite
+INFO:root:--     noise_reduction_ACTIVATION_BUF_SZ=0x00200000
+INFO:root:--     noise_reduction_MODEL_TFLITE_PATH=/home/ml-embedded-evaluation-kit/resources_downloaded/noise_reduction/rnnoise_INT8_vela_H128.tflite
+INFO:root:--     noise_reduction_FILE_PATH=/home/ml-embedded-evaluation-kit/resources/noise_reduction/samples
+INFO:root:--     noise_reduction_AUDIO_RATE=48000
+INFO:root:--     noise_reduction_AUDIO_MONO=ON
+INFO:root:--     noise_reduction_AUDIO_OFFSET=0
+INFO:root:--     noise_reduction_AUDIO_DURATION=0
+INFO:root:--     noise_reduction_AUDIO_RES_TYPE=kaiser_best
+INFO:root:--     noise_reduction_AUDIO_MIN_SAMPLES=512
+INFO:root:--     noise_reduction_MEM_DUMP_BASE_ADDR=0x80000000
+INFO:root:--     noise_reduction_MEM_DUMP_LEN=0x00100000
+INFO:root:--     object_detection_FILE_PATH=/home/ml-embedded-evaluation-kit/resources/object_detection/samples
+INFO:root:--     object_detection_IMAGE_SIZE=192
+INFO:root:--     object_detection_ANCHOR_1={38, 77, 47, 97, 61, 126}
+INFO:root:--     object_detection_ANCHOR_2={14, 26, 19, 37, 28, 55 }
+INFO:root:--     object_detection_CHANNELS_IMAGE_DISPLAYED=3
+INFO:root:--     object_detection_ACTIVATION_BUF_SZ=0x00082000
+INFO:root:--     object_detection_MODEL_TFLITE_PATH=/home/ml-embedded-evaluation-kit/resources_downloaded/object_detection/yolo-fastest_192_face_v4_vela_H128.tflite
+INFO:root:--     vww_FILE_PATH=/home/ml-embedded-evaluation-kit/resources/vww/samples
+INFO:root:--     vww_IMAGE_SIZE=128
+INFO:root:--     vww_LABELS_TXT_FILE=/home/ml-embedded-evaluation-kit/resources/vww/labels/visual_wake_word_labels.txt
+INFO:root:--     vww_ACTIVATION_BUF_SZ=0x00200000
+INFO:root:--     vww_MODEL_TFLITE_PATH=/home/ml-embedded-evaluation-kit/resources_downloaded/vww/vww4_128_128_INT8_vela_H128.tflite
+INFO:root:-- --------------------------------------------------------------------------------------------------
+INFO:root:-- Configuring done
+INFO:root:-- Generating done
+INFO:root:-- Build files have been written to: /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu
+INFO:root:
+
+
+/home/ml-embedded-evaluation-kit/resources_downloaded/env/bin/cmake --build /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu -j56
+
+
+
+INFO:root:[  1%] Building C object cmsis_device/CMakeFiles/cmsis_device.dir/source/handlers.c.obj
+INFO:root:[  1%] Building C object ethos-u-driver/CMakeFiles/ethosu_core_driver.dir/src/ethosu_pmu.c.obj
+INFO:root:[  1%] Building C object ethos-u-driver/CMakeFiles/ethosu_core_driver.dir/src/ethosu_driver.c.obj
+INFO:root:[  1%] Building C object uart/CMakeFiles/ethosu_uart_cmsdk_apb.dir/src/uart_cmsdk_apb.c.obj
+INFO:root:[  1%] Building C object timing_adapter/CMakeFiles/timing_adapter.dir/src/timing_adapter.c.obj
+INFO:root:[  2%] Building C object cmsis_device/CMakeFiles/cmsis_device.dir/__/__/__/__/__/dependencies/cmsis/Device/ARM/ARMCM55/Source/system_ARMCM55.c.obj
+INFO:root:[  2%] Building C object cmsis_device/CMakeFiles/cmsis_device.dir/__/__/__/__/__/dependencies/cmsis/Device/ARM/ARMCM55/Source/startup_ARMCM55.c.obj
+INFO:root:[  2%] Building C object ethos-u-driver/CMakeFiles/ethosu_core_driver.dir/src/ethosu_device_u55_u65.c.obj
+INFO:root:[  3%] Building C object uart/CMakeFiles/ethosu_uart_dummy.dir/src/uart_dummy.c.obj
+INFO:root:[  3%] Building C object lcd/CMakeFiles/lcd_mps3.dir/source/glcd_mps3/glcd_mps3.c.obj
+INFO:root:[  4%] Building C object lcd/CMakeFiles/lcd_stubs.dir/source/glcd_stubs/glcd_stubs.c.obj
+INFO:root:[  4%] Building C object lcd/CMakeFiles/lcd_stubs.dir/source/lcd_img.c.obj
+INFO:root:[  4%] Building C object uart/CMakeFiles/ethosu_uart_pl011.dir/src/uart_pl011.c.obj
+INFO:root:[  4%] Building C object lcd/CMakeFiles/lcd_mps3.dir/source/lcd_img.c.obj
+INFO:root:[  5%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_abs_f16.c.obj
+INFO:root:[  5%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_abs_f32.c.obj
+INFO:root:[  5%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_abs_f64.c.obj
+INFO:root:[  5%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_abs_q15.c.obj
+INFO:root:[  5%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_abs_q31.c.obj
+INFO:root:[  6%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_abs_q7.c.obj
+INFO:root:[  6%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_add_f16.c.obj
+INFO:root:[  6%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_add_f32.c.obj
+INFO:root:[  6%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_add_f64.c.obj
+INFO:root:[  6%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_add_q15.c.obj
+INFO:root:[  7%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_add_q31.c.obj
+INFO:root:[  7%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_add_q7.c.obj
+INFO:root:[  7%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_and_u32.c.obj
+INFO:root:[  7%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_and_u16.c.obj
+INFO:root:[  7%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_and_u8.c.obj
+INFO:root:[  8%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_clip_f16.c.obj
+INFO:root:[  8%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_clip_f32.c.obj
+INFO:root:[  8%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_clip_q15.c.obj
+INFO:root:[  8%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_clip_q31.c.obj
+INFO:root:[  8%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_clip_q7.c.obj
+INFO:root:[  8%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_dot_prod_f16.c.obj
+INFO:root:[  8%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_dot_prod_f64.c.obj
+INFO:root:[  9%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_dot_prod_f32.c.obj
+INFO:root:[  9%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_dot_prod_q15.c.obj
+INFO:root:[  9%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_dot_prod_q7.c.obj
+INFO:root:[  9%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_dot_prod_q31.c.obj
+INFO:root:[ 10%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_mult_f16.c.obj
+INFO:root:[ 10%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_mult_f32.c.obj
+INFO:root:[ 10%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_mult_f64.c.obj
+INFO:root:[ 10%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_mult_q15.c.obj
+INFO:root:[ 10%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_mult_q31.c.obj
+INFO:root:[ 11%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_mult_q7.c.obj
+INFO:root:[ 11%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_negate_f16.c.obj
+INFO:root:[ 11%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_negate_f32.c.obj
+INFO:root:[ 11%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_negate_f64.c.obj
+INFO:root:[ 11%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_negate_q15.c.obj
+INFO:root:[ 12%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_negate_q31.c.obj
+INFO:root:[ 12%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_negate_q7.c.obj
+INFO:root:[ 12%] Linking C static library ../lib/libethosu_uart_dummy.a
+INFO:root:[ 12%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_not_u16.c.obj
+INFO:root:[ 12%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_not_u32.c.obj
+INFO:root:[ 12%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_not_u8.c.obj
+INFO:root:[ 13%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_offset_f16.c.obj
+INFO:root:[ 13%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_offset_f32.c.obj
+INFO:root:[ 13%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_offset_f64.c.obj
+INFO:root:[ 13%] Built target ethosu_uart_dummy
+INFO:root:[ 13%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_offset_q15.c.obj
+INFO:root:[ 13%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_offset_q31.c.obj
+INFO:root:[ 13%] Linking C static library ../lib/libethosu_uart_pl011.a
+INFO:root:[ 13%] Linking C static library ../lib/libethosu_uart_cmsdk_apb.a
+INFO:root:[ 13%] Linking C static library ../lib/libcmsis_device.a
+INFO:root:[ 13%] Built target ethosu_uart_pl011
+INFO:root:[ 14%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_offset_q7.c.obj
+INFO:root:[ 14%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_or_u16.c.obj
+INFO:root:[ 14%] Linking C static library ../lib/liblcd_stubs.a
+INFO:root:[ 14%] Built target ethosu_uart_cmsdk_apb
+INFO:root:[ 14%] Built target cmsis_device
+INFO:root:[ 15%] Building C object stdout/CMakeFiles/stdout_retarget_pl011.dir/source/retarget.c.obj
+INFO:root:[ 15%] Built target lcd_stubs
+INFO:root:[ 15%] Linking C static library ../lib/libtiming_adapter.a
+INFO:root:[ 15%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_or_u32.c.obj
+INFO:root:[ 15%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_or_u8.c.obj
+INFO:root:[ 15%] Built target timing_adapter
+INFO:root:[ 15%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_scale_f16.c.obj
+INFO:root:[ 15%] Building C object stdout/CMakeFiles/stdout_retarget_cmsdk.dir/source/retarget.c.obj
+INFO:root:[ 16%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_scale_f32.c.obj
+INFO:root:[ 16%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_scale_f64.c.obj
+INFO:root:[ 16%] Building C object npu_ta/CMakeFiles/ethos_u_ta.dir/ethosu_ta_init.c.obj
+INFO:root:[ 16%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_scale_q15.c.obj
+INFO:root:[ 16%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_scale_q31.c.obj
+INFO:root:[ 16%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_scale_q7.c.obj
+INFO:root:[ 17%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_shift_q15.c.obj
+INFO:root:[ 17%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_shift_q7.c.obj
+INFO:root:[ 17%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_shift_q31.c.obj
+INFO:root:[ 17%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_sub_f16.c.obj
+INFO:root:[ 17%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_sub_f32.c.obj
+INFO:root:[ 18%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_sub_f64.c.obj
+INFO:root:[ 18%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_sub_q15.c.obj
+INFO:root:[ 18%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_sub_q31.c.obj
+INFO:root:[ 18%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_xor_u16.c.obj
+INFO:root:[ 18%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_xor_u8.c.obj
+INFO:root:[ 18%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_sub_q7.c.obj
+INFO:root:[ 19%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/BasicMathFunctions/arm_xor_u32.c.obj
+INFO:root:In file included from /home/ml-embedded-evaluation-kit/source/hal/source/components/npu_ta/ethosu_ta_init.c:20:
+INFO:root:/home/ml-embedded-evaluation-kit/source/hal/source/components/npu_ta/ethosu_ta_init.c: In function 'arm_ethosu_timing_adapter_init':
+INFO:root:/home/ml-embedded-evaluation-kit/source/hal/source/components/npu_ta/ethosu_ta_init.c:51:10: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+INFO:root:   51 |     info("Configured TA0@0x%" PRIx32 "\n", TA0_BASE);
+INFO:root:      |          ^~~~~~~~~~~~~~~~~~~~
+INFO:root:/home/ml-embedded-evaluation-kit/source/log/include/log_macros.h:60:12: note: in definition of macro 'info'
+INFO:root:   60 |     printf(__VA_ARGS__)
+INFO:root:      |            ^~~~~~~~~~~
+INFO:root:/home/ml-embedded-evaluation-kit/source/hal/source/components/npu_ta/ethosu_ta_init.c:79:10: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+INFO:root:   79 |     info("Configured TA1@0x%" PRIx32 "\n", TA1_BASE);
+INFO:root:      |          ^~~~~~~~~~~~~~~~~~~~
+INFO:root:/home/ml-embedded-evaluation-kit/source/log/include/log_macros.h:60:12: note: in definition of macro 'info'
+INFO:root:   60 |     printf(__VA_ARGS__)
+INFO:root:      |            ^~~~~~~~~~~
+INFO:root:[ 19%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/CommonTables/arm_common_tables.c.obj
+INFO:root:[ 19%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/CommonTables/arm_common_tables_f16.c.obj
+INFO:root:[ 19%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/CommonTables/arm_const_structs.c.obj
+INFO:root:[ 20%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/CommonTables/arm_const_structs_f16.c.obj
+INFO:root:[ 20%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/CommonTables/arm_mve_tables.c.obj
+INFO:root:[ 20%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/CommonTables/arm_mve_tables_f16.c.obj
+INFO:root:[ 20%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_conj_f32.c.obj
+INFO:root:[ 20%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_dot_prod_f32.c.obj
+INFO:root:[ 20%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_mag_f32.c.obj
+INFO:root:[ 21%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_mag_squared_f32.c.obj
+INFO:root:[ 21%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_f32.c.obj
+INFO:root:[ 21%] Linking C static library ../lib/libethosu_core_driver.a
+INFO:root:[ 21%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/ComplexMathFunctions/arm_cmplx_mult_real_f32.c.obj
+INFO:root:[ 21%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_atan2_f16.c.obj
+INFO:root:[ 21%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_atan2_f32.c.obj
+INFO:root:[ 22%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_atan2_q15.c.obj
+INFO:root:[ 22%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_atan2_q31.c.obj
+INFO:root:[ 22%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_cos_f32.c.obj
+INFO:root:[ 22%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_cos_q15.c.obj
+INFO:root:[ 22%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_cos_q31.c.obj
+INFO:root:[ 23%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_divide_q15.c.obj
+INFO:root:[ 23%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_divide_q31.c.obj
+INFO:root:[ 23%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_sin_f32.c.obj
+INFO:root:[ 23%] Linking C static library ../lib/libethos_u_ta.a
+INFO:root:[ 23%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_sin_q15.c.obj
+INFO:root:[ 23%] Linking C static library ../lib/libstdout_retarget_pl011.a
+INFO:root:[ 23%] Linking C static library ../lib/libstdout_retarget_cmsdk.a
+INFO:root:[ 23%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_sin_q31.c.obj
+INFO:root:[ 24%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_sqrt_q15.c.obj
+INFO:root:[ 24%] Built target ethosu_core_driver
+INFO:root:[ 24%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_sqrt_q31.c.obj
+INFO:root:[ 24%] Built target ethos_u_ta
+INFO:root:[ 24%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_vexp_f16.c.obj
+INFO:root:[ 24%] Built target stdout_retarget_pl011
+INFO:root:[ 24%] Built target stdout_retarget_cmsdk
+INFO:root:[ 24%] Building C object npu/CMakeFiles/ethos_u_npu.dir/ethosu_npu_init.c.obj
+INFO:root:[ 24%] Building TensorFlow Lite Micro library...
+INFO:root:[ 24%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_vexp_f32.c.obj
+INFO:root:[ 24%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_vexp_f64.c.obj
+INFO:root:make[3]: warning: -j56 forced in submake: resetting jobserver mode.
+INFO:root:[ 24%] Building C object npu/CMakeFiles/ethos_u_npu.dir/ethosu_profiler.c.obj
+INFO:root:[ 25%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_vinverse_f16.c.obj
+INFO:root:[ 25%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_vlog_f16.c.obj
+INFO:root:[ 25%] Linking C static library ../lib/liblcd_mps3.a
+INFO:root:[ 25%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_vlog_f32.c.obj
+INFO:root:--2024-09-25 05:07:30--  https://github.com/google/flatbuffers/archive/v23.5.26.zip
+INFO:root:[ 26%] Building C object npu/CMakeFiles/ethos_u_npu.dir/ethosu_cpu_cache.c.obj
+INFO:root:[ 26%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_vlog_f64.c.obj
+INFO:root:Resolving github.com (github.com)... [ 26%] Built target lcd_mps3
+INFO:root:In file included from /home/ml-embedded-evaluation-kit/source/hal/source/components/npu/ethosu_npu_init.c:21:
+INFO:root:/home/ml-embedded-evaluation-kit/source/hal/source/components/npu/ethosu_npu_init.c: In function 'arm_ethosu_npu_init':
+INFO:root:/home/ml-embedded-evaluation-kit/source/hal/source/components/npu/ethosu_npu_init.c:102:10: warning: format '%lx' expects argument of type 'long unsigned int', but argument 2 has type 'int' [-Wformat=]
+INFO:root:  102 |     info("Initialising Ethos-U device@0x%" PRIx32 "\n", ETHOS_U_BASE_ADDR);
+INFO:root:      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO:root:/home/ml-embedded-evaluation-kit/source/log/include/log_macros.h:60:12: note: in definition of macro 'info'
+INFO:root:   60 |     printf(__VA_ARGS__)
+INFO:root:      |            ^~~~~~~~~~~
+INFO:root:20.27.177.113
+INFO:root:Connecting to github.com (github.com)|20.27.177.113|:443... [ 26%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_vlog_q15.c.obj
+INFO:root:[ 27%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/FastMathFunctions/arm_vlog_q31.c.obj
+INFO:root:[ 27%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmax_f16.c.obj
+INFO:root:[ 27%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmax_f32.c.obj
+INFO:root:connected.
+INFO:root:[ 27%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmax_f64.c.obj
+INFO:root:[ 27%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmax_no_idx_f16.c.obj
+INFO:root:[ 28%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmax_no_idx_f32.c.obj
+INFO:root:[ 28%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmax_no_idx_f64.c.obj
+INFO:root:[ 28%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmax_no_idx_q31.c.obj
+INFO:root:[ 28%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmax_no_idx_q15.c.obj
+INFO:root:[ 28%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmax_no_idx_q7.c.obj
+INFO:root:[ 29%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmax_q15.c.obj
+INFO:root:HTTP request sent, awaiting response... [ 29%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmax_q31.c.obj
+INFO:root:[ 29%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmax_q7.c.obj
+INFO:root:[ 29%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmin_f16.c.obj
+INFO:root:[ 29%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmin_f32.c.obj
+INFO:root:[ 29%] Linking C static library ../lib/libethos_u_npu.a
+INFO:root:[ 30%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmin_f64.c.obj
+INFO:root:[ 30%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmin_no_idx_f16.c.obj
+INFO:root:[ 30%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmin_no_idx_f32.c.obj
+INFO:root:[ 30%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmin_no_idx_f64.c.obj
+INFO:root:[ 30%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmin_no_idx_q15.c.obj
+INFO:root:[ 31%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmin_no_idx_q31.c.obj
+INFO:root:[ 31%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmin_no_idx_q7.c.obj
+INFO:root:[ 31%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmin_q15.c.obj
+INFO:root:[ 31%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmin_q31.c.obj
+INFO:root:[ 32%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmin_q7.c.obj
+INFO:root:[ 32%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_accumulate_f16.c.obj
+INFO:root:[ 32%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_accumulate_f32.c.obj
+INFO:root:[ 32%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_accumulate_f64.c.obj
+INFO:root:[ 32%] Built target ethos_u_npu
+INFO:root:[ 32%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_entropy_f16.c.obj
+INFO:root:[ 32%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_entropy_f32.c.obj
+INFO:root:[ 32%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_entropy_f64.c.obj
+INFO:root:[ 33%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_kullback_leibler_f16.c.obj
+INFO:root:[ 33%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_kullback_leibler_f32.c.obj
+INFO:root:[ 33%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_kullback_leibler_f64.c.obj
+INFO:root:[ 33%] Building C object platform_driver/CMakeFiles/platform_drivers.dir/source/timer_mps3.c.obj
+INFO:root:[ 33%] Building C object platform_driver/CMakeFiles/platform_drivers.dir/source/platform_drivers.c.obj
+INFO:root:[ 33%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_logsumexp_dot_prod_f32.c.obj
+INFO:root:[ 33%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_logsumexp_dot_prod_f16.c.obj
+INFO:root:[ 34%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_logsumexp_f16.c.obj
+INFO:root:[ 34%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_logsumexp_f32.c.obj
+INFO:root:[ 34%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_max_f16.c.obj
+INFO:root:[ 34%] Building C object platform_driver/CMakeFiles/platform_drivers.dir/__/__/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 34%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_max_f32.c.obj
+INFO:root:302 Found
+INFO:root:Location: https://codeload.github.com/google/flatbuffers/zip/refs/tags/v23.5.26 [following]
+INFO:root:--2024-09-25 05:07:30--  https://codeload.github.com/google/flatbuffers/zip/refs/tags/v23.5.26
+INFO:root:Resolving codeload.github.com (codeload.github.com)... [ 34%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_max_f64.c.obj
+INFO:root:20.27.177.114
+INFO:root:Connecting to codeload.github.com (codeload.github.com)|20.27.177.114|:443... [ 35%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_max_no_idx_f16.c.obj
+INFO:root:connected.
+INFO:root:[ 36%] Building C object platform_driver/CMakeFiles/platform_drivers.dir/__/__/components/stdout/source/retarget.c.obj
+INFO:root:[ 36%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_max_no_idx_f32.c.obj
+INFO:root:[ 36%] Building C object platform_driver/CMakeFiles/platform_drivers.dir/__/__/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 36%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_max_no_idx_f64.c.obj
+INFO:root:HTTP request sent, awaiting response... [ 36%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_max_no_idx_q15.c.obj
+INFO:root:/home/ml-embedded-evaluation-kit/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_absmax_q7.c:50:21: warning: Scalar version of arm_absmax_q7 built. Helium version has build issues with gcc.
+INFO:root:   50 | #pragma GCC warning "Scalar version of arm_absmax_q7 built. Helium version has build issues with gcc."
+INFO:root:      |                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO:root:[ 36%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_max_no_idx_q31.c.obj
+INFO:root:[ 37%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_max_no_idx_q7.c.obj
+INFO:root:[ 37%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_max_q15.c.obj
+INFO:root:[ 37%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_max_q31.c.obj
+INFO:root:[ 37%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_max_q7.c.obj
+INFO:root:[ 37%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_mean_f16.c.obj
+INFO:root:[ 38%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_mean_f32.c.obj
+INFO:root:[ 38%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_mean_f64.c.obj
+INFO:root:[ 38%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_mean_q15.c.obj
+INFO:root:[ 38%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_mean_q31.c.obj
+INFO:root:[ 38%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_mean_q7.c.obj
+INFO:root:[ 39%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_min_f16.c.obj
+INFO:root:[ 39%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_min_f32.c.obj
+INFO:root:[ 39%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_min_f64.c.obj
+INFO:root:[ 39%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_min_no_idx_f16.c.obj
+INFO:root:[ 39%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_min_no_idx_f32.c.obj
+INFO:root:[ 40%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_min_no_idx_q15.c.obj
+INFO:root:[ 40%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_min_no_idx_f64.c.obj
+INFO:root:[ 40%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_min_no_idx_q31.c.obj
+INFO:root:[ 40%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_min_no_idx_q7.c.obj
+INFO:root:[ 40%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_min_q15.c.obj
+INFO:root:[ 41%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_min_q31.c.obj
+INFO:root:[ 41%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_min_q7.c.obj
+INFO:root:[ 41%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_mse_f16.c.obj
+INFO:root:[ 41%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_mse_f32.c.obj
+INFO:root:[ 41%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_mse_f64.c.obj
+INFO:root:[ 42%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_mse_q15.c.obj
+INFO:root:[ 42%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_mse_q31.c.obj
+INFO:root:[ 42%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_mse_q7.c.obj
+INFO:root:[ 42%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_power_f16.c.obj
+INFO:root:[ 42%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_power_f32.c.obj
+INFO:root:[ 43%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_power_f64.c.obj
+INFO:root:[ 43%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_power_q15.c.obj
+INFO:root:[ 43%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_power_q31.c.obj
+INFO:root:[ 43%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_power_q7.c.obj
+INFO:root:[ 43%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_rms_f16.c.obj
+INFO:root:[ 44%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_rms_f32.c.obj
+INFO:root:[ 44%] Linking C static library ../lib/libplatform_drivers.a
+INFO:root:[ 44%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_rms_q15.c.obj
+INFO:root:[ 44%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_rms_q31.c.obj
+INFO:root:[ 44%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_std_f16.c.obj
+INFO:root:[ 44%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_std_f32.c.obj
+INFO:root:[ 44%] Built target platform_drivers
+INFO:root:[ 44%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_std_f64.c.obj
+INFO:root:[ 45%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_std_q15.c.obj
+INFO:root:[ 45%] Building C object hal/CMakeFiles/hal.dir/source/hal.c.obj
+INFO:root:[ 46%] Building C object hal/CMakeFiles/hal.dir/source/hal_pmu.c.obj
+INFO:root:[ 46%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_std_q31.c.obj
+INFO:root:[ 46%] Building C object hal/CMakeFiles/hal.dir/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 46%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_var_f16.c.obj
+INFO:root:[ 46%] Building C object hal/CMakeFiles/hal.dir/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 46%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_var_f32.c.obj
+INFO:root:[ 46%] Building C object hal/CMakeFiles/hal.dir/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 46%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_var_f64.c.obj
+INFO:root:[ 47%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_var_q15.c.obj
+INFO:root:[ 47%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/StatisticsFunctions/arm_var_q31.c.obj
+INFO:root:200 OK
+INFO:root:Length: 3209602[ 47%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_bitreversal.c.obj
+INFO:root: (3.1M) [application/zip]
+INFO:root:Saving to: ‘/tmp/tmp.6SwwFYDkkY/v23.5.26.zip’
+INFO:root:
+INFO:root:     0K .......... ..[ 47%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_bitreversal2.c.obj
+INFO:root:[ 47%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_bitreversal_f16.c.obj
+INFO:root:[ 48%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_f16.c.obj
+INFO:root:[ 48%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_f32.c.obj
+INFO:root:[ 48%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_f64.c.obj
+INFO:root:[ 48%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_init_f16.c.obj
+INFO:root:[ 48%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_init_f32.c.obj
+INFO:root:[ 49%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_init_f64.c.obj
+INFO:root:[ 49%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_init_q15.c.obj
+INFO:root:[ 49%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_init_q31.c.obj
+INFO:root:[ 49%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_q15.c.obj
+INFO:root:[ 49%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_q31.c.obj
+INFO:root:[ 50%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix2_f16.c.obj
+INFO:root:[ 50%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix2_f32.c.obj
+INFO:root:[ 50%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix2_init_f16.c.obj
+INFO:root:[ 50%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix2_init_f32.c.obj
+INFO:root:........ .......... .........[ 50%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix2_init_q15.c.obj
+INFO:root:[ 51%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix2_init_q31.c.obj
+INFO:root:[ 51%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix2_q15.c.obj
+INFO:root:[ 51%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix2_q31.c.obj
+INFO:root:[ 51%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix4_f16.c.obj
+INFO:root:[ 51%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix4_f32.c.obj
+INFO:root:[ 51%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix4_init_f32.c.obj
+INFO:root:[ 51%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix4_init_q15.c.obj
+INFO:root:[ 52%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix4_init_f16.c.obj
+INFO:root:[ 52%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix4_init_q31.c.obj
+INFO:root:[ 52%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix4_q15.c.obj
+INFO:root:[ 53%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix4_q31.c.obj
+INFO:root:[ 53%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix8_f16.c.obj
+INFO:root:. ..[ 53%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_cfft_radix8_f32.c.obj
+INFO:root:.....[ 53%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_dct4_f32.c.obj
+INFO:root:...  1%  635K 5s
+INFO:root:    50K .....[ 53%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_dct4_init_f32.c.obj
+INFO:root:.[ 54%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_dct4_init_q15.c.obj
+INFO:root:[ 54%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_dct4_init_q31.c.obj
+INFO:root:.... ....[ 54%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_dct4_q15.c.obj
+INFO:root:...... .......... .......... ....[ 54%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_dct4_q31.c.obj
+INFO:root:[ 54%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_mfcc_f16.c.obj
+INFO:root:[ 55%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_mfcc_f32.c.obj
+INFO:root:[ 55%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_mfcc_init_f16.c.obj
+INFO:root:[ 55%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_mfcc_init_f32.c.obj
+INFO:root:[ 55%] Linking C static library ../lib/libhal.a
+INFO:root:[ 55%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_mfcc_init_q15.c.obj
+INFO:root:[ 55%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_mfcc_init_q31.c.obj
+INFO:root:[ 56%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_mfcc_q15.c.obj
+INFO:root:[ 56%] Built target hal
+INFO:root:......  3% 1.17M 4s
+INFO:root:   100K .......... ........[ 56%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_mfcc_q31.c.obj
+INFO:root:.. .......... .......... ..........  4% 6.26M 3s
+INFO:root:   150K .......... .......... .......... .......... ..........  6% 27.9M 2s
+INFO:root:   200K ....[ 56%] Building CXX object profiler/CMakeFiles/profiler.dir/Profiler.cc.obj
+INFO:root:[ 56%] Building C object profiler/CMakeFiles/profiler.dir/__/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 56%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_rfft_f32.c.obj
+INFO:root:...... .......... .......... .......... ..........  7% 1.51M 2s
+INFO:root:   250K .......... .......... .......... .......... ..........  9% 13.1M 2s
+INFO:root:   300K .......... .......... .......... .......... .......... 11% 4.79M 1s
+INFO:root:   350K .......... .......... .......... .......... .......... 12% 15.0M 1s
+INFO:root:   400K .......... .......... .......... .......... .......... 14% 2.28M 1s
+INFO:root:   450K .......... .......... .......... .......... .......... 15% 12.8M 1s
+INFO:root:   500K .......... .......... .......... .......... .......... 17% 10.6M 1s
+INFO:root:   550K .......... .......... .......... .......... .......... 19% 12.4M 1s
+INFO:root:   600K .......... .......... .......... .......... ........[ 57%] Building C object profiler/CMakeFiles/profiler.dir/__/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:.. 20% 10.4M 1s
+INFO:root:   650K .........[ 57%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_rfft_fast_f16.c.obj
+INFO:root:. .......... .......... .......... .......... 22% 5.97M 1s
+INFO:root:   700K .......... .......... .......... .......... ......[ 57%] Building C object profiler/CMakeFiles/profiler.dir/__/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:.... 23% 20.4M 1s
+INFO:root:   750K .......... .......... .......... .......... .......... 25% 12.5M 1s
+INFO:root:   800K .......... .......... .......... .......... .......... 27% 13.8M 1s
+INFO:root:   850K .......... .......... .......... .......... .......... 28% 6.29M 1s
+INFO:root:   900K .......... .......... .......... .......... .......... 30% 13.3M 1s
+INFO:root:   950K .......... .......... .......... .......... .....[ 57%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_rfft_fast_f32.c.obj
+INFO:root:..... 31% 7.41M 1s
+INFO:root:  1000K .......... .......... .......... .......... .......... 33% 19.3M 1s
+INFO:root:  1050K .......... ........[ 57%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_rfft_fast_f64.c.obj
+INFO:root:.. .......... .......... .......... 35% 9.15M 0s
+INFO:root:  1100K[ 57%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_rfft_fast_init_f32.c.obj
+INFO:root: .......... .......... ....[ 58%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_rfft_fast_init_f16.c.obj
+INFO:root:...... .......... ....[ 58%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_rfft_fast_init_f64.c.obj
+INFO:root:...... 36% 7.10M 0s
+INFO:root:  1150K ..........[ 58%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_rfft_init_f32.c.obj
+INFO:root:[ 58%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_rfft_init_q15.c.obj
+INFO:root: .......... .......... .......... .......... 38% 10.8M 0s
+INFO:root:  1200K ......[ 59%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_rfft_init_q31.c.obj
+INFO:root:.... .......... .......... .......... .......... 39% 22.3M 0s
+INFO:root:  1250K .......... ..[ 59%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_rfft_q15.c.obj
+INFO:root:........ .......... .......... .......... 41% 18.9M 0s
+INFO:root:  1300K .......... .......... .[ 59%] Building C object math/CMakeFiles/cmsis-dsp.dir/__/__/dependencies/cmsis-dsp/Source/TransformFunctions/arm_rfft_q31.c.obj
+INFO:root:......... .......... .......... 43% 10.7M 0s
+INFO:root:  1350K .......... .......... .......... .......... .......... 44% 9.00M 0s
+INFO:root:  1400K .......... .......... .......... .......... .......... 46% 12.4M 0s
+INFO:root:  1450K .......... .......... .......... .......... .......... 47% 12.7M 0s
+INFO:root:  1500K .......... .......... .......... .......... .......... 49% 11.2M 0s
+INFO:root:  1550K .......... .......... .......... .......... .......... 51% 10.9M 0s
+INFO:root:  1600K .......... .......... .......... .......... .......... 52%  624K 0s
+INFO:root:  1650K .......... .......... .......... .......... .......... 54% 25.5M 0s
+INFO:root:  1700K .......... .......... .......... .......... .......... 55% 51.5M 0s
+INFO:root:  1750K .......... .......... .......... .......... .......... 57% 41.8M 0s
+INFO:root:  1800K .......... .......... .......... .......... .......... 59% 65.1M 0s
+INFO:root:  1850K .......... .......... .......... .......... .......... 60% 64.3M 0s
+INFO:root:  1900K .......... .......... .......... .......... .......... 62% 58.1M 0s
+INFO:root:  1950K .......... .......... .......... .......... .......... 63% 37.4M 0s
+INFO:root:  2000K .......... .......... .......... .......... .......... 65% 17.3M 0s
+INFO:root:  2050K .......... .......... .......... .......... .......... 66% 12.2M 0s
+INFO:root:  2100K .......... .......... .......... .......... .......... 68% 12.3M 0s
+INFO:root:  2150K .......... .......... .......... .......... .......... 70% 48.2M 0s
+INFO:root:  2200K .......... .......... .......... .......... .......... 71% 12.6M 0s
+INFO:root:  2250K .......... .......... .......... .......... .......... 73% 25.4M 0s
+INFO:root:  2300K .......... .......... .......... .......... .......... 74% 42.7M 0s
+INFO:root:  2350K .......... .......... .......... .......... .......... 76% 21.5M 0s
+INFO:root:  2400K .......... .......... .......... .......... .......... 78% 12.8M 0s
+INFO:root:  2450K .......... .......... .......... .......... .......... 79% 21.7M 0s
+INFO:root:  2500K .......... .......... .......... .......... .......... 81% 13.2M 0s
+INFO:root:  2550K .......... .......... .......... .......... .......... 82% 32.3M 0s
+INFO:root:  2600K .......... .......... .......... .......... .......... 84% 35.9M 0s
+INFO:root:  2650K .......... .......... .......... .......... .......... 86% 34.2M 0s
+INFO:root:  2700K .......... .......... .......... .......... .......... 87% 23.4M 0s
+INFO:root:  2750K .......... .......... .......... .......... .......... 89% 24.2M 0s
+INFO:root:  2800K .......... .......... .......... .......... .......... 90% 24.5M 0s
+INFO:root:  2850K .......... .......... .......... .......... .......... 92% 24.9M 0s
+INFO:root:  2900K .......... .......... .......... .......... .......... 94% 24.1M 0s
+INFO:root:  2950K .......... .......... .......... .......... .......... 95% 24.4M 0s
+INFO:root:  3000K .......... .......... .......... .......... .......... 97% 31.8M 0s
+INFO:root:  3050K .......... .......... .......... .......... .......... 98% 38.3M 0s
+INFO:root:  3100K .......... .......... .......... ....                 100% 39.6M=0.4s
+INFO:root:
+INFO:root:2024-09-25 05:07:31 (6.91 MB/s) - ‘/tmp/tmp.6SwwFYDkkY/v23.5.26.zip’ saved [3209602/3209602]
+INFO:root:
+INFO:root:[ 59%] Linking C static library ../lib/libcmsis-dsp.a
+INFO:root:[ 59%] Built target cmsis-dsp
+INFO:root:[ 59%] Building CXX object math/CMakeFiles/arm_math.dir/PlatformMath.cc.obj
+INFO:root:hint: Using 'master' as the name for the initial branch. This default branch name
+INFO:root:hint: is subject to change. To configure the initial branch name to use in all
+INFO:root:hint: of your new repositories, which will suppress this warning, call:
+INFO:root:hint: 
+INFO:root:hint: 	git config --global init.defaultBranch <name>
+INFO:root:hint: 
+INFO:root:hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+INFO:root:hint: 'development'. The just-created branch can be renamed via this command:
+INFO:root:hint: 
+INFO:root:hint: 	git branch -m <name>
+INFO:root:[ 59%] Linking CXX static library ../lib/libprofiler.a
+INFO:root:[ 59%] Built target profiler
+INFO:root:[ 59%] Linking CXX static library ../lib/libarm_math.a
+INFO:root:[ 59%] Built target arm_math
+INFO:root:Switched to a new branch 'tflm'
+INFO:root:Applying /home/ml-embedded-evaluation-kit/dependencies/tensorflow/tensorflow/lite/micro/tools/make/downloads/flatbuffers/.//../../flatbuffers.patch to /home/ml-embedded-evaluation-kit/dependencies/tensorflow/tensorflow/lite/micro/tools/make/downloads/flatbuffers/./
+INFO:root:--2024-09-25 05:07:32--  https://github.com/mborgerding/kissfft/archive/refs/tags/v130.zip
+INFO:root:Resolving github.com (github.com)... 20.27.177.113
+INFO:root:Connecting to github.com (github.com)|20.27.177.113|:443... connected.
+INFO:root:HTTP request sent, awaiting response... 302 Found
+INFO:root:Location: https://codeload.github.com/mborgerding/kissfft/zip/refs/tags/v130 [following]
+INFO:root:--2024-09-25 05:07:32--  https://codeload.github.com/mborgerding/kissfft/zip/refs/tags/v130
+INFO:root:Resolving codeload.github.com (codeload.github.com)... 20.27.177.114
+INFO:root:Connecting to codeload.github.com (codeload.github.com)|20.27.177.114|:443... connected.
+INFO:root:HTTP request sent, awaiting response... 200 OK
+INFO:root:Length: 60513 (59K) [application/zip]
+INFO:root:Saving to: ‘/tmp/tmp.Z5grcUZrIk/v130.zip’
+INFO:root:
+INFO:root:     0K .......... .......... .......... .......... .......... 84%  600K 0s
+INFO:root:    50K .........                                             100% 8.98M=0.08s
+INFO:root:
+INFO:root:2024-09-25 05:07:33 (701 KB/s) - ‘/tmp/tmp.Z5grcUZrIk/v130.zip’ saved [60513/60513]
+INFO:root:
+INFO:root:hint: Using 'master' as the name for the initial branch. This default branch name
+INFO:root:hint: is subject to change. To configure the initial branch name to use in all
+INFO:root:hint: of your new repositories, which will suppress this warning, call:
+INFO:root:hint: 
+INFO:root:hint: 	git config --global init.defaultBranch <name>
+INFO:root:hint: 
+INFO:root:hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+INFO:root:hint: 'development'. The just-created branch can be renamed via this command:
+INFO:root:hint: 
+INFO:root:hint: 	git branch -m <name>
+INFO:root:Switched to a new branch 'tflm'
+INFO:root:Applying /home/ml-embedded-evaluation-kit/dependencies/tensorflow/tensorflow/lite/micro/tools/make/downloads/kissfft/.//../../../../../../../third_party/kissfft/kissfft.patch to /home/ml-embedded-evaluation-kit/dependencies/tensorflow/tensorflow/lite/micro/tools/make/downloads/kissfft/./
+INFO:root:Cloning into 'tensorflow/lite/micro/tools/make/downloads/pigweed'...
+INFO:root:Note: switching to '47268dff45019863e20438ca3746c6c62df6ef09'.
+INFO:root:
+INFO:root:You are in 'detached HEAD' state. You can look around, make experimental
+INFO:root:changes and commit them, and you can discard any commits you make in this
+INFO:root:state without impacting any branches by switching back to a branch.
+INFO:root:
+INFO:root:If you want to create a new branch to retain commits you create, you may
+INFO:root:do so (now or later) by using -c with the switch command. Example:
+INFO:root:
+INFO:root:  git switch -c <new-branch-name>
+INFO:root:
+INFO:root:Or undo this operation with:
+INFO:root:
+INFO:root:  git switch -
+INFO:root:
+INFO:root:Turn off this advice by setting config variable advice.detachedHead to false
+INFO:root:
+INFO:root:HEAD is now at 47268dff4 pw_hdlc_lite: Client I/O improvements
+INFO:root:Switched to a new branch 'tflm'
+INFO:root:Applying /home/ml-embedded-evaluation-kit/dependencies/tensorflow/tensorflow/lite/micro/tools/make/downloads/pigweed/.//../../pigweed.patch to /home/ml-embedded-evaluation-kit/dependencies/tensorflow/tensorflow/lite/micro/tools/make/downloads/pigweed/./
+INFO:root:/opt/gcc-arm-none-eabi/bin/arm-none-eabi-ar: creating /home/ml-embedded-evaluation-kit/cmake-build-mps3-sse-300-ethos-u55-128-gnu/tensorflow/lib/libtensorflow-microlite.a
+INFO:root:[ 59%] Built target tensorflow_build
+INFO:root:[ 60%] Building CXX object api/common/CMakeFiles/common_api.dir/source/Mfcc.cc.obj
+INFO:root:[ 60%] Building CXX object api/common/CMakeFiles/common_api.dir/source/ImageUtils.cc.obj
+INFO:root:[ 60%] Building CXX object api/common/CMakeFiles/common_api.dir/source/Classifier.cc.obj
+INFO:root:[ 60%] Building CXX object api/common/CMakeFiles/common_api.dir/source/Model.cc.obj
+INFO:root:[ 60%] Building CXX object api/common/CMakeFiles/common_api.dir/source/TensorFlowLiteMicro.cc.obj
+INFO:root:[ 60%] Linking CXX static library ../../lib/libcommon_api.a
+INFO:root:[ 60%] Built target common_api
+INFO:root:[ 61%] Building CXX object api/use_case/asr/CMakeFiles/asr_api.dir/src/Wav2LetterPreprocess.cc.obj
+INFO:root:[ 61%] Building CXX object api/use_case/asr/CMakeFiles/asr_api.dir/src/Wav2LetterPostprocess.cc.obj
+INFO:root:[ 61%] Building CXX object api/use_case/img_class/CMakeFiles/img_class_api.dir/src/ImgClassProcessing.cc.obj
+INFO:root:[ 61%] Building CXX object api/use_case/img_class/CMakeFiles/img_class_api.dir/src/MobileNetModel.cc.obj
+INFO:root:[ 61%] Building CXX object api/use_case/ad/CMakeFiles/ad_api.dir/src/AdModel.cc.obj
+INFO:root:[ 62%] Building CXX object api/use_case/asr/CMakeFiles/asr_api.dir/src/Wav2LetterMfcc.cc.obj
+INFO:root:[ 62%] Building CXX object api/use_case/kws/CMakeFiles/kws_api.dir/src/KwsProcessing.cc.obj
+INFO:root:[ 62%] Building CXX object api/use_case/asr/CMakeFiles/asr_api.dir/src/AsrClassifier.cc.obj
+INFO:root:[ 63%] Building CXX object api/use_case/ad/CMakeFiles/ad_api.dir/src/AdProcessing.cc.obj
+INFO:root:[ 63%] Building CXX object api/use_case/kws/CMakeFiles/kws_api.dir/src/MicroNetKwsModel.cc.obj
+INFO:root:[ 64%] Building CXX object api/use_case/asr/CMakeFiles/asr_api.dir/src/OutputDecode.cc.obj
+INFO:root:[ 64%] Building CXX object api/use_case/inference_runner/CMakeFiles/inference_runner_api.dir/src/TestModel.cc.obj
+INFO:root:[ 64%] Building CXX object api/use_case/noise_reduction/CMakeFiles/noise_reduction_api.dir/src/RNNoiseProcessing.cc.obj
+INFO:root:[ 64%] Building CXX object api/use_case/noise_reduction/CMakeFiles/noise_reduction_api.dir/src/RNNoiseFeatureProcessor.cc.obj
+INFO:root:[ 64%] Building CXX object api/use_case/kws/CMakeFiles/kws_api.dir/src/KwsClassifier.cc.obj
+INFO:root:[ 64%] Building CXX object api/use_case/asr/CMakeFiles/asr_api.dir/src/Wav2LetterModel.cc.obj
+INFO:root:[ 64%] Building CXX object api/use_case/ad/CMakeFiles/ad_api.dir/src/AdMelSpectrogram.cc.obj
+INFO:root:[ 64%] Building CXX object api/use_case/noise_reduction/CMakeFiles/noise_reduction_api.dir/src/RNNoiseModel.cc.obj
+INFO:root:[ 64%] Building CXX object api/use_case/object_detection/CMakeFiles/object_detection_api.dir/src/DetectorPreProcessing.cc.obj
+INFO:root:[ 64%] Building CXX object api/use_case/inference_runner/CMakeFiles/inference_runner_api.dir/src/MicroMutableAllOpsResolver.cc.obj
+INFO:root:[ 64%] Building CXX object api/use_case/ad/CMakeFiles/ad_api.dir/src/MelSpectrogram.cc.obj
+INFO:root:[ 65%] Building CXX object api/use_case/vww/CMakeFiles/vww_api.dir/src/VisualWakeWordProcessing.cc.obj
+INFO:root:[ 65%] Building CXX object api/use_case/object_detection/CMakeFiles/object_detection_api.dir/src/YoloFastestModel.cc.obj
+INFO:root:[ 65%] Building CXX object api/use_case/object_detection/CMakeFiles/object_detection_api.dir/src/DetectorPostProcessing.cc.obj
+INFO:root:[ 65%] Building CXX object api/use_case/vww/CMakeFiles/vww_api.dir/src/VisualWakeWordModel.cc.obj
+INFO:root:[ 65%] Linking CXX static library ../../../lib/libimg_class_api.a
+INFO:root:[ 65%] Built target img_class_api
+INFO:root:[ 66%] Building CXX object CMakeFiles/img_class.dir/source/application/main/UseCaseCommonUtils.cc.obj
+INFO:root:[ 66%] Building CXX object CMakeFiles/img_class.dir/source/application/main/Main.cc.obj
+INFO:root:[ 66%] Building CXX object CMakeFiles/img_class.dir/source/use_case/img_class/src/UseCaseHandler.cc.obj
+INFO:root:[ 66%] Building CXX object CMakeFiles/img_class.dir/source/use_case/img_class/src/MainLoop.cc.obj
+INFO:root:[ 66%] Building CXX object CMakeFiles/img_class.dir/generated/img_class/src/InputFiles.cc.obj
+INFO:root:[ 67%] Building CXX object CMakeFiles/img_class.dir/generated/img_class/src/Labels.cc.obj
+INFO:root:[ 67%] Building CXX object CMakeFiles/img_class.dir/generated/img_class/src/cat.cc.obj
+INFO:root:[ 67%] Building CXX object CMakeFiles/img_class.dir/generated/img_class/src/dog.cc.obj
+INFO:root:[ 67%] Building CXX object CMakeFiles/img_class.dir/generated/img_class/src/kimono.cc.obj
+INFO:root:[ 68%] Building CXX object CMakeFiles/img_class.dir/generated/img_class/src/tiger.cc.obj
+INFO:root:[ 68%] Building CXX object CMakeFiles/img_class.dir/generated/img_class/src/mobilenet_v2_1.0_224_INT8_vela_H128.tflite.cc.obj
+INFO:root:[ 68%] Building C object CMakeFiles/img_class.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 68%] Building C object CMakeFiles/img_class.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 68%] Building C object CMakeFiles/img_class.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 69%] Linking CXX static library ../../../lib/libvww_api.a
+INFO:root:[ 69%] Built target vww_api
+INFO:root:[ 70%] Building CXX object CMakeFiles/vww.dir/source/application/main/Main.cc.obj
+INFO:root:[ 70%] Building CXX object CMakeFiles/vww.dir/source/application/main/UseCaseCommonUtils.cc.obj
+INFO:root:[ 70%] Building CXX object CMakeFiles/vww.dir/source/use_case/vww/src/MainLoop.cc.obj
+INFO:root:[ 70%] Building CXX object CMakeFiles/vww.dir/source/use_case/vww/src/UseCaseHandler.cc.obj
+INFO:root:[ 71%] Building CXX object CMakeFiles/vww.dir/generated/vww/src/Labels.cc.obj
+INFO:root:[ 71%] Building CXX object CMakeFiles/vww.dir/generated/vww/src/InputFiles.cc.obj
+INFO:root:[ 71%] Building CXX object CMakeFiles/vww.dir/generated/vww/src/vww4_128_128_INT8_vela_H128.tflite.cc.obj
+INFO:root:[ 71%] Building CXX object CMakeFiles/vww.dir/generated/vww/src/man_in_red_jacket.cc.obj
+INFO:root:[ 71%] Building CXX object CMakeFiles/vww.dir/generated/vww/src/st_paul_s_cathedral.cc.obj
+INFO:root:[ 72%] Building C object CMakeFiles/vww.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 72%] Building C object CMakeFiles/vww.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 72%] Building C object CMakeFiles/vww.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 72%] Linking CXX static library ../../../lib/libinference_runner_api.a
+INFO:root:[ 72%] Linking CXX static library ../../../lib/libnoise_reduction_api.a
+INFO:root:[ 72%] Built target inference_runner_api
+INFO:root:[ 72%] Building CXX object CMakeFiles/inference_runner.dir/source/application/main/Main.cc.obj
+INFO:root:[ 72%] Built target noise_reduction_api
+INFO:root:[ 72%] Building CXX object CMakeFiles/inference_runner.dir/source/application/main/UseCaseCommonUtils.cc.obj
+INFO:root:[ 72%] Building CXX object CMakeFiles/inference_runner.dir/source/use_case/inference_runner/src/UseCaseHandler.cc.obj
+INFO:root:[ 73%] Building CXX object CMakeFiles/inference_runner.dir/source/use_case/inference_runner/src/MainLoop.cc.obj
+INFO:root:[ 73%] Building CXX object CMakeFiles/inference_runner.dir/generated/inference_runner/src/dnn_s_quantized_vela_H128.tflite.cc.obj
+INFO:root:[ 73%] Building C object CMakeFiles/inference_runner.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 73%] Building C object CMakeFiles/inference_runner.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 73%] Building C object CMakeFiles/inference_runner.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 73%] Building CXX object CMakeFiles/noise_reduction.dir/source/application/main/Main.cc.obj
+INFO:root:[ 74%] Building CXX object CMakeFiles/noise_reduction.dir/source/use_case/noise_reduction/src/MainLoop.cc.obj
+INFO:root:[ 74%] Building CXX object CMakeFiles/noise_reduction.dir/source/application/main/UseCaseCommonUtils.cc.obj
+INFO:root:[ 74%] Building CXX object CMakeFiles/noise_reduction.dir/source/use_case/noise_reduction/src/UseCaseHandler.cc.obj
+INFO:root:[ 74%] Building CXX object CMakeFiles/noise_reduction.dir/generated/noise_reduction/src/InputFiles.cc.obj
+INFO:root:[ 74%] Building CXX object CMakeFiles/noise_reduction.dir/generated/noise_reduction/src/p232_208.cc.obj
+INFO:root:[ 74%] Building CXX object CMakeFiles/noise_reduction.dir/generated/noise_reduction/src/p232_113.cc.obj
+INFO:root:[ 75%] Building CXX object CMakeFiles/noise_reduction.dir/generated/noise_reduction/src/p257_031.cc.obj
+INFO:root:[ 75%] Building CXX object CMakeFiles/noise_reduction.dir/generated/noise_reduction/src/rnnoise_INT8_vela_H128.tflite.cc.obj
+INFO:root:[ 75%] Building C object CMakeFiles/noise_reduction.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 75%] Building C object CMakeFiles/noise_reduction.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 75%] Building C object CMakeFiles/noise_reduction.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 75%] Linking CXX static library ../../../lib/libobject_detection_api.a
+INFO:root:[ 75%] Built target object_detection_api
+INFO:root:[ 76%] Building CXX object CMakeFiles/object_detection.dir/source/use_case/object_detection/src/MainLoop.cc.obj
+INFO:root:[ 76%] Building CXX object CMakeFiles/object_detection.dir/source/application/main/UseCaseCommonUtils.cc.obj
+INFO:root:[ 76%] Building CXX object CMakeFiles/object_detection.dir/source/application/main/Main.cc.obj
+INFO:root:[ 76%] Building CXX object CMakeFiles/object_detection.dir/generated/object_detection/src/couple.cc.obj
+INFO:root:[ 76%] Building CXX object CMakeFiles/object_detection.dir/generated/object_detection/src/InputFiles.cc.obj
+INFO:root:[ 76%] Building CXX object CMakeFiles/object_detection.dir/source/use_case/object_detection/src/UseCaseHandler.cc.obj
+INFO:root:[ 77%] Building CXX object CMakeFiles/object_detection.dir/generated/object_detection/src/glasses.cc.obj
+INFO:root:[ 77%] Building CXX object CMakeFiles/object_detection.dir/generated/object_detection/src/yolo-fastest_192_face_v4_vela_H128.tflite.cc.obj
+INFO:root:[ 77%] Building CXX object CMakeFiles/object_detection.dir/generated/object_detection/src/pitch_and_roll.cc.obj
+INFO:root:[ 77%] Building CXX object CMakeFiles/object_detection.dir/generated/object_detection/src/man_and_baby.cc.obj
+INFO:root:[ 77%] Building C object CMakeFiles/object_detection.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 78%] Building C object CMakeFiles/object_detection.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 78%] Building C object CMakeFiles/object_detection.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 78%] Linking CXX static library ../../../lib/libasr_api.a
+INFO:root:[ 78%] Built target asr_api
+INFO:root:[ 78%] Building CXX object CMakeFiles/asr.dir/source/application/main/Main.cc.obj
+INFO:root:[ 78%] Building CXX object CMakeFiles/asr.dir/source/application/main/UseCaseCommonUtils.cc.obj
+INFO:root:[ 79%] Building CXX object CMakeFiles/asr.dir/source/use_case/asr/src/MainLoop.cc.obj
+INFO:root:[ 79%] Building CXX object CMakeFiles/asr.dir/generated/asr/src/InputFiles.cc.obj
+INFO:root:[ 79%] Building CXX object CMakeFiles/asr.dir/source/use_case/asr/src/UseCaseHandler.cc.obj
+INFO:root:[ 79%] Building CXX object CMakeFiles/asr.dir/generated/asr/src/Labels.cc.obj
+INFO:root:[ 79%] Building CXX object CMakeFiles/asr.dir/generated/asr/src/another_door.cc.obj
+INFO:root:[ 80%] Building CXX object CMakeFiles/asr.dir/generated/asr/src/another_engineer.cc.obj
+INFO:root:[ 80%] Building CXX object CMakeFiles/asr.dir/generated/asr/src/i_tell_you.cc.obj
+INFO:root:[ 80%] Building CXX object CMakeFiles/asr.dir/generated/asr/src/testing_routine.cc.obj
+INFO:root:[ 80%] Building CXX object CMakeFiles/asr.dir/generated/asr/src/wav2letter_pruned_int8_vela_H128.tflite.cc.obj
+INFO:root:[ 80%] Building C object CMakeFiles/asr.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 81%] Building C object CMakeFiles/asr.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 81%] Building C object CMakeFiles/asr.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 82%] Linking CXX static library ../../../lib/libad_api.a
+INFO:root:[ 82%] Built target ad_api
+INFO:root:[ 82%] Building CXX object CMakeFiles/ad.dir/source/application/main/Main.cc.obj
+INFO:root:[ 82%] Building CXX object CMakeFiles/ad.dir/source/application/main/UseCaseCommonUtils.cc.obj
+INFO:root:[ 82%] Building CXX object CMakeFiles/ad.dir/source/use_case/ad/src/MainLoop.cc.obj
+INFO:root:[ 82%] Building CXX object CMakeFiles/ad.dir/source/use_case/ad/src/UseCaseHandler.cc.obj
+INFO:root:[ 82%] Building CXX object CMakeFiles/ad.dir/generated/ad/src/InputFiles.cc.obj
+INFO:root:[ 83%] Building CXX object CMakeFiles/ad.dir/generated/ad/src/ad_medium_int8_vela_H128.tflite.cc.obj
+INFO:root:[ 83%] Building CXX object CMakeFiles/ad.dir/generated/ad/src/random_id_00_000000.cc.obj
+INFO:root:[ 83%] Building C object CMakeFiles/ad.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 83%] Building C object CMakeFiles/ad.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 83%] Building C object CMakeFiles/ad.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 83%] Linking CXX static library ../../../lib/libkws_api.a
+INFO:root:[ 83%] Built target kws_api
+INFO:root:[ 83%] Building CXX object CMakeFiles/kws_asr.dir/source/application/main/Main.cc.obj
+INFO:root:[ 83%] Building CXX object CMakeFiles/kws.dir/source/application/main/Main.cc.obj
+INFO:root:[ 83%] Building CXX object CMakeFiles/kws_asr.dir/source/application/main/UseCaseCommonUtils.cc.obj
+INFO:root:[ 84%] Building CXX object CMakeFiles/kws_asr.dir/source/use_case/kws_asr/src/MainLoop.cc.obj
+INFO:root:[ 85%] Building CXX object CMakeFiles/kws.dir/source/application/main/UseCaseCommonUtils.cc.obj
+INFO:root:[ 85%] Building CXX object CMakeFiles/kws_asr.dir/source/use_case/kws_asr/src/UseCaseHandler.cc.obj
+INFO:root:[ 85%] Building CXX object CMakeFiles/kws.dir/source/use_case/kws/src/MainLoop.cc.obj
+INFO:root:[ 85%] Building CXX object CMakeFiles/kws.dir/source/use_case/kws/src/UseCaseHandler.cc.obj
+INFO:root:[ 85%] Building CXX object CMakeFiles/kws_asr.dir/generated/kws_asr/src/InputFiles.cc.obj
+INFO:root:[ 85%] Building CXX object CMakeFiles/kws_asr.dir/generated/kws_asr/src/Labels_micronetkws.cc.obj
+INFO:root:[ 85%] Building CXX object CMakeFiles/kws.dir/generated/kws/src/InputFiles.cc.obj
+INFO:root:[ 85%] Building CXX object CMakeFiles/kws_asr.dir/generated/kws_asr/src/Labels_wav2letter.cc.obj
+INFO:root:[ 85%] Building CXX object CMakeFiles/kws.dir/generated/kws/src/Labels.cc.obj
+INFO:root:[ 87%] Building CXX object CMakeFiles/kws.dir/generated/kws/src/down.cc.obj
+INFO:root:[ 87%] Building CXX object CMakeFiles/kws_asr.dir/generated/kws_asr/src/wav2letter_pruned_int8_vela_H128.tflite.cc.obj
+INFO:root:[ 86%] Building CXX object CMakeFiles/kws_asr.dir/generated/kws_asr/src/kws_micronet_m_vela_H128.tflite.cc.obj
+INFO:root:[ 87%] Building CXX object CMakeFiles/kws_asr.dir/generated/kws_asr/src/yes_no_go_stop.cc.obj
+INFO:root:[ 87%] Building CXX object CMakeFiles/kws.dir/generated/kws/src/kws_micronet_m_vela_H128.tflite.cc.obj
+INFO:root:[ 87%] Building CXX object CMakeFiles/kws.dir/generated/kws/src/right_left_up.cc.obj
+INFO:root:[ 87%] Building CXX object CMakeFiles/kws.dir/generated/kws/src/yes.cc.obj
+INFO:root:[ 87%] Building C object CMakeFiles/kws_asr.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 87%] Building C object CMakeFiles/kws_asr.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 88%] Building C object CMakeFiles/kws_asr.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 88%] Building CXX object CMakeFiles/kws.dir/generated/kws/src/yes_no_go_stop.cc.obj
+INFO:root:[ 89%] Building C object CMakeFiles/kws.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 89%] Building C object CMakeFiles/kws.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 89%] Building C object CMakeFiles/kws.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 90%] Linking CXX static library lib/libinference_runner.a
+INFO:root:[ 90%] Built target inference_runner
+INFO:root:[ 90%] Building CXX object CMakeFiles/ethos-u-inference_runner.dir/source/application/main/Main.cc.obj
+INFO:root:[ 90%] Building C object CMakeFiles/ethos-u-inference_runner.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 91%] Building C object CMakeFiles/ethos-u-inference_runner.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 91%] Building C object CMakeFiles/ethos-u-inference_runner.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 91%] Linking CXX static library lib/libvww.a
+INFO:root:[ 91%] Built target vww
+INFO:root:[ 91%] Building CXX object CMakeFiles/ethos-u-vww.dir/source/application/main/Main.cc.obj
+INFO:root:[ 91%] Building C object CMakeFiles/ethos-u-vww.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 91%] Building C object CMakeFiles/ethos-u-vww.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 92%] Building C object CMakeFiles/ethos-u-vww.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 92%] Linking CXX static library lib/libobject_detection.a
+INFO:root:[ 92%] Built target object_detection
+INFO:root:[ 92%] Building CXX object CMakeFiles/ethos-u-object_detection.dir/source/application/main/Main.cc.obj
+INFO:root:[ 93%] Building C object CMakeFiles/ethos-u-object_detection.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 93%] Building C object CMakeFiles/ethos-u-object_detection.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 93%] Building C object CMakeFiles/ethos-u-object_detection.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 94%] Linking CXX static library lib/libad.a
+INFO:root:[ 94%] Built target ad
+INFO:root:[ 94%] Linking CXX static library lib/libnoise_reduction.a
+INFO:root:[ 95%] Building C object CMakeFiles/ethos-u-ad.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 95%] Building CXX object CMakeFiles/ethos-u-ad.dir/source/application/main/Main.cc.obj
+INFO:root:[ 95%] Building C object CMakeFiles/ethos-u-ad.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 95%] Building C object CMakeFiles/ethos-u-ad.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 95%] Linking CXX static library lib/libkws.a
+INFO:root:[ 95%] Built target noise_reduction
+INFO:root:[ 95%] Building CXX object CMakeFiles/ethos-u-noise_reduction.dir/source/application/main/Main.cc.obj
+INFO:root:[ 96%] Building C object CMakeFiles/ethos-u-noise_reduction.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 96%] Building C object CMakeFiles/ethos-u-noise_reduction.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 96%] Building C object CMakeFiles/ethos-u-noise_reduction.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 96%] Built target kws
+INFO:root:[ 96%] Building CXX object CMakeFiles/ethos-u-kws.dir/source/application/main/Main.cc.obj
+INFO:root:[ 97%] Building C object CMakeFiles/ethos-u-kws.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 97%] Building C object CMakeFiles/ethos-u-kws.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 97%] Building C object CMakeFiles/ethos-u-kws.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 97%] Linking CXX executable bin/ethos-u-inference_runner.axf
+INFO:root:/opt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/bin/ld: warning: bin/ethos-u-inference_runner.axf has a LOAD segment with RWX permissions
+INFO:root:[ 97%] Built target ethos-u-inference_runner
+INFO:root:[ 97%] Linking CXX executable bin/ethos-u-vww.axf
+INFO:root:[ 97%] Linking CXX static library lib/libimg_class.a
+INFO:root:[ 97%] Linking CXX executable bin/ethos-u-object_detection.axf
+INFO:root:[ 97%] Built target img_class
+INFO:root:[ 97%] Building CXX object CMakeFiles/ethos-u-img_class.dir/source/application/main/Main.cc.obj
+INFO:root:[ 98%] Building C object CMakeFiles/ethos-u-img_class.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 98%] Building C object CMakeFiles/ethos-u-img_class.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 98%] Building C object CMakeFiles/ethos-u-img_class.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:/opt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/bin/ld: warning: bin/ethos-u-vww.axf has a LOAD segment with RWX permissions
+INFO:root:/opt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/bin/ld: warning: bin/ethos-u-object_detection.axf has a LOAD segment with RWX permissions
+INFO:root:[ 98%] Built target ethos-u-vww
+INFO:root:[ 98%] Built target ethos-u-object_detection
+INFO:root:[ 98%] Linking CXX executable bin/ethos-u-kws.axf
+INFO:root:/opt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/bin/ld: warning: bin/ethos-u-kws.axf has a LOAD segment with RWX permissions
+INFO:root:[ 98%] Linking CXX executable bin/ethos-u-ad.axf
+INFO:root:[ 98%] Linking CXX executable bin/ethos-u-noise_reduction.axf
+INFO:root:[ 98%] Built target ethos-u-kws
+INFO:root:/opt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/bin/ld: warning: bin/ethos-u-ad.axf has a LOAD segment with RWX permissions
+INFO:root:/opt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/bin/ld: warning: bin/ethos-u-noise_reduction.axf has a LOAD segment with RWX permissions
+INFO:root:[ 98%] Built target ethos-u-ad
+INFO:root:[ 98%] Built target ethos-u-noise_reduction
+INFO:root:[ 98%] Linking CXX executable bin/ethos-u-img_class.axf
+INFO:root:/opt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/bin/ld: warning: bin/ethos-u-img_class.axf has a LOAD segment with RWX permissions
+INFO:root:[ 98%] Built target ethos-u-img_class
+INFO:root:[ 98%] Linking CXX static library lib/libasr.a
+INFO:root:[ 98%] Built target asr
+INFO:root:[ 99%] Building C object CMakeFiles/ethos-u-asr.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[ 99%] Building C object CMakeFiles/ethos-u-asr.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[ 99%] Building CXX object CMakeFiles/ethos-u-asr.dir/source/application/main/Main.cc.obj
+INFO:root:[ 99%] Building C object CMakeFiles/ethos-u-asr.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[ 99%] Linking CXX static library lib/libkws_asr.a
+INFO:root:[ 99%] Built target kws_asr
+INFO:root:[100%] Building C object CMakeFiles/ethos-u-kws_asr.dir/source/hal/source/components/stdout/source/retarget.c.obj
+INFO:root:[100%] Building CXX object CMakeFiles/ethos-u-kws_asr.dir/source/application/main/Main.cc.obj
+INFO:root:[100%] Building C object CMakeFiles/ethos-u-kws_asr.dir/source/hal/source/components/cmsis_device/source/handlers.c.obj
+INFO:root:[100%] Building C object CMakeFiles/ethos-u-kws_asr.dir/source/hal/source/components/npu/ethosu_cpu_cache.c.obj
+INFO:root:[100%] Linking CXX executable bin/ethos-u-asr.axf
+INFO:root:/opt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/bin/ld: warning: bin/ethos-u-asr.axf has a LOAD segment with RWX permissions
+INFO:root:[100%] Built target ethos-u-asr
+INFO:root:[100%] Linking CXX executable bin/ethos-u-kws_asr.axf
+INFO:root:/opt/gcc-arm-none-eabi/bin/../lib/gcc/arm-none-eabi/13.2.1/../../../../arm-none-eabi/bin/ld: warning: bin/ethos-u-kws_asr.axf has a LOAD segment with RWX permissions
+INFO:root:[100%] Built target ethos-u-kws_asr

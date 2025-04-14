@@ -235,8 +235,6 @@ static int32_t _gdma_evaluate(lv_draw_unit_t *u, lv_draw_task_t *task)
         goto _gdma_evaluate_not_ok;
     }
 
-_gdma_evaluate_ok:
-
     if (task->preference_score > 70)
     {
         task->preference_score = 70;

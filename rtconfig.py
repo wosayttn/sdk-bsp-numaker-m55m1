@@ -42,6 +42,7 @@ if PLATFORM == 'gcc':
     OBJCPY = PREFIX + 'objcopy'
     STRIP = PREFIX + 'strip'
 
+    NPU = '  '
     DEVICE = ' -march=armv8.1-m.main -mthumb -mfpu=fpv5-d16 -mfloat-abi=hard -ffunction-sections -fdata-sections -ffreestanding -funwind-tables -fno-strict-aliasing '
     CFLAGS = DEVICE + ' -Dgcc -Wno-unused-variable -Wno-unused-function -Wno-unused-but-set-variable '
     AFLAGS = ' -c ' + DEVICE + ' -x assembler-with-cpp -Wa,-mimplicit-it=thumb '

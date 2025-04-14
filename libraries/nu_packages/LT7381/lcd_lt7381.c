@@ -207,17 +207,17 @@ static void lt7381_initial_pll(void)
     LT7381_WRITE_REG(0x05);
     LT7381_WRITE_DATA((s_PllSettings[XI_IN].lpllOD_sclk << 6) |
                       (s_PllSettings[XI_IN].lpllR_sclk << 1) |
-                      (s_PllSettings[XI_IN].lpllN_sclk >> 8) & 0x1);
+                      ((s_PllSettings[XI_IN].lpllN_sclk >> 8) & 0x1));
 
     LT7381_WRITE_REG(0x07);
     LT7381_WRITE_DATA((s_PllSettings[XI_IN].lpllOD_mclk << 6) |
                       (s_PllSettings[XI_IN].lpllR_mclk << 1) |
-                      (s_PllSettings[XI_IN].lpllN_mclk >> 8) & 0x1);
+                      ((s_PllSettings[XI_IN].lpllN_mclk >> 8) & 0x1));
 
     LT7381_WRITE_REG(0x09);
     LT7381_WRITE_DATA((s_PllSettings[XI_IN].lpllOD_cclk << 6) |
                       (s_PllSettings[XI_IN].lpllR_cclk << 1) |
-                      (s_PllSettings[XI_IN].lpllN_cclk >> 8) & 0x1);
+                      ((s_PllSettings[XI_IN].lpllN_cclk >> 8) & 0x1));
 
     LT7381_WRITE_REG(0x06);
     LT7381_WRITE_DATA(s_PllSettings[XI_IN].lpllN_sclk);

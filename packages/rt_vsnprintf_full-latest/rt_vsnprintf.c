@@ -54,7 +54,6 @@
 
 #include <rtconfig.h>
 #include <rtdef.h>
-#include <rtthread.h>
 
 #ifndef RT_VER_NUM /* Doesn't use menuconfig */
 // 'ntoa' conversion buffer size, this must be big enough to hold one converted
@@ -245,7 +244,7 @@ typedef uint64_t double_uint_t;
 #define DOUBLE_EXPONENT_MASK 0x7FFU
 #define DOUBLE_BASE_EXPONENT 1023
 #define DOUBLE_MAX_SUBNORMAL_EXPONENT_OF_10 -308
-#define DOUBLE_MAX_SUBNORMAL_POWER_OF_10 ((double)1e-308L)
+#define DOUBLE_MAX_SUBNORMAL_POWER_OF_10 1e-308
 
 #else
 #error "Unsupported double type configuration"
@@ -596,13 +595,13 @@ static double apply_scaling(double num, struct scaling_factor normalization)
 
 static double unapply_scaling(double normalized, struct scaling_factor normalization)
 {
-#if defined(__GNUC__) && !defined(__ARMCC_VERSION) /* GCC */
+#ifdef __GNUC__
 // accounting for a static analysis bug in GCC 6.x and earlier
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
   return normalization.multiply ? normalized / normalization.raw_factor : normalized * normalization.raw_factor;
-#if defined(__GNUC__) && !defined(__ARMCC_VERSION) /* GCC */
+#ifdef __GNUC__
 #pragma GCC diagnostic pop
 #endif
 }
