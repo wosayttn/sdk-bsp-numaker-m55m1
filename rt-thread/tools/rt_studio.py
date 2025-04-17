@@ -194,6 +194,7 @@ project_temp = """<?xml version="1.0" encoding="UTF-8"?>
     </buildSpec>
     <natures>
         <nature>org.eclipse.cdt.core.cnature</nature>
+        <nature>org.eclipse.cdt.core.ccnature</nature>
         <nature>org.rt-thread.studio.rttnature</nature>
         <nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
         <nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>

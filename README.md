@@ -49,15 +49,13 @@ The NuMicro® M55M1 series microcontrollers stand out for their exceptional perf
 
 ## 2. Supported compiler
 
-Support GCC, MDK5 IDE/compilers. More information of these compiler version as following:
+Support GCC and Keil MDK. More information of these compiler version as following:
 
-| IDE/Compiler  | Tested version                    |
-| ---------- | ------------------------------------ |
-| MDK5       | 5.40                                 |
-| GCC        | Arm Embedded Toolchain 10.3-2021.10 (Env 1.3.5 embedded version)|
-
-Notice:
-(1) Please install Nu-Link_Keil_Driver for development.
+| IDE/Compiler  | Tested version            |
+| ---------- | ---------------------------- |
+| GCC        | GCC 10.3.1 20210824 (release) |
+| Keil MDK5  | Keil v5.40                   |
+| RT-Thread Studio | v2.2.6                 |
 
 ## 3. Drag & Drop Program Firmware
 
