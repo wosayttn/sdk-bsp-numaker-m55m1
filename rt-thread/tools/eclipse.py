@@ -265,7 +265,6 @@ def HandleToolOption(tools, env, project, reset):
                 find_ok = True
                 break
         if find_ok is False:
-            print(rtt_pre_inc_item)
             SubElement(option, 'listOptionValue', {'builtIn': 'false', 'value': rtt_pre_inc_item})
     if len(compile_include_files_options) == 0:
         for option in compile_defs_options:
@@ -285,7 +284,6 @@ def HandleToolOption(tools, env, project, reset):
             # print('c.compiler.defs')
             cproject_defs = sorted(cproject_defs)
             for item in cproject_defs:
-                print(item)
                 SubElement(option, 'listOptionValue', {'builtIn': 'false', 'value': item})
 
     # update linker script config

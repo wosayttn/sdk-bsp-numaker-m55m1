@@ -118,7 +118,7 @@ int rt_hw_memheap_init(void)
 
     for (i = (NU_MEMHEAP_START + 1); i < NU_MEMHEAP_CNT; i++)
     {
-        LOG_I("Initial %s memheap: Begin@%08x , remain@%08x\n",
+        LOG_I("Initial %s memheap: Begin@%08x , remain@%08x",
               nu_memheap_arr[i].name,
               nu_memheap_arr[i].mem_base,
               nu_memheap_arr[i].mem_size);

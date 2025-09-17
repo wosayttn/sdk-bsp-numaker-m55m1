@@ -90,6 +90,7 @@ extern "C"
 #define PHASE_ORDER_MODE2                   (0x2)   /*!< SPIM_PHDMAW/SPIM_PHDMAR/SPIM_PHDMM: Set Byte order of program data to SPI Flash is byte1, byte0, byte3, byte2, byte5, byte4, byte7, byte6. */
 #define PHASE_ORDER_MODE3                   (0x3)   /*!< SPIM_PHDMAW/SPIM_PHDMAR/SPIM_PHDMM: Set Byte order of program data to SPI Flash is byte6, byte7, byte4, byte5, byte2, byte3, byte0, byte1. */
 
+#define PHASE_WIDTH_0                       (0x0)   /*!< SPIM_PHDMAW/SPIM_PHDMAR/SPIM_PHDMM: No command phase. */
 #define PHASE_WIDTH_8                       (0x1)   /*!< SPIM_PHDMAW/SPIM_PHDMAR/SPIM_PHDMM: Set 8 bits are transmitted in this phase. */
 #define PHASE_WIDTH_16                      (0x2)   /*!< SPIM_PHDMAW/SPIM_PHDMAR/SPIM_PHDMM: Set 16 bits are transmitted in this phase. */
 #define PHASE_WIDTH_24                      (0x3)   /*!< SPIM_PHDMAW/SPIM_PHDMAR/SPIM_PHDMM: Set 24 bits are transmitted in this phase. */
@@ -197,6 +198,7 @@ typedef enum
     MFGID_MXIC      = 0xC2U,
     MFGID_WINBOND   = 0xEFU,
     MFGID_MICRON    = 0x2CU,
+    MFGID_IFX       = 0x34U,
 }
 E_MFGID;
 
@@ -222,13 +224,6 @@ E_MFGID;
 #define OPCODE_FAST_DUAL_READ               (0x3BU)   /* Read data bytes */
 #define OPCODE_FAST_QUAD_READ               (0x6BU)   /* Read data bytes */
 
-/* Micron MT35xU02 octal SPI flash configure register OP code */
-#define OPCODE_WR_NVCONFIG                  (0xB1U) /* Write Non-Volatile Configuration Register*/
-#define OPCODE_WR_VCONFIG                   (0x81U) /* Write Volatile Configuration Register*/
-#define OPCODE_RD_NVCONFIG                  (0xB5U) /* Read Non-Volatile Configuration Register*/
-#define OPCODE_RD_VCONFIG                   (0x85U) /* Read Volatile Configuration Register*/
-#define OPCODE_RD_FLGREG                    (0x70U) /* Read Volatile Configuration Register*/
-
 /* Used for SST flashes only. */
 #define OPCODE_BP                           (0x02U)   /* Byte program */
 #define OPCODE_WRDI                         (0x04U)   /* Write disable */
@@ -246,6 +241,58 @@ E_MFGID;
 
 #define OPCODE_ENQPI                        (0x38U)
 #define OPCODE_EXQPI                        (0xFFU)
+
+/* Used for MICRON flashes only. */
+#define OPCODE_MICRON_WR_NVCFG              (0xB1U)     /* Write Non-Volatile Configuration Register */
+#define OPCODE_MICRON_WR_VCFG               (0x81U)     /* Write Volatile Configuration Register */
+#define OPCODE_MICRON_RD_NVCFG              (0xB5U)     /* Read Non-Volatile Configuration Register */
+#define OPCODE_MICRON_RD_VCFG               (0x85U)     /* Read Volatile Configuration Register */
+#define OPCODE_MICRON_RD_FLG                (0x70U)     /* Read Volatile Configuration Register */
+
+#define OPCODE_MICRON_SDR_DQS                (0xFFU)  /* Extended SPI (with DQS) */
+#define OPCODE_MICRON_SDR                    (0xDFU)  /* Extended SPI (no DQS) */
+#define OPCODE_MICRON_OCTAL_DQS              (0xE7U)  /* Octal DDR (with DQS) */
+#define OPCODE_MICRON_OCTAL                  (0xC7U)  /* Octal DDR (no DQS) */
+
+/* Used for Infineon flashes only. */
+// ---------------------------------------------
+// Read Status / Configuration Register (Infineon)
+// ---------------------------------------------
+#define OPCODE_IFX_RD_SR1                       (0x05)    /* Read Status Register 1 */
+#define OPCODE_IFX_RD_SR2                       (0x07)    /* Read Status Register 2 */
+#define OPCODE_IFX_RD_VCR                       (0x65)    /* Read Volatile Configuration Register */
+#define OPCODE_IFX_WR_VCR                       (0x71)    /* Write Volatile Configuration Register */
+
+// ---------------------------------------------
+// Read Memory Array (Infineon)
+// ---------------------------------------------
+#define OPCODE_IFX_READ_FAST                    (0x0B)    /* Legacy Fast Read (1S-1S-1S) */
+#define OPCODE_IFX_READ_OCTAL_SDR               (0xEC)    /* Octal SDR: Read (1-byte) */
+#define OPCODE_IFX_READ_OCTAL_DDR               (0xEE)      /* Octal DDR: Read Memory Array (2-byte) */
+
+// ---------------------------------------------
+// Erase (Infineon)
+// ---------------------------------------------
+#define OPCODE_IFX_SECTOR_ERASE_4K              (0x21)    /* Erase 4KB sector */
+#define OPCODE_IFX_BLOCK_ERASE_256K             (0xDC)    /* Erase 256KB block */
+#define OPCODE_IFX_CHIP_ERASE                   (0xC7)    /* Chip Erase */
+
+// ---------------------------------------------
+// Misc (Infineon)
+// ---------------------------------------------
+#define OPCODE_IFX_ENTER_4BYTE_ADDR             (0xB7)    /* Enter 4-byte address mode */
+#define OPCODE_IFX_EXIT_4BYTE_ADDR              (0xE9)    /* Exit 4-byte address mode */
+
+// ---------------------------------------------
+// Infineon SEMPER  Flash Volatile Configuration Register Addresses (VCR)
+// ---------------------------------------------
+#define IFX_STR1_ADDR                       (0x00800000)  /* Status Register 1 (VCR0) */
+#define IFX_STR2_ADDR                       (0x00800001)  /* Status Register 2 (VCR1) */
+#define IFX_CFR1_ADDR                       (0x00800002)  /* Configuration Register 1 (VCR2) */
+#define IFX_CFR2_ADDR                       (0x00800003)  /* Configuration Register 2 (VCR3) */
+#define IFX_CFR3_ADDR                       (0x00800004)  /* Configuration Register 3 (VCR4) */
+#define IFX_CFR4_ADDR                       (0x00800005)  /* Configuration Register 4 (VCR5) */
+#define IFX_CFR5_ADDR                       (0x00800006)  /* Configuration Register 5 (VCR6) */
 
 /* Status Register bits. */
 #define SR_WIP                              (0x1U)    /* Write in progress */
@@ -271,7 +318,7 @@ E_MFGID;
 #define SPIM_ERR_TIMEOUT                    (-2L)               /*!< SPIM operation abort due to timeout error */
 
 /* SPIM define flash page size */
-#define SPIM_FLH_PAGE_SIZE                  (256UL) /* SPI Flash Write Page Size */
+#define SPIM_FLH_PAGE_SIZE                  (256UL)     /* SPI Flash Write Page Size */
 
 /*---------------------------------------------------------------------------------------------------------*/
 /*  Define Macros and functions                                                                            */
@@ -288,7 +335,11 @@ E_MFGID;
   * @param[in]   spim
   * \hideinitializer
   */
-#define SPIM_SET_FLASH_MODE(spim)   (spim->CTL0 &= ~(SPIM_CTL0_DEVMODE_Msk))
+#define SPIM_SET_FLASH_MODE(spim)                   \
+    do{                                             \
+        (spim->CTL0 &= ~(SPIM_CTL0_DEVMODE_Msk));   \
+        SPIM_DISABLE_CIPHER(spim);                  \
+    }while(0)
 
 /**
  * @brief   Set 4-byte address.
@@ -580,6 +631,14 @@ E_MFGID;
     ((spim->CTL0 & SPIM_CTL0_RBO_NORM_Msk) >> SPIM_CTL0_RBO_NORM_Pos)
 
 /**
+ * @brief   SPI Flash Reset Enable Bit for SPI Flash.
+ * @param[in]   spim
+ * \hideinitializer
+ */
+#define SPIM_SET_RSTN_MODE(spim, x) \
+    (spim->CTL0 = ((spim->CTL0 & ~(SPIM_CTL0_SPI_RSTN_Msk)) | (((x) ? 0UL : 1UL) << SPIM_CTL0_SPI_RSTN_Pos)))
+
+/**
  * @brief   Set SPI flash R/W commmand code.
  * @param[in]   spim
  * @param[in]   x   reference SPI Flash Specification.
@@ -786,32 +845,6 @@ E_MFGID;
   * \hideinitializer
   */
 #define SPIM_GET_DMM_IDLE(spim) ((spim->DMMCTL & SPIM_DMMCTL_DMMIDLE_Msk) >> SPIM_DMMCTL_DMMIDLE_Pos)
-
-/**
-  * @brief   Set DMM time-out counter.
-  * @param[in]   spim
-  * \hideinitializer
-  */
-#define SPIM_SET_DMM_TOCNTDMM(spim, x)  \
-    (spim->DMM_TIMEOUT_INTERVAL = ((spim->DMM_TIMEOUT_INTERVAL & ~(SPIM_DMM_TIMEOUT_TOCNT_Msk)) | \
-                                   ((x) <<SPIM_DMM_TIMEOUT_TOCNT_Pos)))
-
-/**
-  * @brief   Get DMM time-out state flag.
-  * @param[in]   spim
-  * \hideinitializer
-  */
-#define SPIM_GET_DMM_TIMEOUT_STS(spim)   \
-    ((spim->DMM_TIMEOUT_FLAG_STS & SPIM_DMM_TIMEOUT_STS_TOF_Msk) >> SPIM_DMM_TIMEOUT_STS_TOF_Pos)
-
-/**
-  * @brief   Clear DMM time-out state flag.
-  * @param[in]   spim
-  * \hideinitializer
-  */
-#define SPIM_CLR_DMM_TIMEOUT_STS(spim)                                                                      \
-    (spim->DMM_TIMEOUT_FLAG_STS = ((spim->DMM_TIMEOUT_FLAG_STS & ~(SPIM_DMM_TIMEOUT_STS_TOF_Msk)) | \
-                                   SPIM_DMM_TIMEOUT_STS_TOF_Msk))
 
 /**
   * @brief   Set dummy cycle number (Only DMA Command Mode). It could be 0 ~ 0xFF.
@@ -1765,7 +1798,7 @@ __STATIC_INLINE void SPIM_ENABLE_CIPHER(SPIM_T *spim)
 {
     spim->CTL0 &= ~(SPIM_CTL0_CIPHOFF_Msk);
 
-    SPIM_SET_DMM_DESELTIM(spim, 0x12);
+    SPIM_SET_DMM_DESELTIM(spim, 0x10);
 }
 
 /**
@@ -1778,7 +1811,7 @@ __STATIC_INLINE void SPIM_DISABLE_CIPHER(SPIM_T *spim)
 {
     (spim->CTL0 |= (SPIM_CTL0_CIPHOFF_Msk));
 
-    SPIM_SET_DMM_DESELTIM(spim, 0x0A);
+    SPIM_SET_DMM_DESELTIM(spim, 0x08);
 }
 
 /**
@@ -1803,12 +1836,12 @@ __STATIC_INLINE uint32_t SPIM_GET_DMMADDR(SPIM_T *spim)
  */
 __STATIC_INLINE void SPIM_SET_OPMODE(SPIM_T *spim, uint32_t u32OPMode)
 {
-    volatile int32_t u32TimeOutCount = SPIM_TIMEOUT;
+    volatile int32_t i32TimeOutCount = (int32_t)SPIM_TIMEOUT;
 
     /* Wait for DMM mode to be idle. */
     while (SPIM_GET_DMM_IDLE(spim) == SPIM_OP_DISABLE)
     {
-        if (--u32TimeOutCount <= 0)
+        if (--i32TimeOutCount <= 0)
         {
             break;
         }
@@ -1859,29 +1892,32 @@ typedef struct
 /*---------------------------------------------------------------------------------------------------------*/
 /* Define Function Prototypes                                                                              */
 /*---------------------------------------------------------------------------------------------------------*/
-int32_t  SPIM_InitFlash(SPIM_T *spim, int clrWP);
+int32_t  SPIM_InitFlash(SPIM_T *spim, int32_t i32ClrWP);
 uint32_t SPIM_GetSClkFreq(SPIM_T *spim);
 void SPIM_ReadJedecId(SPIM_T *spim, uint8_t idBuf[], uint32_t u32NRx, uint32_t u32NBit);
-void SPIM_ReadStatusRegister(SPIM_T *spim, uint8_t dataBuf[], uint32_t u32NRx, uint32_t u32NBit);
-int32_t SPIM_Enable_4Bytes_Mode(SPIM_T *spim, int isEn, uint32_t u32NBit);
+void SPIM_ReadStatusRegister(SPIM_T *spim, uint8_t *pu8DataBuf, uint32_t u32NRx, uint32_t u32NBit);
+int32_t SPIM_Enable_4Bytes_Mode(SPIM_T *spim, uint32_t u32IsEn, uint32_t u32NBit);
 int32_t  SPIM_Is4ByteModeEnable(SPIM_T *spim, uint32_t u32NBit);
-void SPIM_SetWriteEnable(SPIM_T *spim, int isEn, uint32_t u32NBit);
-int32_t SPIM_SetWrapAroundEnable(SPIM_T *spim, uint32_t u32IsEn);
+void SPIM_SetWriteEnable(SPIM_T *spim, int32_t i32IsEn, uint32_t u32NBit);
+int32_t SPIM_SetWrapAroundEnable(SPIM_T *spim, int32_t i32IsEn);
+void SPIM_SwitchNBitOutput(SPIM_T *spim, uint32_t u32NBit);
+void SPIM_SwitchNBitInput(SPIM_T *spim, uint32_t u32NBit);
+int32_t SPIM_WaitOpDone(SPIM_T *spim, uint32_t u32IsSync);
 
-void SPIM_ChipErase(SPIM_T *spim, uint32_t u32NBit, int isSync);
-void SPIM_EraseBlock(SPIM_T *spim, uint32_t u32Addr, uint32_t u32Is4ByteAddr, uint8_t u8ErsCmd, uint32_t u32NBit, int isSync);
+void SPIM_ChipErase(SPIM_T *spim, uint32_t u32NBit, int32_t i32IsSync);
+void SPIM_EraseBlock(SPIM_T *spim, uint32_t u32Addr, uint32_t u32Is4ByteAddr, uint8_t u8ErsCmd, uint32_t u32NBit, int32_t i32IsSync);
 
 void SPIM_IO_Write(SPIM_T *spim, uint32_t u32Addr, uint32_t u32Is4ByteAddr, uint32_t u32NTx, uint8_t pu8TxBuf[], uint8_t wrCmd, uint32_t u32NBitCmd, uint32_t u32NBitAddr, uint32_t u32NBitDat);
 void SPIM_IO_Read(SPIM_T *spim, uint32_t u32Addr, uint32_t u32Is4ByteAddr, uint32_t u32NRx, uint8_t pu8RxBuf[], uint8_t rdCmd, uint32_t u32NBitCmd, uint32_t u32NBitAddr, uint32_t u32NBitDat,
-                  int u32NDummy);
+                  uint32_t u32NDummy);
 
-void SPIM_DMA_Write(SPIM_T *spim, uint32_t u32Addr, uint32_t u32Is4ByteAddr, uint32_t u32NTx, uint8_t pu8TxBuf[], uint32_t wrCmd);
-int32_t SPIM_DMA_Read(SPIM_T *spim, uint32_t u32Addr, uint32_t u32Is4ByteAddr, uint32_t u32NRx, uint8_t pu8RxBuf[], uint32_t u32RdCmd, int isSync);
+void SPIM_DMA_Write(SPIM_T *spim, uint32_t u32Addr, uint32_t u32Is4ByteAddr, uint32_t u32NTx, uint8_t *pu8TxBuf, uint32_t u32WrCmd);
+int32_t SPIM_DMA_Read(SPIM_T *spim, uint32_t u32Addr, uint32_t u32Is4ByteAddr, uint32_t u32NRx, uint8_t *pu8RxBuf, uint32_t u32RdCmd, uint32_t u32I32IsSync);
 
 void SPIM_EnterDirectMapMode(SPIM_T *spim, uint32_t u32Is4ByteAddr, uint32_t u32RdCmd, uint32_t u32IdleIntvl);
 void SPIM_ExitDirectMapMode(SPIM_T *spim);
 
-void SPIM_SetQuadEnable(SPIM_T *spim, int isEn, uint32_t u32NBit);
+void SPIM_SetQuadEnable(SPIM_T *spim, uint32_t u32IsEn, uint32_t u32NBit);
 
 void SPIM_WinbondUnlock(SPIM_T *spim, uint32_t u32NBit);
 
@@ -1896,7 +1932,7 @@ void SPIM_DMADMM_InitPhase(SPIM_T *spim, SPIM_PHASE_T *psPhaseTable, uint32_t u3
 /*----------------------------------------------------------------------------*/
 void SPIM_IO_SendCommandByPhase(SPIM_T *spim, uint32_t u32OPMode, uint32_t u32OpCMD, uint32_t u32CMDPhase, uint32_t u32DTREn);
 void SPIM_IO_SendAddressByPhase(SPIM_T *spim, uint32_t u32Is4ByteAddr, uint32_t u32Addr, uint32_t u32AddrPhase, uint32_t u32DTREn);
-int32_t SPIM_IO_SendDummyByPhase(SPIM_T *spim, int u32NDummy);
+int32_t SPIM_IO_SendDummyByPhase(SPIM_T *spim, uint32_t u32NDummy);
 void SPIM_IO_RWDataByPhase(SPIM_T *spim, uint32_t u32OPMode, uint8_t *pu8TRxBuf, uint32_t u32TRxSize, uint32_t u32DataPhase, uint32_t u32DTREn, uint32_t u32RdDQS);
 
 void SPIM_IO_ReadByPhase(SPIM_T *spim, SPIM_PHASE_T *psPhaseTable, uint32_t u32Addr, uint8_t *pu8RxBuf, uint32_t u32RdSize);
@@ -1907,6 +1943,18 @@ void SPIM_IO_WriteByPhase(SPIM_T *spim, SPIM_PHASE_T *psPhaseTable, uint32_t u32
 /*----------------------------------------------------------------------------*/
 int32_t SPIM_INIT_DLL(SPIM_T *spim);
 int32_t SPIM_SetDLLDelayNum(SPIM_T *spim, uint32_t u32DelayNum);
+
+/*----------------------------------------------------------------------------*/
+/* MICRON Octal SPI Flash Mode Control APIs                                   */
+/*----------------------------------------------------------------------------*/
+void SPIM_ExitOPIMode_MICRON(SPIM_T *spim);
+void SPIM_EnterOPIMode_MICRON(SPIM_T *spim);
+
+/*----------------------------------------------------------------------------*/
+/* Infineon (IFX) Octal SPI Flash Mode Control APIs                           */
+/*----------------------------------------------------------------------------*/
+void SPIM_ExitOPIMode_IFX(SPIM_T *spim);
+void SPIM_EnterOPIMode_IFX(SPIM_T *spim, int i32IsDDR);
 
 /** @} end of group SPIM_EXPORTED_FUNCTIONS */
 /** @} end of group SPIM_Driver */

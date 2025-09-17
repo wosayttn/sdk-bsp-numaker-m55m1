@@ -130,19 +130,8 @@ void LPADC_Close(LPADC_T *lpadc)
     /*Disable the LPADC Power on*/
     lpadc->ADCR &= ~LPADC_ADCR_ADEN_Msk;
 
-    uint32_t u32RegLockLevel = SYS_IsRegLocked();
-
-    if (u32RegLockLevel)
-    {
-        /* Unlock protected registers */
-        SYS_UnlockReg();
-    }
     SYS_ResetModule(SYS_LPADC0RST);
-    if (u32RegLockLevel)
-    {
-        /* Lock protected registers */
-        SYS_LockReg();
-    }
+
     return;
 }
 

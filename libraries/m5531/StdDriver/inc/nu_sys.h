@@ -914,7 +914,7 @@ extern "C"
 #define SYS_GPC_MFP0_PC2MFP_I2C3_SDA          (0xFUL<<SYS_GPC_MFP0_PC2MFP_Pos)    /*!< GPC_MFP0 PC2 setting for I2C3_SDA           */
 #define SYS_GPC_MFP0_PC2MFP_PSIO0_CH3         (0x11UL<<SYS_GPC_MFP0_PC2MFP_Pos)   /*!< GPC_MFP0 PC2 setting for PSIO0_CH3          */
 #define SYS_GPC_MFP0_PC2MFP_KPI_ROW3          (0x12UL<<SYS_GPC_MFP0_PC2MFP_Pos)   /*!< GPC_MFP0 PC2 setting for KPI_ROW3           */
-#define SYS_GPC_MFP0_PC2MFP_UTCPD0_CCDB1      (0x13UL<<SYS_GPC_MFP0_PC2MFP_Pos)   /*!< GPC_MFP0 PC2 setting for UTCPD0_CCDB1       */
+#define SYS_GPC_MFP0_PC2MFP_UTCPD0_CCDB2      (0x13UL<<SYS_GPC_MFP0_PC2MFP_Pos)   /*!< GPC_MFP0 PC2 setting for UTCPD0_CCDB2       */
 
 /* PC.3 MFP */
 #define SYS_GPC_MFP0_PC3MFP_GPIO              (0x0UL<<SYS_GPC_MFP0_PC3MFP_Pos)    /*!< GPC_MFP0 PC3 setting for GPIO               */
@@ -933,7 +933,7 @@ extern "C"
 #define SYS_GPC_MFP0_PC3MFP_I2C3_SCL          (0xFUL<<SYS_GPC_MFP0_PC3MFP_Pos)    /*!< GPC_MFP0 PC3 setting for I2C3_SCL           */
 #define SYS_GPC_MFP0_PC3MFP_PSIO0_CH2         (0x11UL<<SYS_GPC_MFP0_PC3MFP_Pos)   /*!< GPC_MFP0 PC3 setting for PSIO0_CH2          */
 #define SYS_GPC_MFP0_PC3MFP_KPI_ROW2          (0x12UL<<SYS_GPC_MFP0_PC3MFP_Pos)   /*!< GPC_MFP0 PC3 setting for KPI_ROW2           */
-#define SYS_GPC_MFP0_PC3MFP_UTCPD0_CCDB2      (0x13UL<<SYS_GPC_MFP0_PC3MFP_Pos)   /*!< GPC_MFP0 PC3 setting for UTCPD0_CCDB2       */
+#define SYS_GPC_MFP0_PC3MFP_UTCPD0_CCDB1      (0x13UL<<SYS_GPC_MFP0_PC3MFP_Pos)   /*!< GPC_MFP0 PC3 setting for UTCPD0_CCDB1       */
 
 /* PC.4 MFP */
 #define SYS_GPC_MFP1_PC4MFP_GPIO              (0x0UL<<SYS_GPC_MFP1_PC4MFP_Pos)    /*!< GPC_MFP1 PC4 setting for GPIO               */
@@ -3849,8 +3849,8 @@ extern "C"
 #define SET_USCI0_DAT1_PF1()        SYS->GPF_MFP0 = ((SYS->GPF_MFP0 & (~SYS_GPF_MFP0_PF1MFP_Msk)) | SYS_GPF_MFP0_PF1MFP_USCI0_DAT1)                    /*!< Set PF1 function to USCI0_DAT1          */
 #define SET_UTCPD0_CC1_PC0()        SYS->GPC_MFP0 = ((SYS->GPC_MFP0 & (~SYS_GPC_MFP0_PC0MFP_Msk)) | SYS_GPC_MFP0_PC0MFP_UTCPD0_CC1)                    /*!< Set PC0 function to UTCPD0_CC1          */
 #define SET_UTCPD0_CC2_PC1()        SYS->GPC_MFP0 = ((SYS->GPC_MFP0 & (~SYS_GPC_MFP0_PC1MFP_Msk)) | SYS_GPC_MFP0_PC1MFP_UTCPD0_CC2)                    /*!< Set PC1 function to UTCPD0_CC2          */
-#define SET_UTCPD0_CCDB1_PC2()      SYS->GPC_MFP0 = ((SYS->GPC_MFP0 & (~SYS_GPC_MFP0_PC2MFP_Msk)) | SYS_GPC_MFP0_PC2MFP_UTCPD0_CCDB1)                  /*!< Set PC2 function to UTCPD0_CCDB1        */
-#define SET_UTCPD0_CCDB2_PC3()      SYS->GPC_MFP0 = ((SYS->GPC_MFP0 & (~SYS_GPC_MFP0_PC3MFP_Msk)) | SYS_GPC_MFP0_PC3MFP_UTCPD0_CCDB2)                  /*!< Set PC3 function to UTCPD0_CCDB2        */
+#define SET_UTCPD0_CCDB1_PC3()      SYS->GPC_MFP0 = ((SYS->GPC_MFP0 & (~SYS_GPC_MFP0_PC3MFP_Msk)) | SYS_GPC_MFP0_PC3MFP_UTCPD0_CCDB1)                  /*!< Set PC3 function to UTCPD0_CCDB1        */
+#define SET_UTCPD0_CCDB2_PC2()      SYS->GPC_MFP0 = ((SYS->GPC_MFP0 & (~SYS_GPC_MFP0_PC2MFP_Msk)) | SYS_GPC_MFP0_PC2MFP_UTCPD0_CCDB2)                  /*!< Set PC2 function to UTCPD0_CCDB2        */
 #define SET_UTCPD0_DISCHG_PA1()     SYS->GPA_MFP0 = ((SYS->GPA_MFP0 & (~SYS_GPA_MFP0_PA1MFP_Msk)) | SYS_GPA_MFP0_PA1MFP_UTCPD0_DISCHG)                 /*!< Set PA1 function to UTCPD0_DISCHG       */
 #define SET_UTCPD0_DISCHG_PA6()     SYS->GPA_MFP1 = ((SYS->GPA_MFP1 & (~SYS_GPA_MFP1_PA6MFP_Msk)) | SYS_GPA_MFP1_PA6MFP_UTCPD0_DISCHG)                 /*!< Set PA6 function to UTCPD0_DISCHG       */
 #define SET_UTCPD0_DISCHG_PC4()     SYS->GPC_MFP1 = ((SYS->GPC_MFP1 & (~SYS_GPC_MFP1_PC4MFP_Msk)) | SYS_GPC_MFP1_PC4MFP_UTCPD0_DISCHG)                 /*!< Set PC4 function to UTCPD0_DISCHG       */

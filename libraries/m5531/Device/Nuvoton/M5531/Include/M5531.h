@@ -93,7 +93,7 @@ typedef enum IRQn
     WDT0_IRQn                     =   8,      /*!< Watchdog Timer 0 Interrupt               */
     WWDT0_IRQn                    =   9,      /*!< Window Watchdog Timer 0 Interrupt        */
 
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
     WDT1_IRQn                     =  11,      /*!< Watchdog Timer 1 Interrupt               */
     WWDT1_IRQn                    =  12,      /*!< Window Watchdog Timer 1 Interrupt        */
     NPU_IRQn                      =  13,      /*!< Neural Network Processor Interrupt       */
@@ -126,12 +126,12 @@ typedef enum IRQn
     BPWM0_IRQn                    =  38,      /*!< BPWM0 Interrupt                          */
     BPWM1_IRQn                    =  39,      /*!< BPWM1 Interrupt                          */
 
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
     PDMA0_IRQn                    =  41,      /*!< PDMA0 Interrupt                          */
     PDMA1_IRQn                    =  42,      /*!< PDMA1 Interrupt                          */
     LPPDMA_IRQn                   =  43,      /*!< Low Power PDMA Interrupt                 */
     SCU_IRQn                      =  44,      /*!< SCU Interrupt                            */
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
     KS_IRQn                       =  46,      /*!< Key Store Interrupt                      */
     TIMER0_IRQn                   =  47,      /*!< Timer0 Interrupt                         */
     TIMER1_IRQn                   =  48,      /*!< Timer1 Interrupt                         */
@@ -140,7 +140,7 @@ typedef enum IRQn
     TIMER3_IRQn                   =  50,      /*!< Timer3 Interrupt                         */
     LPTMR0_IRQn                   =  51,      /*!< Low Power Timer 0 Interrupt              */
     LPTMR1_IRQn                   =  52,      /*!< Low Power Timer 1 Interrupt              */
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
     TTMR0_IRQn                    =  54,      /*!< Tick Timer 0 Interrupt                   */
     TTMR1_IRQn                    =  55,      /*!< Tick Timer 1 Interrupt                   */
     USBH0_IRQn                    =  56,      /*!< USB Host 0 Interrupt                     */
@@ -159,11 +159,11 @@ typedef enum IRQn
     SPI2_IRQn                     =  68,      /*!< SPI2 Interrupt                           */
     SPI3_IRQn                     =  69,      /*!< SPI3 Interrupt                           */
 
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
     LPSPI0_IRQn                   =  71,      /*!< Low Power SPI 0 Interrupt                */
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
     SPIM0_IRQn                    =  73,      /*!< SPIM0 Interrupt                          */
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
     UART0_IRQn                    =  75,      /*!< UART0 Interrupt                          */
     UART1_IRQn                    =  76,      /*!< UART1 Interrupt                          */
     UART2_IRQn                    =  77,      /*!< UART2 Interrupt                          */
@@ -175,21 +175,21 @@ typedef enum IRQn
     UART7_IRQn                    =  82,      /*!< UART7 Interrupt                          */
     UART8_IRQn                    =  83,      /*!< UART8 Interrupt                          */
     UART9_IRQn                    =  84,      /*!< UART9 Interrupt                          */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
     EINT6_IRQn                    =  88,      /*!< External Input 6 Interrupt               */
     EINT7_IRQn                    =  89,      /*!< External Input 7 Interrupt               */
 
     LPUART0_IRQn                  =  90,      /*!< Low Power UART 0 Interrupt               */
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
     I2C0_IRQn                     =  92,      /*!< I2C0 Interrupt                           */
     I2C1_IRQn                     =  93,      /*!< I2C1 Interrupt                           */
     I2C2_IRQn                     =  94,      /*!< I2C2 Interrupt                           */
     I2C3_IRQn                     =  95,      /*!< I2C3 Interrupt                           */
     LPI2C0_IRQn                   =  96,      /*!< Low Power I2C 0 Interrupt                */
     USCI0_IRQn                    =  97,      /*!< USCI0 Interrupt                          */
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
     SC0_IRQn                      =  99,      /*!< Smart Card Host 0 Interrupt              */
 
     SC1_IRQn                      = 100,      /*!< Smart Card Host 1 Interrupt              */
@@ -201,10 +201,10 @@ typedef enum IRQn
     I2S1_IRQn                     = 106,      /*!< I2S1 Interrupt                           */
     TRNG_IRQn                     = 107,      /*!< TRNG Interrupt                           */
     I3C0_IRQn                     = 108,      /*!< I3C0 Interrupt                           */
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
 
     OTFC0_IRQn                    = 110,      /*!< OTFC0 Interrupt                          */
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
     KPI_IRQn                      = 112,      /*!< KPI Interrupt                            */
     SDH0_IRQn                     = 113,      /*!< SD Host 0 Interrupt                      */
     SDH1_IRQn                     = 114,      /*!< SD Host 1 Interrupt                      */
@@ -217,18 +217,18 @@ typedef enum IRQn
     CANFD11_IRQn                  = 120,      /*!< CANFD11 Interrupt                        */
     ACMP01_IRQn                   = 121,      /*!< ACMP0 and ACMP1 Interrupt                */
     ACMP23_IRQn                   = 122,      /*!< ACMP2 and ACMP3 Interrupt                */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
     CRC_IRQn                      = 125,      /*!< CRC Interrupt                            */
     EADC00_IRQn                   = 126,      /*!< EADC0 Interrupt 0                        */
     EADC01_IRQn                   = 127,      /*!< EADC0 Interrupt 1                        */
     EADC02_IRQn                   = 128,      /*!< EADC0 Interrupt 2                        */
     EADC03_IRQn                   = 129,      /*!< EADC0 Interrupt 3                        */
 
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
     LPADC0_IRQn                   = 134,      /*!< Low Power ADC 0 Interrupt                */
     DAC01_IRQn                    = 135,      /*!< DAC0 and DAC1 Interrupt                  */
     /*!< Reserved                                 */
@@ -241,22 +241,22 @@ typedef enum IRQn
     ECAP1_IRQn                    = 142,      /*!< ECAP1 Interrupt                          */
     ECAP2_IRQn                    = 143,      /*!< ECAP2 Interrupt                          */
     ECAP3_IRQn                    = 144,      /*!< ECAP3 Interrupt                          */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
     AWF_IRQn                      = 149,      /*!< AWF Interrupt                            */
 
     UTCPD_IRQn                    = 150,      /*!< UTCPD Interrupt                          */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
-    /*!< Reserved                                 */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
+    /*!< Reserved                                                                           */
 
     GDMACH0_IRQn                  = 160,      /*!< GDMA Channel 0 Interrupt                 */
     GDMACH1_IRQn                  = 161,      /*!< GDMA Channel 1 Interrupt                 */

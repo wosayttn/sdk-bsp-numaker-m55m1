@@ -302,10 +302,6 @@ static int rt_hw_ecap_init(void)
     int i;
     rt_err_t ret = RT_EOK;
 
-    uint32_t u32RegLockBackup = SYS_IsRegLocked();
-
-    SYS_UnlockReg();
-
     for (i = (ECAP_START + 1); i < ECAP_CNT; i++)
     {
         nu_ecap_t psNuEcap = &nu_ecap_arr[i];
@@ -331,9 +327,6 @@ static int rt_hw_ecap_init(void)
         ret = rt_device_inputcapture_register(&psNuEcap->parent, psNuEcap->name, psNuEcap);
         RT_ASSERT(ret == RT_EOK);
     }
-
-    if (u32RegLockBackup)
-        SYS_LockReg();
 
     return 0;
 }

@@ -11,7 +11,7 @@
 #define __LPPDMA_REG_H__
 
 #if defined ( __CC_ARM   )
-#pragma anon_unions
+    #pragma anon_unions
 #endif
 
 #define LPPDMA_CH_MAX    4UL   /*!< Specify Maximum Channels of LPPDMA  \hideinitializer */

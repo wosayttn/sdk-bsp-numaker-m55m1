@@ -24,7 +24,7 @@
     Memory Mapped Structure for CLK Controller
     @{
 */
- 
+
 typedef struct
 {
 

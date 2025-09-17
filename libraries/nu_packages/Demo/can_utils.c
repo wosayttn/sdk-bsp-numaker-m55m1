@@ -23,22 +23,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-static struct rt_semaphore rx_sem;
-static rt_err_t canutils_msg_rx_cb(rt_device_t dev, rt_size_t size)
-{
-    rt_sem_release(&rx_sem);
-
-    return RT_EOK;
-}
-
 static void canutils_receiver(void *parameter)
 {
     int i;
     rt_err_t res;
     rt_device_t dev = (rt_device_t)parameter;
-
-    res = rt_sem_init(&rx_sem, "rx_sem", 0, RT_IPC_FLAG_PRIO);
-    RT_ASSERT(res == RT_EOK);
 
     res = rt_device_control(dev, RT_CAN_CMD_SET_BAUD, (void *)CAN500kBaud);
     RT_ASSERT(res == RT_EOK);
@@ -46,65 +35,68 @@ static void canutils_receiver(void *parameter)
     res = rt_device_control(dev, RT_CAN_CMD_SET_MODE, (void *)RT_CAN_MODE_NORMAL);
     RT_ASSERT(res == RT_EOK);
 
-    res = rt_device_set_rx_indicate(dev, canutils_msg_rx_cb);
-    RT_ASSERT(res == RT_EOK);
-
 #ifdef RT_CAN_USING_HDR
-#if 0
-    struct rt_can_filter_item
+    struct rt_can_filter_item items[] =
     {
-        rt_uint32_t id  : 29;
-        rt_uint32_t ide : 1;
-        rt_uint32_t rtr : 1;
-        rt_uint32_t mode : 1;
-        rt_uint32_t mask;
-        rt_int32_t  hdr_bank;/*Should be defined as:rx.FilterBank,which should be changed to rt_int32_t hdr_bank*/
-        rt_uint32_t rxfifo;/*Add a configuration item that CAN_RX_FIFO0/CAN_RX_FIFO1*/
-#ifdef RT_CAN_USING_HDR
-        rt_err_t (*ind)(rt_device_t dev, void *args, rt_int32_t hdr, rt_size_t size);
-        void *args;
-#endif /*RT_CAN_USING_HDR*/
-    };
-#define RT_CAN_FILTER_ITEM_INIT(id,ide,rtr,mode,mask,ind,args) \
-      {(id), (ide), (rtr), (mode),(mask), -1, CAN_RX_FIFO0,(ind), (args)}/*0:CAN_RX_FIFO0*/
-#define RT_CAN_FILTER_STD_INIT(id,ind,args) \
-     RT_CAN_FILTER_ITEM_INIT(id,0,0,0,0xFFFFFFFF,ind,args)
-#endif
+        /* {(id),       (ide),  (rtr), (mode),  (mask),         (hdr_bank),     (rxfifo),      (ind),    (args)} */
 
-    struct rt_can_filter_item items[5] =
-    {
-        RT_CAN_FILTER_ITEM_INIT(0x100, 0, 0, 1, 0x700, RT_NULL, RT_NULL),
-        RT_CAN_FILTER_ITEM_INIT(0x300, 0, 0, 1, 0x700, RT_NULL, RT_NULL),
-        RT_CAN_FILTER_ITEM_INIT(0x211, 0, 0, 1, 0x7ff, RT_NULL, RT_NULL),
-        RT_CAN_FILTER_STD_INIT(0x486, RT_NULL, RT_NULL),
-        {0x555, 1, 0, 1, 0x7ff, 6, RT_NULL, RT_NULL, RT_NULL}
+        /* Must fully match 0x678 ID and STD-ID. */
+        {0x678,         0,     0,       1,      0xFFFFFFFF,          0,              RT_NULL,    RT_NULL,   RT_NULL},
+
+        /* Must fully match 0x678 ID and EXT-ID. */
+        {0x678,         1,     0,       1,      0xFFFFFFFF,          1,              RT_NULL,    RT_NULL,   RT_NULL},
+
+        /* Must fully match 0x123 ID and STD-ID. */
+        {0x123,         0,     0,       1,      0xFFFFFFFF,          2,              RT_NULL,    RT_NULL,   RT_NULL},
+
+        /* Must fully match 0x123 ID and EXT-ID. */
+        {0x123,         1,     0,       1,      0xFFFFFFFF,          3,              RT_NULL,    RT_NULL,   RT_NULL},
     };
-    struct rt_can_filter_config cfg = {5, 1, items};
+
+    struct rt_can_filter_config cfg = {sizeof(items) / sizeof(struct rt_can_filter_item), 1, items};
 
     res = rt_device_control(dev, RT_CAN_CMD_SET_FILTER, &cfg);
     RT_ASSERT(res == RT_EOK);
 #endif
-    struct rt_can_msg rxmsg = {0};
+    static struct rt_can_msg rxmsg[32] = {0};
 
     while (1)
     {
-        rxmsg.hdr_index  = -1;
-        if (rt_sem_take(&rx_sem, RT_WAITING_FOREVER) != RT_EOK)
-            continue;
+        int size;
+        int fid;
 
-        if (rt_device_read(dev, 0, &rxmsg, sizeof(struct rt_can_msg)) == sizeof(struct rt_can_msg))
+        for (fid = 0; fid < sizeof(rxmsg) / sizeof(struct rt_can_msg); fid++)
         {
-#if 0
-            rt_kprintf("[%s, %d]ID:%02x Data:", dev->parent.name, rxmsg.hdr_index, rxmsg.id);
-            for (i = 0; i < rxmsg.len; i++)
-            {
-                rt_kprintf("%02x ", rxmsg.data[i]);
-            }
-            rt_kprintf("\n");
-#endif
+            rxmsg[fid].hdr_index = -1;
         }
-    }
 
+        if ((size = rt_device_read(dev, 0, &rxmsg, sizeof(rxmsg))) > 0)
+        {
+            for (fid = 0; fid < size / sizeof(struct rt_can_msg); fid++)
+            {
+                rt_kprintf("[%s: MsgRXBoxID:%d] ID: 0x%08X, %s, %s, length: %d",
+                           dev->parent.name,
+                           rxmsg[fid].hdr_index,
+                           rxmsg[fid].id,
+                           (rxmsg[fid].ide  == RT_CAN_STDID) ? "Standard ID" : "Extended ID",
+                           (rxmsg[fid].rtr == RT_CAN_RTR) ? "RTR frame" : "DATA frame",
+                           rxmsg[fid].len);
+
+                if (rxmsg[fid].rtr == RT_CAN_DTR)
+                {
+                    rt_kprintf(", Data: ");
+                    for (i = 0; i < rxmsg[fid].len; i++)
+                    {
+                        rt_kprintf("%02x ", rxmsg[fid].data[i]);
+                    }
+                }
+
+                rt_kprintf("\n");
+
+            } // for
+
+        } // if
+    }
 }
 
 static rt_thread_t canutils_receiver_new(rt_device_t dev)

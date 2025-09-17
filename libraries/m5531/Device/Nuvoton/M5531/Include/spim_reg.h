@@ -45,6 +45,8 @@ typedef struct
      * |        |          |0x1 = SPIROM operates in HYPER RAM device mode.
      * |        |          |0x2 = SPIROM operates in HYPER Flash device mode.
      * |        |          |0x3 = Reserved.
+     * |        |          |Note: Please sets DEVMODE to 0x2 (i.e
+     * |        |          |HYPER Flash mode) when there is the limitation of Linear Burst Read with Row Boundary Crossing for the used Hyper RAM device.
      * |[5]     |B4ADDREN  |4-byte Address Mode Enable Bit
      * |        |          |0 = 3-byte address mode Enabled.
      * |        |          |1 = 4-byte address mode Enabled.
@@ -846,24 +848,6 @@ typedef struct
      * |[0]     |OPDONE    |HyperBus Operation Done Interrupt
      * |        |          |0 = HyperBus operation is busy.
      * |        |          |1 = HyperBus operation is done.
-     * @var SPIM_T::DMM_TIMEOUT_INTERVAL
-     * Offset: 0xA0  SPIM DMM Time-out Interval Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[31:0]  |TOCNTDMM  |Time-Out Counter Setting Value for DMM Read Mode only
-     * |        |          |User can set this control register to know if SPIM DMM mode doesnu2019t response read data to MCU over the time interval by this time-out counter settings value, and the time-out event flag of DMM mode (SPIM_DMM_TIMEOUT_FLAG_STS[0]) will go high.
-     * |        |          |Note 1: The time interval by this time-out counter settings value equals to time-out counter settings value multiple by clock cycle period of SPIM HCLK.
-     * |        |          |Note 2: If setting value of this control register is smaller than 0x1000, then hardware will set this control register to 0x1000 automatically.
-     * @var SPIM_T::DMM_TIMEOUT_FLAG_STS
-     * Offset: 0xA4  SPIM DMM Time-out Flag Status Register
-     * ---------------------------------------------------------------------------------------------------
-     * |Bits    |Field     |Descriptions
-     * | :----: | :----:   | :---- |
-     * |[0]     |DMMTOF    |Time-out Flag for DMM Read Mode only
-     * |        |          |0 = There is no time-out event when SPIM is in DMM read mode.
-     * |        |          |1 = There is time-out event when SPIM is in DMM read mode.
-     * |        |          |Note: Write 1 to clear to zero for this time-out event flag of DMM mode.
      */
     __IO uint32_t CTL0;                  /*!< [0x0000] Control and Status Register 0                                    */
     __IO uint32_t CTL1;                  /*!< [0x0004] Control and Status Register 1                                    */
@@ -895,8 +879,6 @@ typedef struct
     __I  uint32_t HYPER_RDATA;           /*!< [0x0094] HyperBus 32-Bits Read Data Register                              */
     __IO uint32_t HYPER_INTEN;           /*!< [0x0098] HyperBus Interrupt Enable Register                               */
     __IO uint32_t HYPER_INTSTS;          /*!< [0x009c] HyperBus Interrupt Status Register                               */
-    __IO uint32_t DMM_TIMEOUT_INTERVAL;  /*!< [0x00a0] SPIM DMM Time-out Interval Register                              */
-    __IO uint32_t DMM_TIMEOUT_FLAG_STS;  /*!< [0x00a4] SPIM DMM Time-out Flag Status Register                           */
 } SPIM_T;
 
 /**
@@ -1227,12 +1209,6 @@ typedef struct
 
 #define SPIM_HYPER_INTSTS_OPDONE_Pos     (0)                                               /*!< SPIM_T::HYPER_INTSTS: OPDONE Position  */
 #define SPIM_HYPER_INTSTS_OPDONE_Msk     (0x1ul << SPIM_HYPER_INTSTS_OPDONE_Pos)           /*!< SPIM_T::HYPER_INTSTS: OPDONE Mask      */
-
-#define SPIM_DMM_TIMEOUT_TOCNT_Pos       (0)                                               /*!< SPIM_T::DMM_TIMEOUT_INTERVAL: TOCNTDMM Position*/
-#define SPIM_DMM_TIMEOUT_TOCNT_Msk       (0xfffffffful << SPIM_DMM_TIMEOUT_TOCNT_Pos)      /*!< SPIM_T::DMM_TIMEOUT_INTERVAL: TOCNTDMM Mask*/
-
-#define SPIM_DMM_TIMEOUT_STS_TOF_Pos     (0)                                                  /*!< SPIM_T::DMM_TIMEOUT_FLAG_STS: DMMTOF Position*/
-#define SPIM_DMM_TIMEOUT_STS_TOF_Msk     (0x1ul << SPIM_DMM_TIMEOUT_STS_TOF_Pos)               /*!< SPIM_T::DMM_TIMEOUT_FLAG_STS: DMMTOF Mask*/
 
 /** @} SPIM_CONST */
 /** @} end of SPIM register group */

@@ -36,7 +36,7 @@
     #define NU_PDMA_MEMFUN_ACTOR_MAX (4)
 #endif
 
-#define NU_PDMA_SG_TBL_MAXSIZE         (NU_PDMA_SG_LIMITED_DISTANCE/sizeof(DSCT_T))
+#define NU_PDMA_SG_TBL_MAXSIZE         (NU_PDMA_SG_LIMITED_DISTANCE/sizeof(sDESC_T))
 
 #define NU_PDMA_CH_MAX    (PDMA_CNT*PDMA_CH_MAX)     /* Specify maximum channels of PDMA */
 #define NU_PDMA_CH_Msk    ((1<<PDMA_CH_MAX)-1)
@@ -210,6 +210,7 @@ static int nu_pdma_check_is_nonallocated(uint32_t i32ModChnID)
     uint32_t mod_idx = NU_PDMA_GET_MOD_IDX(i32ModChnID);
 
     RT_ASSERT(mod_idx < PDMA_CNT);
+
     return !(nu_pdma_chn_mask_arr[mod_idx] & (1 << NU_PDMA_GET_MOD_CHIDX(i32ModChnID)));
 }
 
@@ -251,6 +252,8 @@ static void nu_pdma_init(void)
     {
         PDMA_T *psPDMA = (PDMA_T *)nu_pdma_arr[i].m_pvBase;
         nu_pdma_chn_mask_arr[i] = ~(NU_PDMA_CH_Msk);
+
+        //rt_kprintf("PDMA controller %s @ 0x%08x, IRQn: %d\n", nu_pdma_arr[i].name, (uint32_t)psPDMA, nu_pdma_arr[i].eIRQn);
 
         SYS_ResetModule(nu_pdma_arr[i].u32RstId);
 
@@ -641,6 +644,7 @@ rt_err_t nu_pdma_desc_setup(int i32ModChnID, nu_pdma_desc_t dma_desc, uint32_t u
 {
     nu_pdma_periph_ctl_t *psPeriphCtl = NULL;
     PDMA_T *PDMA = NULL;
+    int isPdmaDescReg = 0;
 
     uint32_t u32SrcCtl = 0;
     uint32_t u32DstCtl = 0;
@@ -660,6 +664,15 @@ rt_err_t nu_pdma_desc_setup(int i32ModChnID, nu_pdma_desc_t dma_desc, uint32_t u
 
     PDMA = NU_PDMA_GET_BASE(i32ModChnID);
 
+    for (int i = 0; i < PDMA_CH_MAX; i++)
+    {
+        if ((nu_pdma_desc_t)&PDMA->DSCT[i] == dma_desc)
+        {
+            isPdmaDescReg = 1;
+            break;
+        }
+    }
+
     psPeriphCtl = &nu_pdma_chn_arr[NU_PDMA_GET_ARRAY_IDX(i32ModChnID)].m_spPeripCtl;
 
     nu_pdma_channel_memctrl_fill(psPeriphCtl->m_eMemCtl, &u32SrcCtl, &u32DstCtl);
@@ -668,7 +681,7 @@ rt_err_t nu_pdma_desc_setup(int i32ModChnID, nu_pdma_desc_t dma_desc, uint32_t u
                     ((u32DataWidth == 8) ? PDMA_WIDTH_8 : (u32DataWidth == 16) ? PDMA_WIDTH_16 : PDMA_WIDTH_32) |
                     u32SrcCtl |
                     u32DstCtl |
-                    PDMA_OP_BASIC;
+                    ((isPdmaDescReg) ? PDMA_OP_STOP : PDMA_OP_BASIC);
 
     dma_desc->SA = u32AddrSrc;
     dma_desc->DA = u32AddrDst;
@@ -713,15 +726,15 @@ rt_err_t nu_pdma_sgtbls_allocate(int i32ModChnID, nu_pdma_desc_t *ppsSgtbls, int
 
     if (nu_pdma_check_is_lppdma(i32ModChnID))
     {
-        psSgTblHead = rt_memheap_alloc(nu_memheap_get(NU_MEMHEAP_LPSRAM), RT_ALIGN(sizeof(DSCT_T) * num, 32));
+        psSgTblHead = rt_memheap_alloc(nu_memheap_get(NU_MEMHEAP_LPSRAM), RT_ALIGN(sizeof(sDESC_T), 32) * num);
     }
     else
     {
-        psSgTblHead = (nu_pdma_desc_t) rt_malloc_align(RT_ALIGN(sizeof(DSCT_T) * num, 32), 32);
+        psSgTblHead = (nu_pdma_desc_t) rt_malloc_align(RT_ALIGN(sizeof(sDESC_T), 32) * num, 32);
     }
     RT_ASSERT(psSgTblHead != RT_NULL);
 
-    rt_memset((void *)psSgTblHead, 0, RT_ALIGN(sizeof(DSCT_T) * num, 32));
+    rt_memset((void *)psSgTblHead, 0, RT_ALIGN(sizeof(sDESC_T), 32)* num);
 
     for (i = 0; i < num; i++)
         ppsSgtbls[i] = &psSgTblHead[i];
@@ -765,6 +778,9 @@ static void _nu_pdma_transfer(int i32ModChnID, uint32_t u32Peripheral, nu_pdma_d
             uint32_t u32DstCtl    = (next->CTL & PDMA_DSCT_CTL_DAINC_Msk);
             uint32_t u32FlushLen  = u32TxCnt * u32DataWidth;
 
+            //rt_kprintf("PDMA desc %08x, SA %08x, DA %08x, CTL %08x, NEXT %08x\n",
+            //           (uint32_t)next, next->SA, next->DA, next->CTL, next->NEXT);
+
             /* Flush Src buffer into memory. */
             if ((u32SrcCtl == PDMA_SAR_INC)) // for M2P, M2M
                 rt_hw_cpu_dcache_ops(RT_HW_CACHE_FLUSH_INVALIDATE, (void *)next->SA, (int32_t)u32FlushLen);
@@ -775,7 +791,7 @@ static void _nu_pdma_transfer(int i32ModChnID, uint32_t u32Peripheral, nu_pdma_d
 
             /* Flush descriptor into memory */
             if (!((uint32_t)next & BIT31))
-                rt_hw_cpu_dcache_ops(RT_HW_CACHE_FLUSH_INVALIDATE, (void *)next, sizeof(DSCT_T));
+                rt_hw_cpu_dcache_ops(RT_HW_CACHE_FLUSH_INVALIDATE, (void *)next, sizeof(sDESC_T));
 
             if (bNonCacheAlignedWarning)
             {
@@ -919,7 +935,7 @@ rt_err_t nu_pdma_transfer(int i32ModChnID, uint32_t u32DataWidth, uint32_t u32Ad
     psPdmaChann = &nu_pdma_chn_arr[NU_PDMA_GET_ARRAY_IDX(i32ModChnID)];
     psPeriphCtl = &psPdmaChann->m_spPeripCtl;
 
-    head = &PDMA->DSCT[NU_PDMA_GET_MOD_CHIDX(i32ModChnID)];
+    head = (nu_pdma_desc_t)&PDMA->DSCT[NU_PDMA_GET_MOD_CHIDX(i32ModChnID)];
 
     ret = nu_pdma_desc_setup(i32ModChnID,
                              head,
@@ -1038,7 +1054,7 @@ void pdma_isr(PDMA_T *PDMA, int idx)
                     ch_event |= NU_PDMA_EVENT_TIMEOUT;
                 }
 
-                //rt_kprintf("module_id=%d, ch_event=%08x\n", j, ch_event);
+                //rt_kprintf("ch_id=%d, module_id=%d, ch_event=%08x\n", i, j, ch_event);
 
                 if (dma_chn->m_sCB_Disable.m_pfnCBHandler)
                     dma_chn->m_sCB_Disable.m_pfnCBHandler(dma_chn->m_sCB_Disable.m_pvUserData, dma_chn->m_sCB_Disable.m_u32Reserved);

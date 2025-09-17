@@ -21,6 +21,9 @@
 #ifndef RT_CANSND_BOX_NUM
 #define RT_CANSND_BOX_NUM   1
 #endif
+#ifndef RT_CANSND_MSG_TIMEOUT
+#define RT_CANSND_MSG_TIMEOUT 100
+#endif
 
 enum CAN_DLC
 {
@@ -69,6 +72,9 @@ enum CANBAUD
 #define CAN_RX_FIFO0                (0x00000000U)  /*!< CAN receive FIFO 0 */
 #define CAN_RX_FIFO1                (0x00000001U)  /*!< CAN receive FIFO 1 */
 
+/**
+ * @brief CAN filter item
+ */
 struct rt_can_filter_item
 {
     rt_uint32_t id  : 29;
@@ -118,6 +124,10 @@ struct rt_can_filter_item
      RT_CAN_FILTER_ITEM_INIT(id,1,0,1,0xFFFFFFFF)
 #endif
 
+
+/**
+ * @brief CAN filter configuration
+ */
 struct rt_can_filter_config
 {
     rt_uint32_t count;
@@ -125,6 +135,9 @@ struct rt_can_filter_config
     struct rt_can_filter_item *items;
 };
 
+/**
+ * @brief CAN timing configuration
+ */
 struct rt_can_bit_timing
 {
     rt_uint16_t prescaler;  /* Pre-scaler */
@@ -135,8 +148,8 @@ struct rt_can_bit_timing
 };
 
 /**
- * CAN bit timing configuration list
- * NOTE:
+ * @brief CAN bit timing configuration list
+ * @note
  *  items[0] always for CAN2.0/CANFD Arbitration Phase
  *  items[1] always for CANFD (if it exists)
  */
@@ -146,6 +159,10 @@ struct rt_can_bit_timing_config
     struct rt_can_bit_timing *items;
 };
 
+
+/**
+ * @brief CAN configuration
+ */
 struct can_configure
 {
     rt_uint32_t baud_rate;
@@ -190,6 +207,7 @@ struct rt_can_ops;
 #define RT_CAN_CMD_SET_CANFD        0x1A
 #define RT_CAN_CMD_SET_BAUD_FD      0x1B
 #define RT_CAN_CMD_SET_BITTIMING    0x1C
+#define RT_CAN_CMD_START            0x1D
 
 #define RT_DEVICE_CAN_INT_ERR       0x1000
 
@@ -211,6 +229,9 @@ enum RT_CAN_BUS_ERR
     RT_CAN_BUS_CRC_ERR = 6,
 };
 
+/**
+ * @brief CAN status
+ */
 struct rt_can_status
 {
     rt_uint32_t rcverrcnt;
@@ -241,6 +262,7 @@ struct rt_can_hdr
 #endif
 struct rt_can_device;
 typedef rt_err_t (*rt_canstatus_ind)(struct rt_can_device *, void *);
+
 typedef struct rt_can_status_ind_type
 {
     rt_canstatus_ind ind;
@@ -289,8 +311,9 @@ struct rt_can_msg
     rt_int32_t hdr_index : 8;/*Should be defined as:rx.FilterMatchIndex,which should be changed to rt_int32_t hdr_index : 8*/
 #ifdef RT_CAN_USING_CANFD
     rt_uint32_t fd_frame : 1;
+    rt_uint32_t brs : 1;
     rt_uint32_t rxfifo : 2;/*Redefined to return :CAN RX FIFO0/CAN RX FIFO1*/
-    rt_uint32_t reserved : 5;
+    rt_uint32_t reserved : 4;
 #else
     rt_uint32_t rxfifo : 2;/*Redefined to return :CAN RX FIFO0/CAN RX FIFO1*/
     rt_uint32_t reserved : 6;
@@ -346,6 +369,9 @@ struct rt_can_tx_fifo
     struct rt_list_node freelist;
 };
 
+/**
+ * @brief CAN operators
+ */
 struct rt_can_ops
 {
     rt_err_t (*configure)(struct rt_can_device *can, struct can_configure *cfg);
@@ -354,10 +380,30 @@ struct rt_can_ops
     int (*recvmsg)(struct rt_can_device *can, void *buf, rt_uint32_t boxno);
 };
 
+/**
+ * @brief Register a CAN device to device list
+ *
+ * @param can   the CAN device object
+ * @param name  the name of CAN device
+ * @param ops   the CAN device operators
+ * @param data  the private data of CAN device
+ *
+ * @return the error code, RT_EOK on successfully
+ */
 rt_err_t rt_hw_can_register(struct rt_can_device    *can,
                             const char              *name,
                             const struct rt_can_ops *ops,
                             void                    *data);
+
+/**
+ * @brief CAN interrupt service routine
+ *
+ * @param can    the CAN device
+ * @param event  the event mask
+ */
 void rt_hw_can_isr(struct rt_can_device *can, int event);
-#endif /*_CAN_H*/
+
+/*! @}*/
+
+#endif /*__DEV_CAN_H*/
 

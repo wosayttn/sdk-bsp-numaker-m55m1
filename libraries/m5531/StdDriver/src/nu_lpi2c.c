@@ -61,25 +61,12 @@ uint32_t LPI2C_Open(LPI2C_T *i2c, uint32_t u32BusClock)
 
 void LPI2C_Close(LPI2C_T *i2c)
 {
-    uint32_t u32IsRegLocked;
-    u32IsRegLocked = SYS_IsRegLocked();
-
-    if (u32IsRegLocked)
-    {
-        SYS_UnlockReg();
-    }
-
     /* Reset I2C Controller */
     SYS->LPI2CRST |= SYS_LPI2CRST_LPI2C0RST_Msk;
     SYS->LPI2CRST &= ~SYS_LPI2CRST_LPI2C0RST_Msk;
 
     /* Disable I2C */
     i2c->CTL0 &= ~LPI2C_CTL0_LPI2CEN_Msk;
-
-    if (u32IsRegLocked)
-    {
-        SYS_LockReg();
-    }
 }
 
 /**
@@ -411,75 +398,16 @@ void LPI2C_DisableWakeup(LPI2C_T *i2c)
 
 uint8_t LPI2C_WriteByte(LPI2C_T *i2c, uint8_t u8SlaveAddr, uint8_t data)
 {
-    uint8_t u8Xfering = 1u, u8Err = 0u, u8Ctrl = 0u;
-    uint32_t u32TimeOutCount = 0u;
+    uint32_t u32txLen = LPI2C_WriteMultiBytes(i2c, u8SlaveAddr, &data, 1);
 
-    g_LPI2C_i32ErrCode = 0;
-
-    LPI2C_START(i2c);
-
-    while (u8Xfering && (u8Err == 0u))
+    if (u32txLen == 1)
     {
-        u32TimeOutCount = LPI2C_TIMEOUT;
-        LPI2C_WAIT_READY(i2c)
-        {
-            if (--u32TimeOutCount == 0)
-            {
-                g_LPI2C_i32ErrCode = LPI2C_ERR_TIMEOUT;
-                u8Err = 1u;
-                break;
-            }
-        }
-
-
-        switch (LPI2C_GET_STATUS(i2c))
-        {
-            case 0x08u:
-                LPI2C_SET_DATA(i2c, (uint8_t)(u8SlaveAddr << 1u | 0x00u));    /* Write SLA+W to Register I2CDAT */
-                u8Ctrl = LPI2C_CTL_SI;                              /* Clear SI */
-                break;
-
-            case 0x18u:                                           /* Slave Address ACK */
-                LPI2C_SET_DATA(i2c, data);                          /* Write data to I2CDAT */
-                break;
-
-            case 0x20u:                                           /* Slave Address NACK */
-            case 0x30u:                                           /* Master transmit data NACK */
-                u8Ctrl = LPI2C_CTL_STO_SI;                          /* Clear SI and send STOP */
-                u8Err = 1u;
-                break;
-
-            case 0x28u:
-                u8Ctrl = LPI2C_CTL_STO_SI;                          /* Clear SI and send STOP */
-                u8Xfering = 0u;
-                break;
-
-            case 0x38u:                                           /* Arbitration Lost */
-            default:                                              /* Unknow status */
-                LPI2C_SET_CONTROL_REG(i2c, LPI2C_CTL_STO_SI);      /* Clear SI and send STOP */
-                u8Ctrl = LPI2C_CTL_SI;
-                u8Err = 1u;
-                break;
-        }
-
-        LPI2C_SET_CONTROL_REG(i2c, u8Ctrl);                        /* Write controlbit to LPI2C_CTL register */
+        return 0; // Write data success
     }
-
-    u32TimeOutCount = LPI2C_TIMEOUT;
-
-    while ((i2c)->CTL0 & LPI2C_CTL0_STO_Msk)
+    else
     {
-        u32TimeOutCount--;
-
-        if (u32TimeOutCount == 0)
-        {
-            g_LPI2C_i32ErrCode = LPI2C_ERR_TIMEOUT;
-            u8Err = 1u;
-            break;
-        }
+        return 1; // Write data fail, or bus occurs error events
     }
-
-    return (u8Err | u8Xfering);                                  /* return (Success)/(Fail) status */
 }
 
 /**
@@ -594,83 +522,16 @@ uint32_t LPI2C_WriteMultiBytes(LPI2C_T *i2c, uint8_t u8SlaveAddr, uint8_t data[]
 
 uint8_t LPI2C_WriteByteOneReg(LPI2C_T *i2c, uint8_t u8SlaveAddr, uint8_t u8DataAddr, uint8_t data)
 {
-    uint8_t u8Xfering = 1u, u8Err = 0u, u8Ctrl = 0u;
-    uint32_t u32txLen = 0u, u32TimeOutCount = 0u;
+    uint32_t u32txLen = LPI2C_WriteMultiBytesOneReg(i2c, u8SlaveAddr, u8DataAddr, &data, 1);
 
-    g_LPI2C_i32ErrCode = 0;
-
-    LPI2C_START(i2c);                                              /* Send START */
-
-    while (u8Xfering && (u8Err == 0u))
+    if (u32txLen == 1)
     {
-        u32TimeOutCount = LPI2C_TIMEOUT;
-        LPI2C_WAIT_READY(i2c)
-        {
-            if (--u32TimeOutCount == 0)
-            {
-                g_LPI2C_i32ErrCode = LPI2C_ERR_TIMEOUT;
-                u8Err = 1u;
-                break;
-            }
-        }
-
-        switch (LPI2C_GET_STATUS(i2c))
-        {
-            case 0x08u:
-                LPI2C_SET_DATA(i2c, (uint8_t)(u8SlaveAddr << 1u | 0x00u));    /* Send Slave address with write bit */
-                u8Ctrl = LPI2C_CTL_SI;                           /* Clear SI */
-                break;
-
-            case 0x18u:                                           /* Slave Address ACK */
-                LPI2C_SET_DATA(i2c, u8DataAddr);                   /* Write Lo byte address of register */
-                break;
-
-            case 0x20u:                                           /* Slave Address NACK */
-            case 0x30u:                                           /* Master transmit data NACK */
-                u8Ctrl = LPI2C_CTL_STO_SI;                       /* Clear SI and send STOP */
-                u8Err = 1u;
-                break;
-
-            case 0x28u:
-                if (u32txLen < 1u)
-                {
-                    LPI2C_SET_DATA(i2c, data);
-                    u32txLen++;
-                }
-                else
-                {
-                    u8Ctrl = LPI2C_CTL_STO_SI;                   /* Clear SI and send STOP */
-                    u8Xfering = 0u;
-                }
-
-                break;
-
-            case 0x38u:                                           /* Arbitration Lost */
-            default:                                             /* Unknow status */
-                LPI2C_SET_CONTROL_REG(i2c, LPI2C_CTL_STO_SI);      /* Clear SI and send STOP */
-                u8Ctrl = LPI2C_CTL_SI;
-                u8Err = 1u;
-                break;
-        }
-
-        LPI2C_SET_CONTROL_REG(i2c, u8Ctrl);                        /* Write controlbit to LPI2C_CTL register */
+        return 0; // Write data success
     }
-
-    u32TimeOutCount = LPI2C_TIMEOUT;
-
-    while ((i2c)->CTL0 & LPI2C_CTL0_STO_Msk)
+    else
     {
-        u32TimeOutCount--;
-
-        if (u32TimeOutCount == 0)
-        {
-            g_LPI2C_i32ErrCode = LPI2C_ERR_TIMEOUT;
-            u8Err = 1u;
-            break;
-        }
+        return 1; // Write data fail, or bus occurs error events
     }
-
-    return (u8Err | u8Xfering);                                  /* return (Success)/(Fail) status */
 }
 
 
@@ -790,88 +651,16 @@ uint32_t LPI2C_WriteMultiBytesOneReg(LPI2C_T *i2c, uint8_t u8SlaveAddr, uint8_t 
 
 uint8_t LPI2C_WriteByteTwoRegs(LPI2C_T *i2c, uint8_t u8SlaveAddr, uint16_t u16DataAddr, uint8_t data)
 {
-    uint8_t u8Xfering = 1u, u8Err = 0u, u8Addr = 1u, u8Ctrl = 0u;
-    uint32_t u32txLen = 0u, u32TimeOutCount = 0U;
+    uint32_t u32txLen = LPI2C_WriteMultiBytesTwoRegs(i2c, u8SlaveAddr, u16DataAddr, &data, 1);
 
-    g_LPI2C_i32ErrCode = 0;
-
-    LPI2C_START(i2c);                                                         /* Send START */
-
-    while (u8Xfering && (u8Err == 0u))
+    if (u32txLen == 1)
     {
-        u32TimeOutCount = LPI2C_TIMEOUT;
-        LPI2C_WAIT_READY(i2c)
-        {
-            if (--u32TimeOutCount == 0)
-            {
-                g_LPI2C_i32ErrCode = LPI2C_ERR_TIMEOUT;
-                u8Err = 1u;
-                break;
-            }
-        }
-
-        switch (LPI2C_GET_STATUS(i2c))
-        {
-            case 0x08u:
-                LPI2C_SET_DATA(i2c, (uint8_t)(u8SlaveAddr << 1u | 0x00u));               /* Write SLA+W to Register I2CDAT */
-                u8Ctrl = LPI2C_CTL_SI;                                      /* Clear SI */
-                break;
-
-            case 0x18u:                                                      /* Slave Address ACK */
-                LPI2C_SET_DATA(i2c, (uint8_t)((u16DataAddr & 0xFF00u) >> 8u));    /* Write Hi byte address of register */
-                break;
-
-            case 0x20u:                                                      /* Slave Address NACK */
-            case 0x30u:                                                      /* Master transmit data NACK */
-                u8Ctrl = LPI2C_CTL_STO_SI;                                  /* Clear SI and send STOP */
-                u8Err = 1u;
-                break;
-
-            case 0x28u:
-                if (u8Addr)
-                {
-                    LPI2C_SET_DATA(i2c, (uint8_t)(u16DataAddr & 0xFFu));       /* Write Lo byte address of register */
-                    u8Addr = 0u;
-                }
-                else if ((u32txLen < 1u) && (u8Addr == 0u))
-                {
-                    LPI2C_SET_DATA(i2c, data);
-                    u32txLen++;
-                }
-                else
-                {
-                    u8Ctrl = LPI2C_CTL_STO_SI;                              /* Clear SI and send STOP */
-                    u8Xfering = 0u;
-                }
-
-                break;
-
-            case 0x38u:                                                      /* Arbitration Lost */
-            default:                                                        /* Unknow status */
-                LPI2C_SET_CONTROL_REG(i2c, LPI2C_CTL_STO_SI);                   /* Clear SI and send STOP */
-                u8Ctrl = LPI2C_CTL_SI;
-                u8Err = 1u;
-                break;
-        }
-
-        LPI2C_SET_CONTROL_REG(i2c, u8Ctrl);                                   /* Write controlbit to LPI2C_CTL register */
+        return 0; // Write data success
     }
-
-    u32TimeOutCount = LPI2C_TIMEOUT;
-
-    while ((i2c)->CTL0 & LPI2C_CTL0_STO_Msk)
+    else
     {
-        u32TimeOutCount--;
-
-        if (u32TimeOutCount == 0)
-        {
-            g_LPI2C_i32ErrCode = LPI2C_ERR_TIMEOUT;
-            u8Err = 1u;
-            break;
-        }
-    }
-
-    return (u8Err | u8Xfering);                                             /* return (Success)/(Fail) status */
+        return 1; // Write data fail, or bus occurs error events
+    }                                            /* return (Success)/(Fail) status */
 }
 
 
@@ -992,79 +781,18 @@ uint32_t LPI2C_WriteMultiBytesTwoRegs(LPI2C_T *i2c, uint8_t u8SlaveAddr, uint16_
   */
 uint8_t LPI2C_ReadByte(LPI2C_T *i2c, uint8_t u8SlaveAddr)
 {
-    uint8_t u8Xfering = 1u, u8Err = 0u, rdata = 0u, u8Ctrl = 0u;
-    uint32_t u32TimeOutCount = 0U;
+    uint8_t data;
 
-    g_LPI2C_i32ErrCode = 0;
+    uint32_t u32rxLen = LPI2C_ReadMultiBytes(i2c, u8SlaveAddr, &data, 1);
 
-    LPI2C_START(i2c);                                                /* Send START */
-
-    while (u8Xfering && (u8Err == 0u))
+    if (u32rxLen == 1)
     {
-        u32TimeOutCount = LPI2C_TIMEOUT;
-        LPI2C_WAIT_READY(i2c)
-        {
-            if (--u32TimeOutCount == 0)
-            {
-                g_LPI2C_i32ErrCode = LPI2C_ERR_TIMEOUT;
-                u8Err = 1u;
-                break;
-            }
-        }
-
-        switch (LPI2C_GET_STATUS(i2c))
-        {
-            case 0x08u:
-                LPI2C_SET_DATA(i2c, (uint8_t)((u8SlaveAddr << 1u) | 0x01u));    /* Write SLA+R to Register I2CDAT */
-                u8Ctrl = LPI2C_CTL_SI;                             /* Clear SI */
-                break;
-
-            case 0x40u:                                             /* Slave Address ACK */
-                u8Ctrl = LPI2C_CTL_SI;                             /* Clear SI */
-                break;
-
-            case 0x48u:                                             /* Slave Address NACK */
-                u8Ctrl = LPI2C_CTL_STO_SI;                         /* Clear SI and send STOP */
-                u8Err = 1u;
-                break;
-
-            case 0x58u:
-                rdata = (unsigned char) LPI2C_GET_DATA(i2c);         /* Receive Data */
-                u8Ctrl = LPI2C_CTL_STO_SI;                         /* Clear SI and send STOP */
-                u8Xfering = 0u;
-                break;
-
-            case 0x38u:                                             /* Arbitration Lost */
-            default:                                               /* Unknow status */
-                LPI2C_SET_CONTROL_REG(i2c, LPI2C_CTL_STO_SI);        /* Clear SI and send STOP */
-                u8Ctrl = LPI2C_CTL_SI;
-                u8Err = 1u;
-                break;
-        }
-
-        LPI2C_SET_CONTROL_REG(i2c, u8Ctrl);                          /* Write controlbit to LPI2C_CTL register */
+        return data;
     }
-
-    u32TimeOutCount = LPI2C_TIMEOUT;
-
-    while ((i2c)->CTL0 & LPI2C_CTL0_STO_Msk)
+    else
     {
-        u32TimeOutCount--;
-
-        if (u32TimeOutCount == 0)
-        {
-            g_LPI2C_i32ErrCode = LPI2C_ERR_TIMEOUT;
-            u8Err = 1u;
-            break;
-        }
+        return 0; // Read data fail
     }
-
-    if (u8Err)
-    {
-        rdata = 0u;                                                 /* If occurs error, return 0 */
-    }
-
-    return rdata;                                                  /* Return read data */
 }
 
 
@@ -1113,7 +841,15 @@ uint32_t LPI2C_ReadMultiBytes(LPI2C_T *i2c, uint8_t u8SlaveAddr, uint8_t rdata[]
                 break;
 
             case 0x40u:                                             /* Slave Address ACK */
-                u8Ctrl = LPI2C_CTL_SI_AA;                          /* Clear SI and set ACK */
+                if (u32rLen == 1)
+                {
+                    u8Ctrl = LPI2C_CTL_SI;                                /* Clear SI */
+                }
+                else
+                {
+                    u8Ctrl = LPI2C_CTL_SI_AA;                          /* Clear SI and set ACK */
+                }
+
                 break;
 
             case 0x48u:                                             /* Slave Address NACK */
@@ -1186,98 +922,18 @@ uint32_t LPI2C_ReadMultiBytes(LPI2C_T *i2c, uint8_t u8SlaveAddr, uint8_t rdata[]
   */
 uint8_t LPI2C_ReadByteOneReg(LPI2C_T *i2c, uint8_t u8SlaveAddr, uint8_t u8DataAddr)
 {
-    uint8_t u8Xfering = 1u, u8Err = 0u, rdata = 0u, u8Ctrl = 0u;
-    uint32_t u32TimeOutCount = 0u;
+    uint8_t data;
 
-    g_LPI2C_i32ErrCode = 0;
+    uint32_t u32rxLen = LPI2C_ReadMultiBytesOneReg(i2c, u8SlaveAddr, u8DataAddr, &data, 1);
 
-    LPI2C_START(i2c);                                                /* Send START */
-
-    while (u8Xfering && (u8Err == 0u))
+    if (u32rxLen == 1)
     {
-        u32TimeOutCount = LPI2C_TIMEOUT;
-        LPI2C_WAIT_READY(i2c)
-        {
-            if (--u32TimeOutCount == 0)
-            {
-                g_LPI2C_i32ErrCode = LPI2C_ERR_TIMEOUT;
-                u8Err = 1u;
-                break;
-            }
-        }
-
-        switch (LPI2C_GET_STATUS(i2c))
-        {
-            case 0x08u:
-                LPI2C_SET_DATA(i2c, (uint8_t)(u8SlaveAddr << 1u | 0x00u));      /* Write SLA+W to Register I2CDAT */
-                u8Ctrl = LPI2C_CTL_SI;                             /* Clear SI */
-                break;
-
-            case 0x18u:                                             /* Slave Address ACK */
-                LPI2C_SET_DATA(i2c, u8DataAddr);                     /* Write Lo byte address of register */
-                break;
-
-            case 0x20u:                                             /* Slave Address NACK */
-            case 0x30u:                                             /* Master transmit data NACK */
-                u8Ctrl = LPI2C_CTL_STO_SI;                         /* Clear SI and send STOP */
-                u8Err = 1u;
-                break;
-
-            case 0x28u:
-                u8Ctrl = LPI2C_CTL_STA_SI;                         /* Send repeat START */
-                break;
-
-            case 0x10u:
-                LPI2C_SET_DATA(i2c, (uint8_t)((u8SlaveAddr << 1u) | 0x01u));    /* Write SLA+R to Register I2CDAT */
-                u8Ctrl = LPI2C_CTL_SI;                               /* Clear SI */
-                break;
-
-            case 0x40u:                                             /* Slave Address ACK */
-                u8Ctrl = LPI2C_CTL_SI;                             /* Clear SI */
-                break;
-
-            case 0x48u:                                             /* Slave Address NACK */
-                u8Ctrl = LPI2C_CTL_STO_SI;                         /* Clear SI and send STOP */
-                u8Err = 1u;
-                break;
-
-            case 0x58u:
-                rdata = (uint8_t) LPI2C_GET_DATA(i2c);               /* Receive Data */
-                u8Ctrl = LPI2C_CTL_STO_SI;                         /* Clear SI and send STOP */
-                u8Xfering = 0u;
-                break;
-
-            case 0x38u:                                             /* Arbitration Lost */
-            default:                                               /* Unknow status */
-                LPI2C_SET_CONTROL_REG(i2c, LPI2C_CTL_STO_SI);        /* Clear SI and send STOP */
-                u8Ctrl = LPI2C_CTL_SI;
-                u8Err = 1u;
-                break;
-        }
-
-        LPI2C_SET_CONTROL_REG(i2c, u8Ctrl);                          /* Write controlbit to LPI2C_CTL register */
+        return data;
     }
-
-    u32TimeOutCount = LPI2C_TIMEOUT;
-
-    while ((i2c)->CTL0 & LPI2C_CTL0_STO_Msk)
+    else
     {
-        u32TimeOutCount--;
-
-        if (u32TimeOutCount == 0)
-        {
-            g_LPI2C_i32ErrCode = LPI2C_ERR_TIMEOUT;
-            u8Err = 1u;
-            break;
-        }
+        return 0; // Read data fail
     }
-
-    if (u8Err)
-    {
-        rdata = 0u;                                                 /* If occurs error, return 0 */
-    }
-
-    return rdata;                                                  /* Return read data */
 }
 
 /**
@@ -1345,7 +1001,15 @@ uint32_t LPI2C_ReadMultiBytesOneReg(LPI2C_T *i2c, uint8_t u8SlaveAddr, uint8_t u
                 break;
 
             case 0x40u:                                             /* Slave Address ACK */
-                u8Ctrl = LPI2C_CTL_SI_AA;                          /* Clear SI and set ACK */
+                if (u32rLen == 1)
+                {
+                    u8Ctrl = LPI2C_CTL_SI;                         /* Clear SI */
+                }
+                else
+                {
+                    u8Ctrl = LPI2C_CTL_SI_AA;                          /* Clear SI and set ACK */
+                }
+
                 break;
 
             case 0x48u:                                             /* Slave Address NACK */
@@ -1417,107 +1081,18 @@ uint32_t LPI2C_ReadMultiBytesOneReg(LPI2C_T *i2c, uint8_t u8SlaveAddr, uint8_t u
   */
 uint8_t LPI2C_ReadByteTwoRegs(LPI2C_T *i2c, uint8_t u8SlaveAddr, uint16_t u16DataAddr)
 {
-    uint8_t u8Xfering = 1u, u8Err = 0u, rdata = 0u, u8Addr = 1u, u8Ctrl = 0u;
-    uint32_t u32TimeOutCount = 0u;
+    uint8_t data;
 
-    g_LPI2C_i32ErrCode = 0;
+    uint32_t u32rxLen = LPI2C_ReadMultiBytesTwoRegs(i2c, u8SlaveAddr, u16DataAddr, &data, 1);
 
-    LPI2C_START(i2c);                                                         /* Send START */
-
-    while (u8Xfering && (u8Err == 0u))
+    if (u32rxLen == 1)
     {
-        u32TimeOutCount = LPI2C_TIMEOUT;
-        LPI2C_WAIT_READY(i2c)
-        {
-            if (--u32TimeOutCount == 0)
-            {
-                g_LPI2C_i32ErrCode = LPI2C_ERR_TIMEOUT;
-                u8Err = 1u;
-                break;
-            }
-        }
-
-        switch (LPI2C_GET_STATUS(i2c))
-        {
-            case 0x08u:
-                LPI2C_SET_DATA(i2c, (uint8_t)(u8SlaveAddr << 1u | 0x00u));               /* Write SLA+W to Register I2CDAT */
-                u8Ctrl = LPI2C_CTL_SI;                                      /* Clear SI */
-                break;
-
-            case 0x18u:                                                      /* Slave Address ACK */
-                LPI2C_SET_DATA(i2c, (uint8_t)((u16DataAddr & 0xFF00u) >> 8u));    /* Write Hi byte address of register */
-                break;
-
-            case 0x20u:                                                      /* Slave Address NACK */
-            case 0x30u:                                                      /* Master transmit data NACK */
-                u8Ctrl = LPI2C_CTL_STO_SI;                                  /* Clear SI and send STOP */
-                u8Err = 1u;
-                break;
-
-            case 0x28u:
-                if (u8Addr)
-                {
-                    LPI2C_SET_DATA(i2c, (uint8_t)(u16DataAddr & 0xFFu));       /* Write Lo byte address of register */
-                    u8Addr = 0u;
-                }
-                else
-                {
-                    u8Ctrl = LPI2C_CTL_STA_SI;                              /* Clear SI and send repeat START */
-                }
-
-                break;
-
-            case 0x10u:
-                LPI2C_SET_DATA(i2c, (uint8_t)((u8SlaveAddr << 1u) | 0x01u));             /* Write SLA+R to Register I2CDAT */
-                u8Ctrl = LPI2C_CTL_SI;                                      /* Clear SI */
-                break;
-
-            case 0x40u:                                                      /* Slave Address ACK */
-                u8Ctrl = LPI2C_CTL_SI;                                      /* Clear SI */
-                break;
-
-            case 0x48u:                                                      /* Slave Address NACK */
-                u8Ctrl = LPI2C_CTL_STO_SI;                                  /* Clear SI and send STOP */
-                u8Err = 1u;
-                break;
-
-            case 0x58u:
-                rdata = (unsigned char) LPI2C_GET_DATA(i2c);                  /* Receive Data */
-                u8Ctrl = LPI2C_CTL_STO_SI;                                  /* Clear SI and send STOP */
-                u8Xfering = 0u;
-                break;
-
-            case 0x38u:                                                      /* Arbitration Lost */
-            default:                                                        /* Unknow status */
-                LPI2C_SET_CONTROL_REG(i2c, LPI2C_CTL_STO_SI);                 /* Clear SI and send STOP */
-                u8Ctrl = LPI2C_CTL_SI;
-                u8Err = 1u;
-                break;
-        }
-
-        LPI2C_SET_CONTROL_REG(i2c, u8Ctrl);                                   /* Write controlbit to LPI2C_CTL register */
+        return data;
     }
-
-    u32TimeOutCount = LPI2C_TIMEOUT;
-
-    while ((i2c)->CTL0 & LPI2C_CTL0_STO_Msk)
+    else
     {
-        u32TimeOutCount--;
-
-        if (u32TimeOutCount == 0)
-        {
-            g_LPI2C_i32ErrCode = LPI2C_ERR_TIMEOUT;
-            u8Err = 1u;
-            break;
-        }
+        return 0; // Read data fail
     }
-
-    if (u8Err)
-    {
-        rdata = 0u;                                                          /* If occurs error, return 0 */
-    }
-
-    return rdata;                                                           /* Return read data */
 }
 
 /**
@@ -1594,7 +1169,15 @@ uint32_t LPI2C_ReadMultiBytesTwoRegs(LPI2C_T *i2c, uint8_t u8SlaveAddr, uint16_t
                 break;
 
             case 0x40u:                                                      /* Slave Address ACK */
-                u8Ctrl = LPI2C_CTL_SI_AA;                                   /* Clear SI and set ACK */
+                if (u32rLen == 1)
+                {
+                    u8Ctrl = LPI2C_CTL_SI;                                     /* Clear SI */
+                }
+                else
+                {
+                    u8Ctrl = LPI2C_CTL_SI_AA;                                   /* Clear SI and set ACK */
+                }
+
                 break;
 
             case 0x48u:                                                      /* Slave Address NACK */

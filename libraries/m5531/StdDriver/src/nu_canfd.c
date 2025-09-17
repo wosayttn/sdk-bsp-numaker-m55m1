@@ -921,7 +921,7 @@ void CANFD_EnableInt(CANFD_T *psCanfd, uint32_t u32IntLine0, uint32_t u32IntLine
         /* Select specified interrupt event of Line0. */
         psCanfd->ILS &= ~u32IntLine0;
         /* Enable Line0 interrupt. */
-        psCanfd->ILE |= CANFD_ILE_ENT0_Msk;
+        psCanfd->ILE |= CANFD_ILE_EINT0_Msk;
     }
 
     if (u32IntLine1 != 0)
@@ -929,7 +929,7 @@ void CANFD_EnableInt(CANFD_T *psCanfd, uint32_t u32IntLine0, uint32_t u32IntLine
         /* Select specified interrupt event of Line1. */
         psCanfd->ILS |= u32IntLine1;
         /* Enable Line1 interrupt. */
-        psCanfd->ILE |= CANFD_ILE_ENT1_Msk;
+        psCanfd->ILE |= CANFD_ILE_EINT1_Msk;
     }
 
     /*Setting the Tx Buffer Transmission Interrupt Enable*/
@@ -994,7 +994,7 @@ void CANFD_DisableInt(CANFD_T *psCanfd, uint32_t u32IntLine0, uint32_t u32IntLin
     if (psCanfd->ILS == ~0)
     {
         /* Disable Line0 interrupt */
-        psCanfd->ILE &= ~CANFD_ILE_ENT0_Msk;
+        psCanfd->ILE &= ~CANFD_ILE_EINT0_Msk;
     }
 
     if (u32IntLine1 != 0)
@@ -1005,7 +1005,7 @@ void CANFD_DisableInt(CANFD_T *psCanfd, uint32_t u32IntLine0, uint32_t u32IntLin
     if (psCanfd->ILS == 0)
     {
         /* Disable Line1 interrupt */
-        psCanfd->ILE &= ~CANFD_ILE_ENT1_Msk;
+        psCanfd->ILE &= ~CANFD_ILE_EINT1_Msk;
     }
 
     /*Setting the Tx Buffer Transmission Interrupt Disable*/

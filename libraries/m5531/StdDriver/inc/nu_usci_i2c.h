@@ -110,7 +110,7 @@ extern int32_t g_UI2C_i32ErrCode;
  *    @param[in]    ui2c      The pointer of the specified USCI_I2C module.
  *    @param[in]    u8Ctrl    Set the register value of USCI_I2C control register.
  *
- *    @details      Set UI2C_PROTCTL register to control USCI_I2C bus conditions of START, STOP, SI, ACK.
+ *    @details      Set UI2C_PROTCTL register to control USCI_I2C bus conditions of START, STOP, PTRG, ACK.
  *    \hideinitializer
  */
 #define UI2C_SET_CONTROL_REG(ui2c, u8Ctrl) ((ui2c)->PROTCTL = ((ui2c)->PROTCTL & ~0x2EU) | (u8Ctrl))

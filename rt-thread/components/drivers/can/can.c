@@ -54,7 +54,7 @@ rt_inline int _can_int_rx(struct rt_can_device *can, struct rt_can_msg *data, in
     RT_ASSERT(rx_fifo != RT_NULL);
 
     /* read from software FIFO */
-    while (msgs)
+    while (msgs / sizeof(struct rt_can_msg) > 0)
     {
         rt_base_t level;
 #ifdef RT_CAN_USING_HDR
@@ -164,8 +164,17 @@ rt_inline int _can_int_tx(struct rt_can_device *can, const struct rt_can_msg *da
             rt_sem_release(&(tx_fifo->sem));
             goto err_ret;
         }
-        can->status.sndchange = 1;
-        rt_completion_wait(&(tx_tosnd->completion), RT_WAITING_FOREVER);
+
+        can->status.sndchange |= 1<<no;
+        if (rt_completion_wait(&(tx_tosnd->completion), RT_CANSND_MSG_TIMEOUT) != RT_EOK)
+        {
+            level = rt_hw_interrupt_disable();
+            rt_list_insert_before(&tx_fifo->freelist, &tx_tosnd->list);
+            can->status.sndchange &= ~ (1<<no);
+            rt_hw_interrupt_enable(level);
+            rt_sem_release(&(tx_fifo->sem));
+            goto err_ret;
+        }
 
         level = rt_hw_interrupt_disable();
         result = tx_tosnd->result;
@@ -226,20 +235,22 @@ rt_inline int _can_int_tx_priv(struct rt_can_device *can, const struct rt_can_ms
         {
             rt_hw_interrupt_enable(level);
 
-            rt_completion_init(&(tx_fifo->buffer[no].completion));
             rt_completion_wait(&(tx_fifo->buffer[no].completion), RT_WAITING_FOREVER);
             continue;
         }
         tx_fifo->buffer[no].result = RT_CAN_SND_RESULT_WAIT;
         rt_hw_interrupt_enable(level);
 
-        rt_completion_init(&(tx_fifo->buffer[no].completion));
         if (can->ops->sendmsg(can, data, no) != RT_EOK)
         {
             continue;
         }
-        can->status.sndchange = 1;
-        rt_completion_wait(&(tx_fifo->buffer[no].completion), RT_WAITING_FOREVER);
+        can->status.sndchange |= 1<<no;
+        if (rt_completion_wait(&(tx_fifo->buffer[no].completion), RT_CANSND_MSG_TIMEOUT) != RT_EOK)
+        {
+            can->status.sndchange &= ~ (1<<no);
+            continue;
+        }
 
         result = tx_fifo->buffer[no].result;
         if (result == RT_CAN_SND_RESULT_OK)
@@ -319,7 +330,7 @@ static rt_err_t rt_can_open(struct rt_device *dev, rt_uint16_t oflag)
 
             tx_fifo->buffer = (struct rt_can_sndbxinx_list *)(tx_fifo + 1);
             rt_memset(tx_fifo->buffer, 0,
-                      can->config.sndboxnumber * sizeof(struct rt_can_sndbxinx_list));
+                    can->config.sndboxnumber * sizeof(struct rt_can_sndbxinx_list));
             rt_list_init(&tx_fifo->freelist);
             for (i = 0;  i < can->config.sndboxnumber; i++)
             {
@@ -408,19 +419,23 @@ static rt_err_t rt_can_close(struct rt_device *dev)
     {
         struct rt_can_rx_fifo *rx_fifo;
 
+        /* clear can rx interrupt */
+        can->ops->control(can, RT_DEVICE_CTRL_CLR_INT, (void *)RT_DEVICE_FLAG_INT_RX);
+
         rx_fifo = (struct rt_can_rx_fifo *)can->can_rx;
         RT_ASSERT(rx_fifo != RT_NULL);
 
         rt_free(rx_fifo);
         dev->open_flag &= ~RT_DEVICE_FLAG_INT_RX;
         can->can_rx = RT_NULL;
-        /* clear can rx interrupt */
-        can->ops->control(can, RT_DEVICE_CTRL_CLR_INT, (void *)RT_DEVICE_FLAG_INT_RX);
     }
 
     if (dev->open_flag & RT_DEVICE_FLAG_INT_TX)
     {
         struct rt_can_tx_fifo *tx_fifo;
+
+        /* clear can tx interrupt */
+        can->ops->control(can, RT_DEVICE_CTRL_CLR_INT, (void *)RT_DEVICE_FLAG_INT_TX);
 
         tx_fifo = (struct rt_can_tx_fifo *)can->can_tx;
         RT_ASSERT(tx_fifo != RT_NULL);
@@ -429,8 +444,6 @@ static rt_err_t rt_can_close(struct rt_device *dev)
         rt_free(tx_fifo);
         dev->open_flag &= ~RT_DEVICE_FLAG_INT_TX;
         can->can_tx = RT_NULL;
-        /* clear can tx interrupt */
-        can->ops->control(can, RT_DEVICE_CTRL_CLR_INT, (void *)RT_DEVICE_FLAG_INT_TX);
     }
 
     can->ops->control(can, RT_DEVICE_CTRL_CLR_INT, (void *)RT_DEVICE_CAN_INT_ERR);
@@ -891,16 +904,18 @@ void rt_hw_can_isr(struct rt_can_device *can, int event)
         no = event >> 8;
         tx_fifo = (struct rt_can_tx_fifo *) can->can_tx;
         RT_ASSERT(tx_fifo != RT_NULL);
-
-        if ((event & 0xff) == RT_CAN_EVENT_TX_DONE)
+        if (can->status.sndchange&(1<<no))
         {
-            tx_fifo->buffer[no].result = RT_CAN_SND_RESULT_OK;
+            if ((event & 0xff) == RT_CAN_EVENT_TX_DONE)
+            {
+                tx_fifo->buffer[no].result = RT_CAN_SND_RESULT_OK;
+            }
+            else
+            {
+                tx_fifo->buffer[no].result = RT_CAN_SND_RESULT_ERR;
+            }
+            rt_completion_done(&(tx_fifo->buffer[no].completion));
         }
-        else
-        {
-            tx_fifo->buffer[no].result = RT_CAN_SND_RESULT_ERR;
-        }
-        rt_completion_done(&(tx_fifo->buffer[no].completion));
         break;
     }
     }
@@ -971,3 +986,4 @@ int cmd_canstat(int argc, void **argv)
 }
 MSH_CMD_EXPORT_ALIAS(cmd_canstat, canstat, stat can device status);
 #endif
+

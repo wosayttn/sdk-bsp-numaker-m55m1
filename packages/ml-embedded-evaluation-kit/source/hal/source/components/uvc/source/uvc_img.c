@@ -531,13 +531,7 @@ static void Enable_USBD_Clock_PHY()
 
 void UVC_Init(void)
 {
-    /* Unlock protected registers */
-    SYS_UnlockReg();
-
     Enable_USBD_Clock_PHY();
-
-    /* lock protected registers */
-    SYS_LockReg();
 
     HSUSBD_Open(&gsHSInfo, UVC_ClassRequest, UVC_SetInterface);
 
@@ -712,12 +706,6 @@ int uvc_init(void)
 {
     int i;
 
-    uint32_t u32RegLockLevel = SYS_IsRegLocked();
-
-    /* Unlock protected registers */
-    if (u32RegLockLevel)
-        SYS_UnlockReg();
-
     SYS->USBPHY &= ~SYS_USBPHY_HSUSBROLE_Msk;    /* select HSUSBD */
     /* Enable USB PHY */
     SYS->USBPHY = (SYS->USBPHY & ~(SYS_USBPHY_HSUSBROLE_Msk | SYS_USBPHY_HSUSBACT_Msk)) | SYS_USBPHY_HSOTGPHYEN_Msk;
@@ -729,10 +717,6 @@ int uvc_init(void)
 
     /* Enable IP clock */
     CLK_EnableModuleClock(HSUSBD0_MODULE);
-
-    /* Lock protected registers */
-    if (u32RegLockLevel)
-        SYS_LockReg();
 
     HSUSBD_Open(&gsHSInfo, UVC_ClassRequest, UVC_SetInterface);
 
@@ -811,16 +795,8 @@ void uvc_fini(void)
     /* Enable IP clock */
     CLK_DisableModuleClock(HSUSBD0_MODULE);
 
-    /* Unlock protected registers */
-    if (u32RegLockLevel)
-        SYS_UnlockReg();
-
     SYS->USBPHY &= ~SYS_USBPHY_HSUSBROLE_Msk;    /* select HSUSBD */
     SYS->USBPHY &= ~SYS_USBPHY_HSUSBACT_Msk;
-
-    /* Lock protected registers */
-    if (u32RegLockLevel)
-        SYS_LockReg();
 }
 
 int uvc_is_connected(void)

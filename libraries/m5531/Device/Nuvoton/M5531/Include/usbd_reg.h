@@ -33,7 +33,7 @@ typedef struct
      * ---------------------------------------------------------------------------------------------------
      * |Bits    |Field     |Descriptions
      * | :----: | :----:   | :---- |
-     * |[10:3]   |BUFSEG    |Endpoint Buffer Segmentation
+     * |[10:3]  |BUFSEG    |Endpoint Buffer Segmentation
      * |        |          |It is used to indicate the offset address for each endpoint with the USB SRAM starting address The effective starting address of the endpoint is
      * |        |          |USBD_SRAM address + { BUFSEG, 3'b000}
      * |        |          |Where the USBD_SRAM address = USBD_BA+0x800h.

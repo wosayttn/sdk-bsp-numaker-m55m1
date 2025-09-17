@@ -307,7 +307,7 @@ static int adc(int argc, char **argv)
         rt_kprintf("adc read <channel>      - read adc value on the channel\n");
         rt_kprintf("adc disable <channel>   - disable adc channel\n");
         rt_kprintf("adc enable <channel>    - enable adc channel\n");
-        rt_kprintf("adc volate <channel>    - convert voltage on the channel\n");
+        rt_kprintf("adc voltage <channel>    - convert voltage on the channel\n");
         rt_kprintf("adc power <value>       - nuvoton private command value: <0~8>\n");
 
         result = -RT_ERROR;

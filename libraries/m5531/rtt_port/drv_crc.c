@@ -59,7 +59,7 @@ static rt_uint32_t nu_crc_run(
         if (((((uint32_t)pu8InTempData) % 4) != 0) || (u32DataLen - i < 4))
         {
             CRC->CTL &= ~CRC_CTL_DATLEN_Msk;
-            CRC_WRITE_DATA((*pu8InTempData) & 0xFF);
+            CRC_WRITE_DATA(CRC, (*pu8InTempData) & 0xFF);
             pu8InTempData ++;
             i++;
         }

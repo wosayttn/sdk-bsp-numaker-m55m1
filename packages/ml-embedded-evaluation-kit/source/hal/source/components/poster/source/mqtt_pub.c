@@ -2,7 +2,7 @@
 #include "rtthread.h"
 #include "rtdevice.h"
 #define RyanMqttClientId   (NULL)
-#define RyanMqttHost       ("mqtt.eclipseprojects.io")
+#define RyanMqttHost       ("test.mosquitto.org")
 #define RyanMqttPort       (1883)
 #define RyanMqttUserName   (NULL)
 #define RyanMqttPassword   (NULL)

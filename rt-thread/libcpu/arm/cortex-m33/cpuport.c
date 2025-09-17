@@ -20,7 +20,7 @@
 #include <rtthread.h>
 
 #if               /* ARMCC */ (  (defined ( __CC_ARM ) && defined ( __TARGET_FPU_VFP ))    \
-                  /* Clang */ || (defined ( __clang__ ) && defined ( __VFP_FP__ ) && !defined(__SOFTFP__)) \
+                  /* Clang */ || (defined ( __CLANG_ARM ) && defined ( __VFP_FP__ ) && !defined(__SOFTFP__)) \
                   /* IAR */   || (defined ( __ICCARM__ ) && defined ( __ARMVFP__ ))        \
                   /* GNU */   || (defined ( __GNUC__ ) && defined ( __VFP_FP__ ) && !defined(__SOFTFP__)) )
 #define USE_FPU   1
@@ -32,7 +32,6 @@
 rt_uint32_t rt_interrupt_from_thread;
 rt_uint32_t rt_interrupt_to_thread;
 rt_uint32_t rt_thread_switch_interrupt_flag;
-
 /* exception hook */
 static rt_err_t (*rt_exception_hook)(void *context) = RT_NULL;
 
@@ -50,10 +49,9 @@ struct exception_stack_frame
 
 struct stack_frame
 {
-    rt_uint32_t tz;
-    rt_uint32_t lr;
-    rt_uint32_t psplim;
-    rt_uint32_t control;
+#if USE_FPU
+    rt_uint32_t flag;
+#endif /* USE_FPU */
 
     /* r4 ~ r11 register */
     rt_uint32_t r4;
@@ -169,65 +167,9 @@ rt_uint8_t *rt_hw_stack_init(void       *tentry,
     stack_frame->exception_stack_frame.pc  = (unsigned long)tentry;    /* entry point, pc */
     stack_frame->exception_stack_frame.psr = 0x01000000L;              /* PSR */
 
-    stack_frame->tz = 0x00;                                            /* trustzone thread context */
-    /*
-     * Exception return behavior
-     * +--------+---+---+------+-------+------+-------+---+----+
-     * | PREFIX | - | S | DCRS | FType | Mode | SPSEL | - | ES |
-     * +--------+---+---+------+-------+------+-------+---+----+
-     * PREFIX [31:24]  - Indicates that this is an EXC_RETURN value. This field reads as 0b11111111.
-     * S      [6]      - Indicates whether registers have been pushed to a Secure or Non-secure stack.
-     *                    0: Non-secure stack used.
-     *                    1: Secure stack used.
-     * DCRS   [5]      - Indicates whether the default stacking rules apply, or whether the callee registers are already on the stack.
-     *                    0: Stacking of the callee saved registers is skipped.
-     *                    1: Default rules for stacking the callee registers are followed.
-     * FType  [4]      - In a PE with the Main and Floating-point Extensions:
-     *                    0: The PE allocated space on the stack for FP context.
-     *                    1: The PE did not allocate space on the stack for FP context.
-     *                    In a PE without the Floating-point Extension, this bit is Reserved, RES1.
-     * Mode   [3]      - Indicates the mode that was stacked from.
-     *                    0: Handler mode.
-     *                    1: Thread mode.
-     * SPSEL  [2]      - Indicates which stack contains the exception stack frame.
-     *                    0: Main stack pointer.
-     *                    1: Process stack pointer.
-     * ES     [0]      - Indicates the Security state the exception was taken to.
-     *                    0: Non-secure.
-     *                    1: Secure.
-     */
-#ifdef ARCH_ARM_CORTEX_SECURE
-    stack_frame->lr = 0xfffffffdL;
-#else
-    stack_frame->lr = 0xffffffbcL;
-#endif
-    stack_frame->psplim = 0x00;
-    /*
-     * CONTROL register bit assignments
-     * +---+------+------+-------+-------+
-     * | - | SFPA | FPCA | SPSEL | nPRIV |
-     * +---+------+------+-------+-------+
-     * SFPA   [3]      - Indicates that the floating-point registers contain active state that belongs to the Secure state:
-     *                    0: The floating-point registers do not contain state that belongs to the Secure state.
-     *                    1: The floating-point registers contain state that belongs to the Secure state.
-     *                    This bit is not banked between Security states and RAZ/WI from Non-secure state.
-     * FPCA   [2]      - Indicates whether floating-point context is active:
-     *                    0: No floating-point context active.
-     *                    1: Floating-point context active.
-     *                    This bit is used to determine whether to preserve floating-point state when processing an exception.
-     *                    This bit is not banked between Security states.
-     * SPSEL  [1]      - Defines the currently active stack pointer:
-     *                    0: MSP is the current stack pointer.
-     *                    1: PSP is the current stack pointer.
-     *                    In Handler mode, this bit reads as zero and ignores writes. The CortexM33 core updates this bit automatically onexception return.
-     *                    This bit is banked between Security states.
-     * nPRIV  [0]      - Defines the Thread mode privilege level:
-     *                    0: Privileged.
-     *                    1: Unprivileged.
-     *                    This bit is banked between Security states.
-     *
-     */
-    stack_frame->control = 0x00000000L;
+#if USE_FPU
+    stack_frame->flag = 0;
+#endif /* USE_FPU */
 
     /* return task's current stack address */
     return stk;
@@ -260,37 +202,37 @@ static void usage_fault_track(void)
     rt_kprintf("usage fault:\n");
     rt_kprintf("SCB_CFSR_UFSR:0x%02X ", SCB_CFSR_UFSR);
 
-    if(SCB_CFSR_UFSR & (1<<0))
+    if (SCB_CFSR_UFSR & (1 << 0))
     {
         /* [0]:UNDEFINSTR */
         rt_kprintf("UNDEFINSTR ");
     }
 
-    if(SCB_CFSR_UFSR & (1<<1))
+    if (SCB_CFSR_UFSR & (1 << 1))
     {
         /* [1]:INVSTATE */
         rt_kprintf("INVSTATE ");
     }
 
-    if(SCB_CFSR_UFSR & (1<<2))
+    if (SCB_CFSR_UFSR & (1 << 2))
     {
         /* [2]:INVPC */
         rt_kprintf("INVPC ");
     }
 
-    if(SCB_CFSR_UFSR & (1<<3))
+    if (SCB_CFSR_UFSR & (1 << 3))
     {
         /* [3]:NOCP */
         rt_kprintf("NOCP ");
     }
 
-    if(SCB_CFSR_UFSR & (1<<8))
+    if (SCB_CFSR_UFSR & (1 << 8))
     {
         /* [8]:UNALIGNED */
         rt_kprintf("UNALIGNED ");
     }
 
-    if(SCB_CFSR_UFSR & (1<<9))
+    if (SCB_CFSR_UFSR & (1 << 9))
     {
         /* [9]:DIVBYZERO */
         rt_kprintf("DIVBYZERO ");
@@ -304,37 +246,37 @@ static void bus_fault_track(void)
     rt_kprintf("bus fault:\n");
     rt_kprintf("SCB_CFSR_BFSR:0x%02X ", SCB_CFSR_BFSR);
 
-    if(SCB_CFSR_BFSR & (1<<0))
+    if (SCB_CFSR_BFSR & (1 << 0))
     {
         /* [0]:IBUSERR */
         rt_kprintf("IBUSERR ");
     }
 
-    if(SCB_CFSR_BFSR & (1<<1))
+    if (SCB_CFSR_BFSR & (1 << 1))
     {
         /* [1]:PRECISERR */
         rt_kprintf("PRECISERR ");
     }
 
-    if(SCB_CFSR_BFSR & (1<<2))
+    if (SCB_CFSR_BFSR & (1 << 2))
     {
         /* [2]:IMPRECISERR */
         rt_kprintf("IMPRECISERR ");
     }
 
-    if(SCB_CFSR_BFSR & (1<<3))
+    if (SCB_CFSR_BFSR & (1 << 3))
     {
         /* [3]:UNSTKERR */
         rt_kprintf("UNSTKERR ");
     }
 
-    if(SCB_CFSR_BFSR & (1<<4))
+    if (SCB_CFSR_BFSR & (1 << 4))
     {
         /* [4]:STKERR */
         rt_kprintf("STKERR ");
     }
 
-    if(SCB_CFSR_BFSR & (1<<7))
+    if (SCB_CFSR_BFSR & (1 << 7))
     {
         rt_kprintf("SCB->BFAR:%08X\n", SCB_BFAR);
     }
@@ -349,31 +291,31 @@ static void mem_manage_fault_track(void)
     rt_kprintf("mem manage fault:\n");
     rt_kprintf("SCB_CFSR_MFSR:0x%02X ", SCB_CFSR_MFSR);
 
-    if(SCB_CFSR_MFSR & (1<<0))
+    if (SCB_CFSR_MFSR & (1 << 0))
     {
         /* [0]:IACCVIOL */
         rt_kprintf("IACCVIOL ");
     }
 
-    if(SCB_CFSR_MFSR & (1<<1))
+    if (SCB_CFSR_MFSR & (1 << 1))
     {
         /* [1]:DACCVIOL */
         rt_kprintf("DACCVIOL ");
     }
 
-    if(SCB_CFSR_MFSR & (1<<3))
+    if (SCB_CFSR_MFSR & (1 << 3))
     {
         /* [3]:MUNSTKERR */
         rt_kprintf("MUNSTKERR ");
     }
 
-    if(SCB_CFSR_MFSR & (1<<4))
+    if (SCB_CFSR_MFSR & (1 << 4))
     {
         /* [4]:MSTKERR */
         rt_kprintf("MSTKERR ");
     }
 
-    if(SCB_CFSR_MFSR & (1<<7))
+    if (SCB_CFSR_MFSR & (1 << 7))
     {
         /* [7]:MMARVALID */
         rt_kprintf("SCB->MMAR:%08X\n", SCB_MMAR);
@@ -386,33 +328,33 @@ static void mem_manage_fault_track(void)
 
 static void hard_fault_track(void)
 {
-    if(SCB_HFSR & (1UL<<1))
+    if (SCB_HFSR & (1UL << 1))
     {
         /* [1]:VECTBL, Indicates hard fault is caused by failed vector fetch. */
         rt_kprintf("failed vector fetch\n");
     }
 
-    if(SCB_HFSR & (1UL<<30))
+    if (SCB_HFSR & (1UL << 30))
     {
         /* [30]:FORCED, Indicates hard fault is taken because of bus fault,
                         memory management fault, or usage fault. */
-        if(SCB_CFSR_BFSR)
+        if (SCB_CFSR_BFSR)
         {
             bus_fault_track();
         }
 
-        if(SCB_CFSR_MFSR)
+        if (SCB_CFSR_MFSR)
         {
             mem_manage_fault_track();
         }
 
-        if(SCB_CFSR_UFSR)
+        if (SCB_CFSR_UFSR)
         {
             usage_fault_track();
         }
     }
 
-    if(SCB_HFSR & (1UL<<31))
+    if (SCB_HFSR & (1UL << 31))
     {
         /* [31]:DEBUGEVT, Indicates hard fault is triggered by debug event. */
         rt_kprintf("debug event\n");
@@ -428,9 +370,7 @@ struct exception_info
 
 void rt_hw_hard_fault_exception(struct exception_info *exception_info)
 {
-#if defined(RT_USING_FINSH) && defined(MSH_USING_BUILT_IN_COMMANDS)
     extern long list_thread(void);
-#endif
     struct exception_stack_frame *exception_stack = &exception_info->stack_frame.exception_stack_frame;
     struct stack_frame *context = &exception_info->stack_frame;
 
@@ -464,7 +404,7 @@ void rt_hw_hard_fault_exception(struct exception_info *exception_info)
     {
         rt_kprintf("hard fault on thread: %s\r\n\r\n", rt_thread_self()->name);
 
-#if defined(RT_USING_FINSH) && defined(MSH_USING_BUILT_IN_COMMANDS)
+#ifdef RT_USING_FINSH
         list_thread();
 #endif
     }
@@ -473,7 +413,7 @@ void rt_hw_hard_fault_exception(struct exception_info *exception_info)
         rt_kprintf("hard fault on handler\r\n\r\n");
     }
 
-    if ( (exception_info->exc_return & 0x10) == 0)
+    if ((exception_info->exc_return & 0x10) == 0)
     {
         rt_kprintf("FPU active!\r\n");
     }
@@ -485,23 +425,12 @@ void rt_hw_hard_fault_exception(struct exception_info *exception_info)
     while (1);
 }
 
-/**
- * shutdown CPU
- */
-RT_WEAK void rt_hw_cpu_shutdown(void)
+void TaskSwitch_StackCheck(void)
 {
-    rt_kprintf("shutdown...\n");
-
-    RT_ASSERT(0);
+    volatile rt_uint32_t end_of_stack_val = (rt_uint32_t) rt_thread_self()->stack_addr;
+    __asm volatile("MSR psplim, %0" : : "r"(end_of_stack_val));
 }
 
-/**
- * reset CPU
- */
-RT_WEAK void rt_hw_cpu_reset(void)
-{
-    SCB_AIRCR = SCB_RESET_VALUE;
-}
 
 #ifdef RT_USING_CPU_FFS
 /**
@@ -524,18 +453,21 @@ __asm int __rt_ffs(int value)
     CLZ     r0, r0
     ADDS    r0, r0, #0x01
 
-exit
+    exit
     BX      lr
 }
-#elif defined(__clang__)
+#elif defined(__CLANG_ARM)
 int __rt_ffs(int value)
 {
-    if (value == 0) return value;
-
     __asm volatile(
+        "CMP     r0, #0x00            \n"
+        "BEQ     exit                 \n"
+
         "RBIT    r0, r0               \n"
         "CLZ     r0, r0               \n"
         "ADDS    r0, r0, #0x01        \n"
+
+        "exit:                        \n"
 
         : "=r"(value)
         : "r"(value)

@@ -14,7 +14,11 @@
 #define __DRV_COMMON_H__
 
 #include "NuMicro.h"
+#include "drv_gpio.h"
 
-void nu_pin_set_function(rt_base_t pin, int data);
+#define NU_MFP_POS(PIN)   ((PIN % 4) * 8)
+#define NU_MFP_MSK(PIN)   (0x1ful << NU_MFP_POS(PIN))
+
+void nu_pin_func(rt_base_t pin, int data);
 
 #endif /* __DRV_COMMON_H__ */

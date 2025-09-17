@@ -106,6 +106,9 @@ extern "C"
 #define CCAP_PAR_PCLKP_HIGH             (0x1ul << CCAP_PAR_PCLKP_Pos)       /*!< Setting for Sensor Pixel Clock Active High Polarity   \hideinitializer */
 #define CCAP_PAR_CCIR656_NO_BLANK       (0x1ul << CCAP_PAR_FBB_Pos)         /*!< Setting for Output only active data to system memory  \hideinitializer */
 
+#define CCAP_ONE_SHOT                   TRUE
+#define CCAP_DISABLE                    FALSE
+
 /*---------------------------------------------------------------------------------------------------------*/
 /* CCAP INT constant definitions                                                                           */
 /*---------------------------------------------------------------------------------------------------------*/
@@ -373,7 +376,8 @@ extern "C"
 /**
  * @brief      Set System Memory Packet Base Address
  *
- * @param[in]  u32Address: Set CCAP_PKTBA0 register. It should be 0x0 ~ 0xFFFFFFFF.
+ * @param[in]  u32Address: Set packet frame buffer base address.
+ *                         It should be a valid memory address with enough space for received image.
  *
  * @details    This function is used to set System Memory Packet Base Address 0 Register.
  */
@@ -386,11 +390,11 @@ __STATIC_INLINE void CCAP_SetPacketBuf(CCAP_T *ccap, uint32_t u32Address)
 /**
  * @brief      Set System Memory Planar Base Address
  *
- * @param[in]  u32Yaddr: Set planar Y frame buffer base address.
+ * @param[in]  u32YAddr: Set planar Y frame buffer base address.
  *                       It should be a valid memory address with enough space for received image.
- *             u32Uaddr: Set planar U frame buffer base address.
+ * @param[in]  u32UAddr: Set planar U frame buffer base address.
  *                       It should be a valid memory address with enough space for received image.
- *             u32Vaddr: Set planar V frame buffer base address.
+ * @param[in]  u32VAddr: Set planar V frame buffer base address.
  *                       It should be a valid memory address with enough space for received image.
  *
  * @details    This function is used to set System Memory Planar Base Address Register.

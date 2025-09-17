@@ -190,12 +190,16 @@ void WWDT1_IRQHandler(void) __attribute__((weak, alias("Default_Handler")));
 #endif
 
 /* Static vector table
- * For performance, M5531 places vector table in DTCM by default.
- * User can define NVT_VECTOR_ON_FLASH to place vector table in Flash.
+ * For better performance, M55M1 places the vector table in DTCM by default.
+ * Users can define NVT_VECTOR_ON_FLASH to place the vector table in Flash.
  *
- * If NVT_VECTOR_ON_FLASH is defined and use IAR,
- *   IRQ handlers referenced in __VECTOR_TABLE (__vector_table) are protected and
- *   not affected by 'initialize by copy'. It means IRQ handler must placed in Flash.
+ * In IAR:
+ *   All IRQ handlers referenced in __VECTOR_TABLE (__vector_table) must be placed in Flash.
+ *   Becuase IRQ handlers referenced in __VECTOR_TABLE are protected by IAR linker and
+ *   will not affected by 'initialize by copy'.
+ *
+ * If NVT_VECTOR_ON_FLASH is not defined,
+ * the vector table __VECTOR_TABLE is valid until VTOR is switched to DTCM_VECTOR_TABLE in SystemInit().
  */
 const VECTOR_TABLE_Type __VECTOR_TABLE[] __VECTOR_TABLE_ATTRIBUTE =
 #ifndef NVT_VECTOR_ON_FLASH
@@ -208,6 +212,14 @@ const VECTOR_TABLE_Type __VECTOR_TABLE[] __VECTOR_TABLE_ATTRIBUTE =
     BusFault_Handler,                         /*   -11 Bus Fault Handler                                */
     UsageFault_Handler,                       /*   -10 Usage Fault Handler                              */
     SecureFault_Handler,                      /*    -9 Secure Fault Handler                             */
+    0,                                        /*       Reserved                                         */
+    0,                                        /*       Reserved                                         */
+    0,                                        /*       Reserved                                         */
+    SVC_Handler,                              /*    -5 SVC Handler                                      */
+    DebugMon_Handler,                         /*    -4 Debug Monitor Handler                            */
+    0,                                        /*       Reserved                                         */
+    PendSV_Handler,                           /*    -2 PendSV Handler Handler                           */
+    Default_Handler,                          /*    -1 SysTick Handler                                  */
 };
 
 /* Declare new vector table placed in DTCM */
@@ -452,13 +464,7 @@ __NO_RETURN void Reset_Handler(void)
     if (SCU_IS_CPU_NS(SCU_NS) == 0)
     {
         /* Unlock protected registers */
-        do
-        {
-            SYS->REGLCTL = 0x59UL;
-            SYS->REGLCTL = 0x16UL;
-            SYS->REGLCTL = 0x88UL;
-        }
-        while (SYS->REGLCTL == 0UL);
+        SYS_UnlockReg();
 
         PMC_SetSRAMPowerMode(PMC_SYSRB0PC_SRAM0PMS_Msk |
                              PMC_SYSRB0PC_SRAM1PMS_Msk |
@@ -530,9 +536,7 @@ __NO_RETURN void Reset_Handler(void)
     SCB_EnableDCache();
 #endif  // (NVT_DCACHE_ON == 1)
 
-#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
     SystemInit();
-#endif
 
     Reset_Handler_PreInit();
     /* All global variables will be initialized by __PROGRAM_START,

@@ -135,13 +135,6 @@ uint32_t I2S_Open(I2S_T *i2s, uint32_t u32MasterSlave, uint32_t u32SampleRate, u
 {
     uint16_t u16Divider;
     uint32_t u32BitRate, u32SrcClk;
-    uint32_t u32RegLockLevel = SYS_IsRegLocked();
-
-    if (u32RegLockLevel)
-    {
-        /* Unlock protected registers for ISP function */
-        SYS_UnlockReg();
-    }
 
     if (i2s == I2S0)
     {
@@ -150,12 +143,6 @@ uint32_t I2S_Open(I2S_T *i2s, uint32_t u32MasterSlave, uint32_t u32SampleRate, u
     else if (i2s == I2S1)
     {
         SYS_ResetModule(SYS_I2S1RST);
-    }
-
-    if (u32RegLockLevel)
-    {
-        /* Lock protected registers */
-        SYS_LockReg();
     }
 
     i2s->CTL0 = (u32MasterSlave | u32WordWidth | u32MonoData | u32DataFormat);

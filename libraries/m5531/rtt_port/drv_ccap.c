@@ -290,21 +290,11 @@ static rt_err_t ccap_open(rt_device_t dev, rt_uint16_t oflag)
 {
     nu_ccap_t psNuCcap = (nu_ccap_t)dev;
 
-    uint32_t u32RegLockLevel = SYS_IsRegLocked();
-
-    /* Unlock protected registers */
-    if (u32RegLockLevel)
-        SYS_UnlockReg();
-
     /* Enable clock */
     ccap_sensor_setfreq(psNuCcap, 24000000);
 
     /* Reset IP */
     SYS_ResetModule(psNuCcap->rstidx);
-
-    /* Lock protected registers */
-    if (u32RegLockLevel)
-        SYS_LockReg();
 
     /* Unmask External CCAP Interrupt */
     NVIC_EnableIRQ(psNuCcap->irqn);
@@ -533,7 +523,7 @@ static rt_err_t ccap_register(struct rt_device *device, const char *name, void *
     device->tx_complete = RT_NULL;
 
 #ifdef RT_USING_DEVICE_OPS
-    device->ops         = &inputcapture_ops;
+    device->ops         = &ccap_ops;
 #else
     device->init        = ccap_init;
     device->open        = ccap_open;

@@ -26,11 +26,6 @@ void HSUSBD_IRQHandler(void)
 
 void usb_dc_low_level_init(void)
 {
-    uint32_t u32RegLockBackup = SYS_IsRegLocked();
-
-    /* Initialize USB PHY */
-    SYS_UnlockReg();
-
 #if !defined(BSP_USING_HSOTG)
     void nutool_modclkcfg_init_hsusbd(void);
     nutool_modclkcfg_init_hsusbd();
@@ -46,17 +41,10 @@ void usb_dc_low_level_init(void)
 #endif
 
     SYS_ResetModule(SYS_HSUSBD0RST);
-
-    if (u32RegLockBackup)
-        SYS_LockReg();
 }
 
 void usb_dc_low_level_deinit(void)
 {
-    uint32_t u32RegLockBackup = SYS_IsRegLocked();
-
-    SYS_UnlockReg();
-
 #if !defined(BSP_USING_HSOTG)
 
     SYS->USBPHY &= ~(SYS_USBPHY_HSUSBACT_Msk | SYS_USBPHY_HSOTGPHYEN_Msk);
@@ -65,8 +53,5 @@ void usb_dc_low_level_deinit(void)
     nutool_modclkcfg_deinit_hsusbd();
 
 #endif
-
-    if (u32RegLockBackup)
-        SYS_LockReg();
 }
 #endif

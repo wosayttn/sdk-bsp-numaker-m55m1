@@ -1528,8 +1528,8 @@ typedef struct
 #define HSUSBD_EPCFG_EPNUM_Pos           (4)                                               /*!< HSUSBD_T::EPCFG: EPNUM Position        */
 #define HSUSBD_EPCFG_EPNUM_Msk           (0xful << HSUSBD_EPCFG_EPNUM_Pos)                 /*!< HSUSBD_T::EPCFG: EPNUM Mask            */
 
-#define HSUSBD_EPBUFSTART_SADDR_Pos      (0)                                               /*!< HSUSBD_T::EPBUFSTART: EPBUFSTART Position */
-#define HSUSBD_EPBUFSTART_SADDR_Msk      (0xffful << HSUSBD_EPBUFSTART_SADDR_Pos)          /*!< HSUSBD_T::EPBUFSTART: EPBUFSTART Mask     */
+#define HSUSBD_EPBUFSTART_SADDR_Pos      (0)                                               /*!< HSUSBD_T::EPBUFSTART: SADDR Position   */
+#define HSUSBD_EPBUFSTART_SADDR_Msk      (0xffful << HSUSBD_EPBUFSTART_SADDR_Pos)          /*!< HSUSBD_T::EPBUFSTART: SADDR Mask       */
 
 #define HSUSBD_EPBUFEND_EADDR_Pos        (0)                                               /*!< HSUSBD_T::EPBUFEND: EADDR Position     */
 #define HSUSBD_EPBUFEND_EADDR_Msk        (0xffful << HSUSBD_EPBUFEND_EADDR_Pos)            /*!< HSUSBD_T::EPBUFEND: EADDR Mask         */

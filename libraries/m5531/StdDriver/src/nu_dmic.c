@@ -63,20 +63,8 @@ void DMIC_DisableChMsk(DMIC_T *dmic, uint32_t u32ChMsk)
 void DMIC_Open(DMIC_T *dmic)
 {
     uint32_t u32Delay, u32RamIdx;
-    uint32_t u32IsRegLocked;
-    u32IsRegLocked = SYS_IsRegLocked();
-
-    if (u32IsRegLocked)
-    {
-        SYS_UnlockReg();
-    }
 
     PMC_SetDMIC_SRAMPowerMode(PMC_SRAM_NORMAL);
-
-    if (u32IsRegLocked)
-    {
-        SYS_LockReg();
-    }
 
     dmic->DIV |= DMIC_DIV_FCLR_Msk;
     u32Delay = SystemCoreClock >> 3;

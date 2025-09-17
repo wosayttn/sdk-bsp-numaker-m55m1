@@ -218,6 +218,7 @@ int32_t CCAP_Stop(CCAP_T *ccap, uint32_t u32FrameComplete)
  * @return     None
  *
  * @details    This function is used to set Packet Scaling Vertical and Horizontal Factor register.
+ *             The width of scaled and cropped images should conform to the Packet valid row pixel limit outlined in the TRM.
  */
 void CCAP_SetPacketScaling(CCAP_T *ccap, uint32_t u32VNumerator, uint32_t u32VDenominator, uint32_t u32HNumerator, uint32_t u32HDenominator)
 {

@@ -193,6 +193,8 @@ extern volatile uint8_t g_hsusbd_RemoteWakeupEn;
 #define HSUSBD_DISABLE_LPM()              ((uint32_t)(HSUSBD->LPMCSR &= ~HSUSBD_LPMCSR_LPMEN_Msk)) /*!<Disable LPM  \hideinitializer */
 #define HSUSBD_ENABLE_LPMSLEEP()          ((uint32_t)(HSUSBD->LPMCSR |= HSUSBD_LPMCSR_LPMSLEEPEN_Pos)) /*!<Enable LPMSLEEP  \hideinitializer */
 #define HSUSBD_DISABLE_LPMSLEEP()         ((uint32_t)(HSUSBD->LPMCSR &= ~HSUSBD_LPMCSR_LPMSLEEPEN_Pos)) /*!<Disable LPMSLEEP  \hideinitializer */
+#define HSUSBD_ENABLE_HS_HANDSHAKE()      ((uint32_t)(HSUSBD->OPER |= HSUSBD_OPER_HISHSEN_Msk)) /*!<Enable HISHSEN  \hideinitializer */
+#define HSUSBD_DISABLE_HS_HANDSHAKE()     ((uint32_t)(HSUSBD->OPER &= ~HSUSBD_OPER_HISHSEN_Msk)) /*!<Disable HISHSEN  \hideinitializer */
 #define SET_HSUSBDROLE()                  ((uint32_t)(SYS->USBPHY &= ~SYS_USBPHY_HSUSBROLE_Msk)) /*!<Set HSUSB role to HSUSBD  \hideinitializer */
 
 /**
@@ -387,6 +389,60 @@ __STATIC_INLINE uint32_t HSUSBD_GetStall(uint32_t u32EpNum)
     return val;
 }
 
+/**
+ * @brief       Enable HSUSB PHY
+ *
+ * @param[in]   None
+ *
+ * @return      None
+ *
+ * @details     This function is used to enable the HSUSB (High-Speed USB) PHY (Physical Layer)
+ *              The register write-protection function should be disabled before using this function.
+ */
+__STATIC_INLINE void SYS_Enable_HSUSB_PHY(void)
+{
+    uint32_t i;
+
+    /* Set HSOTG PHY to the reset status */
+    SYS->USBPHY = (SYS->USBPHY & ~SYS_USBPHY_HSUSBACT_Msk) | SYS_USBPHY_HSOTGPHYEN_Msk;
+
+    /* HSOTG PHY at reset mode at least 10us before changing to active mode */
+    for (i = 0; i < 0x1000; i++)
+    {
+        __NOP();
+    }
+
+    /* Set HSOTG PHY to active status */
+    SYS->USBPHY |= SYS_USBPHY_HSUSBACT_Msk;
+}
+
+/**
+ * @brief       Enable HSUSBD PHY
+ *
+ * @param[in]   None
+ *
+ * @return      None
+ *
+ * @details     This function is used to enable the HSUSBD (High-Speed USB device) PHY (Physical Layer)
+ */
+__STATIC_INLINE int32_t HSUSBD_Enable_PHY(void)
+{
+    uint32_t u32TimeOutCnt;
+
+    /* Initial USB engine */
+    HSUSBD_ENABLE_PHY();
+
+    /* wait PHY clock ready */
+    u32TimeOutCnt = HSUSBD_TIMEOUT;
+
+    while (!(HSUSBD->PHYCTL & HSUSBD_PHYCTL_PHYCLKSTB_Msk))
+    {
+        if (--u32TimeOutCnt == 0) return HSUSBD_ERR_TIMEOUT;
+    }
+
+    return HSUSBD_OK;
+}
+
 /*-------------------------------------------------------------------------------------------*/
 typedef void (*HSUSBD_VENDOR_REQ)(void); /*!<USB Vendor request callback function */
 typedef void (*HSUSBD_CLASS_REQ)(void); /*!<USB Class request callback function */
@@ -402,8 +458,6 @@ void HSUSBD_CtrlIn(void);
 int32_t HSUSBD_CtrlOut(uint8_t pu8Buf[], uint32_t u32Size);
 void HSUSBD_SwReset(void);
 void HSUSBD_SetVendorRequest(HSUSBD_VENDOR_REQ pfnVendorReq);
-void SYS_Enable_HSUSB_PHY(void);
-int32_t HSUSBD_Enable_PHY(void);
 
 /** @} end of group HSUSBD_EXPORTED_FUNCTIONS */
 

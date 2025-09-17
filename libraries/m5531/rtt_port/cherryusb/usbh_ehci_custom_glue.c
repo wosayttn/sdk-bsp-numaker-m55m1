@@ -44,11 +44,6 @@ void usb_hc_low_level_init(struct usbh_bus *bus)
 {
     if (bus->hcd.reg_base == HSUSBH_BASE)
     {
-        uint32_t u32RegLockBackup = SYS_IsRegLocked();
-
-        /* Initialize USB HOST */
-        SYS_UnlockReg();
-
 #if !defined(BSP_USING_HSOTG)
         /* Enable USBH clock */
         void nutool_modclkcfg_init_usbh(void);
@@ -67,9 +62,6 @@ void usb_hc_low_level_init(struct usbh_bus *bus)
         /* Enable interrupt */
         NVIC_EnableIRQ(HSUSBH_IRQn);
         NVIC_EnableIRQ(USBH1_IRQn);
-
-        if (u32RegLockBackup)
-            SYS_LockReg();
     }
 }
 

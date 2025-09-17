@@ -320,8 +320,8 @@ void TIMER_DisableEventCounter(TIMER_T *timer)
 /**
   * @brief This function is used to enable the Timer frequency counter function
   * @param[in] timer The base address of Timer module. Can be \ref TIMER0 or \ref TIMER2
-  * @param[in] u32DropCount This parameter has no effect in M5531 Series BSP
-  * @param[in] u32Timeout This parameter has no effect in M5531 Series BSP
+  * @param[in] u32DropCount This parameter has no effect in M55M1 Series BSP
+  * @param[in] u32Timeout This parameter has no effect in M55M1 Series BSP
   * @param[in] u32EnableInt Enable interrupt assertion after capture complete or not. Valid values are TRUE and FALSE
   * @return None
   * @details This function is used to calculate input event frequency. After enable
@@ -336,6 +336,9 @@ void TIMER_EnableFreqCounter(TIMER_T *timer,
                              uint32_t u32EnableInt)
 {
     TIMER_T *t;    /* store the timer base to configure compare value */
+
+    NVT_UNUSED(u32DropCount);
+    NVT_UNUSED(u32Timeout);
 
     t = (timer == TIMER0) ? TIMER1 : TIMER3;
 

@@ -36,9 +36,6 @@ MSH_CMD_EXPORT_ALIAS(usb_role, usb_role, check usb role);
 
 static int hsotg_init(void)
 {
-    uint32_t u32RegLockBackup = SYS_IsRegLocked();
-    SYS_UnlockReg();
-
     void nutool_modclkcfg_init_hsusbd(void);
     nutool_modclkcfg_init_hsusbd();
 
@@ -64,9 +61,6 @@ static int hsotg_init(void)
     /* clear interrupt and enable relative interrupts */
     HSOTG_ENABLE_INT(HSOTG_INTEN_IDCHGIEN_Msk | HSOTG_INTEN_HOSTIEN_Msk | HSOTG_INTEN_PDEVIEN_Msk |
                      HSOTG_INTEN_BVLDCHGIEN_Msk | HSOTG_INTEN_AVLDCHGIEN_Msk);
-
-    if (u32RegLockBackup)
-        SYS_LockReg();
 
     return (int)RT_EOK;
 }

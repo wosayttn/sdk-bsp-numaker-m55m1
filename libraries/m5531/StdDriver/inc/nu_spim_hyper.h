@@ -143,9 +143,12 @@ extern "C"
   *           - \ref SPIM_HYPERFLASH_MODE
   * \hideinitializer
   */
-#define SPIM_HYPER_ENABLE_HYPMODE(spim, x)                    \
-    (spim->CTL0 = ((spim->CTL0 & ~(SPIM_CTL0_DEVMODE_Msk)) |  \
-                   ((x) << SPIM_CTL0_DEVMODE_Pos)))
+#define SPIM_HYPER_ENABLE_HYPMODE(spim, x)                        \
+    do {                                                          \
+        (spim->CTL0 = ((spim->CTL0 & ~(SPIM_CTL0_DEVMODE_Msk)) |  \
+                       ((x) << SPIM_CTL0_DEVMODE_Pos)));          \
+        SPIM_HYPER_DISABLE_CIPHER(spim);                          \
+    }while(0)
 
 /**
   * @brief  Get operation mode.
@@ -231,32 +234,6 @@ extern "C"
  */
 #define SPIM_HYPER_GET_DMM_IDLE(spim) \
     ((spim->DMMCTL & SPIM_DMMCTL_DMMIDLE_Msk) >> SPIM_DMMCTL_DMMIDLE_Pos)
-
-/**
- * @brief Set DMM time-out counter.
- * @param spim
- * \hideinitializer
- */
-#define SPIM_HYPER_SET_DMM_TOCNTDMM(spim, x)  \
-    (spim->DMM_TIMEOUT_INTERVAL = ((spim->DMM_TIMEOUT_INTERVAL & ~(SPIM_DMM_TIMEOUT_TOCNT_Msk)) | \
-                                   ((x) <<SPIM_DMM_TIMEOUT_TOCNT_Pos)))
-
-/**
- * @brief Get DMM time-out state flag.
- * @param spim
- * \hideinitializer
- */
-#define SPIM_HYPER_GET_DMM_TIMEOUT_STS(spim)   \
-    ((spim->DMM_TIMEOUT_FLAG_STS & SPIM_DMM_TIMEOUT_STS_TOF_Msk) >> SPIM_DMM_TIMEOUT_STS_TOF_Pos)
-
-/**
- * @brief Clear DMM time-out state flag.
- * @param spim
- * \hideinitializer
- */
-#define SPIM_HYPER_CLR_DMM_TIMEOUT_STS(spim)                                                                \
-    (spim->DMM_TIMEOUT_FLAG_STS = ((spim->DMM_TIMEOUT_FLAG_STS & ~(SPIM_DMM_TIMEOUT_STS_TOF_Msk)) | \
-                                   SPIM_DMM_TIMEOUT_STS_TOF_Msk))
 
 /*----------------------------------------------------------------------------*/
 /* SPIM_DLLx constant definitions                                            */
@@ -482,9 +459,13 @@ extern "C"
   *           - \ref SPIM_HYPER_CSST_4_5_HCLK : 4.5 HCLK cycles
   * \hideinitializer
   */
-#define SPIM_HYPER_SET_CSST(spim, x)                                                \
-    (spim->HYPER_CONFIG1 = ((spim->HYPER_CONFIG1 & ~(SPIM_HYPER_CONFIG1_CSS_Msk)) | \
-                            ((x) << SPIM_HYPER_CONFIG1_CSS_Pos)))
+#define SPIM_HYPER_SET_CSST(spim, x)                                                            \
+    do {                                                                                        \
+        uint32_t _u32CSST = ((x) < SPIM_HYPER_CSST_3_5_HCLK) ? SPIM_HYPER_CSST_3_5_HCLK :       \
+                            ((x) > SPIM_HYPER_CSST_4_5_HCLK) ? SPIM_HYPER_CSST_4_5_HCLK : (x);  \
+        (spim)->HYPER_CONFIG1 = ((spim)->HYPER_CONFIG1 & ~SPIM_HYPER_CONFIG1_CSS_Msk) |         \
+                                ((_u32CSST) << SPIM_HYPER_CONFIG1_CSS_Pos);                     \
+    } while (0)
 
 /**
   * @brief  Set Hyper Chip Select Hold Time After CK Falling Edge.
@@ -494,9 +475,40 @@ extern "C"
   *           - \ref SPIM_HYPER_CSH_3_5_HCLK : 3.5 HCLK cycles
   * \hideinitializer
   */
-#define SPIM_HYPER_SET_CSH(spim, x)                                                 \
-    (spim->HYPER_CONFIG1 = ((spim->HYPER_CONFIG1 & ~(SPIM_HYPER_CONFIG1_CSH_Msk)) | \
-                            ((x) << SPIM_HYPER_CONFIG1_CSH_Pos)))
+#define SPIM_HYPER_SET_CSH(spim, x)                                                         \
+    do {                                                                                    \
+        uint32_t u32CSH = ((x) < SPIM_HYPER_CSH_2_5_HCLK) ? SPIM_HYPER_CSH_2_5_HCLK :       \
+                          ((x) > SPIM_HYPER_CSH_3_5_HCLK) ? SPIM_HYPER_CSH_3_5_HCLK : (x);  \
+        (spim)->HYPER_CONFIG1 = ((spim)->HYPER_CONFIG1 & ~(SPIM_HYPER_CONFIG1_CSH_Msk)) |   \
+                                (u32CSH << SPIM_HYPER_CONFIG1_CSH_Pos);                     \
+    } while (0)
+
+/**
+ * @brief Set Hyper Chip Select High between Transaction.
+ * @param spim
+ * @param x   Set Chip Select High between Transaction as u8Value HCLK cycles.
+ *                - \ref SPIM_HYPER_CSHI_4_HCLK  : 4 HCLK cycles
+ *                - \ref SPIM_HYPER_CSHI_5_HCLK  : 5 HCLK cycles
+ *                - \ref SPIM_HYPER_CSHI_6_HCLK  : 6 HCLK cycles
+ *                - \ref SPIM_HYPER_CSHI_7_HCLK  : 7 HCLK cycles
+ *                - \ref SPIM_HYPER_CSHI_8_HCLK  : 8 HCLK cycles
+ *                - \ref SPIM_HYPER_CSHI_9_HCLK  : 9 HCLK cycles
+ *                - \ref SPIM_HYPER_CSHI_10_HCLK : 10 HCLK cycles
+ *                - \ref SPIM_HYPER_CSHI_11_HCLK : 11 HCLK cycles
+ *                - \ref SPIM_HYPER_CSHI_12_HCLK : 12 HCLK cycles
+ *                - \ref SPIM_HYPER_CSHI_13_HCLK : 13 HCLK cycles
+ *                - \ref SPIM_HYPER_CSHI_14_HCLK : 14 HCLK cycles
+ *                - \ref SPIM_HYPER_CSHI_15_HCLK : 15 HCLK cycles
+ *                - \ref SPIM_HYPER_CSHI_16_HCLK : 16 HCLK cycles
+ * \hideinitializer
+ */
+#define SPIM_HYPER_SET_CSHI(spim, x)                                                        \
+    do {                                                                                    \
+        uint32_t u32CSHI = ((x) < SPIM_HYPER_CSHI_4_HCLK) ? SPIM_HYPER_CSHI_4_HCLK :        \
+                           ((x) > SPIM_HYPER_CSHI_16_HCLK) ? SPIM_HYPER_CSHI_16_HCLK : (x); \
+        (spim)->HYPER_CONFIG1 = (((spim)->HYPER_CONFIG1 & ~(SPIM_HYPER_CONFIG1_CSHI_Msk)) | \
+                                 ((u32CSHI) << SPIM_HYPER_CONFIG1_CSHI_Pos));               \
+    }while(0)
 
 /**
   * @brief  Set Hyper Chip Select Maximum Low Time.
@@ -619,31 +631,6 @@ __STATIC_INLINE uint32_t SPIM_HYPER_GET_DMMADDR(SPIM_T *spim);
 __STATIC_INLINE void SPIM_HYPER_SET_OPMODE(SPIM_T *spim, uint32_t x);
 
 /**
- * @brief Set Hyper Chip Select High between Transaction.
- * @param spim
- * @param u32CSHI Set Chip Select High between Transaction as u8Value HCLK cycles.
- *                - \ref SPIM_HYPER_CSHI_4_HCLK  : 4 HCLK cycles
- *                - \ref SPIM_HYPER_CSHI_5_HCLK  : 5 HCLK cycles
- *                - \ref SPIM_HYPER_CSHI_6_HCLK  : 6 HCLK cycles
- *                - \ref SPIM_HYPER_CSHI_7_HCLK  : 7 HCLK cycles
- *                - \ref SPIM_HYPER_CSHI_8_HCLK  : 8 HCLK cycles
- *                - \ref SPIM_HYPER_CSHI_9_HCLK  : 9 HCLK cycles
- *                - \ref SPIM_HYPER_CSHI_10_HCLK  : 10 HCLK cycles
- *                - \ref SPIM_HYPER_CSHI_11_HCLK : 11 HCLK cycles
- *                - \ref SPIM_HYPER_CSHI_12_HCLK : 12 HCLK cycles
- *                - \ref SPIM_HYPER_CSHI_13_HCLK : 13 HCLK cycles
- *                - \ref SPIM_HYPER_CSHI_14_HCLK : 14 HCLK cycles
- *                - \ref SPIM_HYPER_CSHI_15_HCLK : 15 HCLK cycles
- *                - \ref SPIM_HYPER_CSHI_16_HCLK : 16 HCLK cycles
- * \hideinitializer
- */
-__STATIC_INLINE void SPIM_HYPER_SET_CSHI(SPIM_T *spim, uint32_t u32CSHI)
-{
-    spim->HYPER_CONFIG1 = ((spim->HYPER_CONFIG1 & ~(SPIM_HYPER_CONFIG1_CSHI_Msk)) |
-                           (((u32CSHI < SPIM_HYPER_CSHI_4_HCLK) ? SPIM_HYPER_CSHI_4_HCLK : u32CSHI) << SPIM_HYPER_CONFIG1_CSHI_Pos));
-}
-
-/**
   * @brief  Wait Hyper Direct Map Mode Read/Write Done.
   * @param  spim
   * @return SPIM_HYPER_OK          SPIM operation OK.
@@ -652,24 +639,24 @@ __STATIC_INLINE void SPIM_HYPER_SET_CSHI(SPIM_T *spim, uint32_t u32CSHI)
   */
 __STATIC_INLINE int32_t SPIM_HYPER_WAIT_DMMDONE(SPIM_T *spim)
 {
-    volatile int32_t u32TimeOutCount = SPIM_HYPER_TIMEOUT;
+    volatile int32_t i32TimeOutCount = (int32_t)SPIM_HYPER_TIMEOUT;
 
     SPIM_HYPER_ENABLE_DMMDONE(spim);       /* HyperBus DMM Mode Done.  */
 
     while (SPIM_HYPER_GET_DMMDONE(spim))
     {
-        if (--u32TimeOutCount <= 0)
+        if (--i32TimeOutCount <= 0)
         {
             break;
         }
     }
 
-    u32TimeOutCount = SPIM_HYPER_TIMEOUT;
+    i32TimeOutCount = (int32_t)SPIM_HYPER_TIMEOUT;
 
     /* Wait for DMM mode to be idle */
     while (SPIM_HYPER_GET_DMM_IDLE(spim) == SPIM_HYPER_OP_DISABLE)
     {
-        if (--u32TimeOutCount <= 0)
+        if (--i32TimeOutCount <= 0)
         {
             break;
         }
@@ -743,8 +730,8 @@ int32_t SPIM_HYPER_WriteHyperRAMReg(SPIM_T *spim, uint32_t u32Addr, uint32_t u32
 /* Hyper Device API */
 void SPIM_HYPER_Init(SPIM_T *spim, uint32_t u32HyperMode, uint32_t u32Div);
 int32_t SPIM_HYPER_Reset(SPIM_T *spim);
-int16_t SPIM_HYPER_Read1Word(SPIM_T *spim, uint32_t u32Addr);
-int32_t SPIM_HYPER_Read2Word(SPIM_T *spim, uint32_t u32Addr);
+uint16_t SPIM_HYPER_Read1Word(SPIM_T *spim, uint32_t u32Addr);
+uint32_t SPIM_HYPER_Read2Word(SPIM_T *spim, uint32_t u32Addr);
 int32_t SPIM_HYPER_Write1Byte(SPIM_T *spim, uint32_t u32Addr, uint8_t u8Data);
 int32_t SPIM_HYPER_Write2Byte(SPIM_T *spim, uint32_t u32Addr, uint16_t u16Data);
 int32_t SPIM_HYPER_Write3Byte(SPIM_T *spim, uint32_t u32Addr, uint32_t u32Data);

@@ -36,6 +36,7 @@ extern "C"
 #define OTG_VBUS_ST_VALID_LOW        (1UL) /*!< USB VBUS power switch valid status is low. \hideinitializer */
 
 
+#define OTG_VBUS_VLDSEL              (1 << 2UL) /*!< VBUS Status Selection.(M55M1 NuMaker board only) \hideinitializer */
 /** @} end of group OTG_EXPORTED_CONSTANTS */
 
 
@@ -71,7 +72,7 @@ extern "C"
   *          This macro will set OTGPHYEN bit of OTG_PHYCTL register to enable USB PHY.
   * \hideinitializer
   */
-#define OTG_ENABLE_PHY() (OTG->PHYCTL |= OTG_PHYCTL_OTGPHYEN_Msk)
+#define OTG_ENABLE_PHY() (OTG->PHYCTL |= (OTG_PHYCTL_OTGPHYEN_Msk | OTG_VBUS_VLDSEL))
 
 /**
   * @brief This macro is used to disable USB PHY
@@ -79,7 +80,7 @@ extern "C"
   * @details This macro will clear OTGPHYEN bit of OTG_PHYCTL register to disable USB PHY.
   * \hideinitializer
   */
-#define OTG_DISABLE_PHY() (OTG->PHYCTL &= ~OTG_PHYCTL_OTGPHYEN_Msk)
+#define OTG_DISABLE_PHY() (OTG->PHYCTL &= ~(OTG_PHYCTL_OTGPHYEN_Msk | OTG_VBUS_VLDSEL))
 
 /**
   * @brief This macro is used to enable ID detection function

@@ -189,7 +189,7 @@ static rt_err_t nu_spi_bus_configure(struct rt_spi_device *device,
     u32BusClock = SPI_SetBusClock(spi_bus->spi_base, configuration->max_hz);
     if (configuration->max_hz > u32BusClock)
     {
-        LOG_W("%s clock max frequency is %dHz (!= %dHz)\n", spi_bus->name, u32BusClock, configuration->max_hz);
+        LOG_I("%s clock max frequency is %dHz (!= %dHz)\n", spi_bus->name, u32BusClock, configuration->max_hz);
         configuration->max_hz = u32BusClock;
     }
 
@@ -203,6 +203,9 @@ static rt_err_t nu_spi_bus_configure(struct rt_spi_device *device,
                  u32SPIMode,
                  configuration->data_width,
                  configuration->max_hz);
+
+        /* Disable Auto-selection function. */
+        SPI_DisableAutoSS(spi_bus->spi_base);
 
         if (configuration->mode & RT_SPI_CS_HIGH)
         {
@@ -301,6 +304,7 @@ static rt_err_t nu_pdma_spi_rx_config(struct nu_spi *spi_bus, uint8_t *pu8Buf, i
     sChnCB.m_eCBType = eCBType_Event;
     sChnCB.m_pfnCBHandler = nu_pdma_spi_rx_cb_event;
     sChnCB.m_pvUserData = (void *)spi_bus;
+
     result = nu_pdma_callback_register(spi_pdma_rx_chid, &sChnCB);
     if (result != RT_EOK)
     {
@@ -320,7 +324,7 @@ static rt_err_t nu_pdma_spi_rx_config(struct nu_spi *spi_bus, uint8_t *pu8Buf, i
     if (pu8Buf == RT_NULL)
     {
         memctrl  = eMemCtl_SrcFix_DstFix;
-        dst_addr = (rt_uint8_t *) &spi_bus->dummy;
+        dst_addr = (rt_uint8_t *) &spi_bus->dummy[0];
     }
     else
     {
@@ -340,6 +344,7 @@ static rt_err_t nu_pdma_spi_rx_config(struct nu_spi *spi_bus, uint8_t *pu8Buf, i
                               (uint32_t)dst_addr,
                               i32RcvLen / bytes_per_word,
                               0);
+
 exit_nu_pdma_spi_rx_config:
 
     return result;
@@ -360,9 +365,9 @@ static rt_err_t nu_pdma_spi_tx_config(struct nu_spi *spi_bus, const uint8_t *pu8
 
     if (pu8Buf == RT_NULL)
     {
-        spi_bus->dummy = 0;
+        spi_bus->dummy[0] = 0;
         memctrl = eMemCtl_SrcFix_DstFix;
-        src_addr = (rt_uint8_t *)&spi_bus->dummy;
+        src_addr = (rt_uint8_t *)&spi_bus->dummy[0];
     }
     else
     {
@@ -541,11 +546,11 @@ static void nu_spi_transmission_with_poll(struct nu_spi *spi_bus,
     // Read-only
     else if ((send_addr == RT_NULL) && (recv_addr != RT_NULL))
     {
-        spi_bus->dummy = 0;
+        spi_bus->dummy[0] = 0;
         while (length > 0)
         {
             /* Input data to SPI TX FIFO */
-            length -= nu_spi_write(spi_base, (const uint8_t *)&spi_bus->dummy, bytes_per_word);
+            length -= nu_spi_write(spi_base, (const uint8_t *)&spi_bus->dummy[0], bytes_per_word);
 
             /* Read data from RX FIFO */
             recv_addr += nu_spi_read(spi_base, recv_addr, bytes_per_word);
@@ -720,18 +725,23 @@ static int rt_hw_spi_init(void)
     for (i = (SPI_START + 1); i < SPI_CNT; i++)
     {
         SYS_ResetModule(nu_spi_arr[i].rstidx);
-        nu_spi_register_bus(&nu_spi_arr[i], nu_spi_arr[i].name);
+
 #if defined(BSP_USING_SPI_PDMA)
         nu_spi_arr[i].pdma_chanid_tx = -1;
         nu_spi_arr[i].pdma_chanid_rx = -1;
+
         if ((nu_spi_arr[i].pdma_perp_tx != NU_PDMA_UNUSED) && (nu_spi_arr[i].pdma_perp_rx != NU_PDMA_UNUSED))
         {
             if (nu_hw_spi_pdma_allocate(&nu_spi_arr[i]) != RT_EOK)
             {
-                LOG_W("Failed to allocate DMA channels for %s. We will use poll-mode for this bus.\n", nu_spi_arr[i].name);
+                LOG_I("Failed to allocate DMA channels for %s. We will use poll-mode for this bus.\n", nu_spi_arr[i].name);
             }
         }
+
+        nu_spi_arr[i].dummy = rt_malloc_align(RT_ALIGN_SIZE, RT_ALIGN_SIZE);
+        RT_ASSERT(nu_spi_arr[i].dummy);
 #endif
+        nu_spi_register_bus(&nu_spi_arr[i], nu_spi_arr[i].name);
     }
 
     return 0;

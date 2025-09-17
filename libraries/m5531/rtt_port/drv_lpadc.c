@@ -108,9 +108,6 @@ static rt_int16_t nu_lpadc_get_vref(struct rt_adc_device *device)
     nu_lpadc_t psNuLPADC = (nu_lpadc_t)device;
     rt_uint16_t u32VBG;
 
-    /* Force to enable internal voltage band-gap. */
-    SYS_UnlockReg();
-
     nu_lpadc_enabled(device, 29, RT_TRUE);
     u32VBG = _lpadc_convert(psNuLPADC, 29);
     nu_lpadc_enabled(device, 29, RT_FALSE);
@@ -214,7 +211,6 @@ int rt_hw_lpadc_init(void)
     rt_err_t result;
 
     /* Invoke ISP function to read built-in band-gap A/D conversion result*/
-    SYS_UnlockReg();
     FMC_Open();
     s_u32BuiltInBandGapValue = FMC_ReadBandGap();
     FMC_Close();

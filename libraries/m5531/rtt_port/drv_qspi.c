@@ -333,11 +333,11 @@ static rt_uint32_t nu_qspi_bus_xfer(struct rt_spi_device *device, struct rt_spi_
     /* Dummy_cycles stage */
     if (qspi_message->dummy_cycles > 0)
     {
-        qspi_bus->dummy = 0x00;
+        qspi_bus->dummy[0] = 0x00;
 
-        u8last = nu_qspi_mode_config(qspi_bus, (rt_uint8_t *) &qspi_bus->dummy, RT_NULL, u8last);
+        u8last = nu_qspi_mode_config(qspi_bus, (rt_uint8_t *) &qspi_bus->dummy[0], RT_NULL, u8last);
         nu_spi_transfer((struct nu_spi *)qspi_bus,
-                        (rt_uint8_t *) &qspi_bus->dummy,
+                        (rt_uint8_t *) &qspi_bus->dummy[0],
                         RT_NULL,
                         qspi_message->dummy_cycles / (8 / u8last),
                         1);
@@ -390,7 +390,9 @@ static int rt_hw_qspi_init(void)
     {
         SYS_ResetModule(nu_qspi_arr[i].rstidx);
 
-        nu_qspi_register_bus(&nu_qspi_arr[i], nu_qspi_arr[i].name);
+        nu_qspi_arr[i].dummy = rt_malloc_align(RT_ALIGN_SIZE, RT_ALIGN_SIZE);
+        RT_ASSERT(nu_qspi_arr[i].dummy);
+
 #if defined(BSP_USING_SPI_PDMA)
         nu_qspi_arr[i].pdma_chanid_tx = -1;
         nu_qspi_arr[i].pdma_chanid_rx = -1;
@@ -404,6 +406,7 @@ static int rt_hw_qspi_init(void)
             }
         }
 #endif
+        nu_qspi_register_bus(&nu_qspi_arr[i], nu_qspi_arr[i].name);
     }
 
     return 0;

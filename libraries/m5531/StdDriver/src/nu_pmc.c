@@ -326,13 +326,6 @@ int32_t PMC_SetPowerDownMode(uint32_t u32PowerDownMode, uint32_t u32PowerLevel)
 
         case PMC_NPD1:
 
-            /* Workaround */
-            if (PMC_Wait_BusyFlag(SYS_BASE + 0xF4C) != 0) return PMC_ERR_TIMEOUT;
-
-            outp32(SYS_BASE + 0xF4C, inp32(SYS_BASE + 0xF4C) | BIT14);
-
-            if (PMC_Wait_BusyFlag(SYS_BASE + 0xF4C) != 0) return PMC_ERR_TIMEOUT;
-
             if (PMC_SetPowerLevel(u32PowerLevel) != 0) return PMC_ERR_TIMEOUT;
 
             break;
@@ -342,13 +335,6 @@ int32_t PMC_SetPowerDownMode(uint32_t u32PowerDownMode, uint32_t u32PowerLevel)
             break;
 
         case PMC_NPD3:
-
-            /* Workaround */
-            if (PMC_Wait_BusyFlag(SYS_BASE + 0xF4C) != 0) return PMC_ERR_TIMEOUT;
-
-            outp32(SYS_BASE + 0xF4C, inp32(SYS_BASE + 0xF4C) | BIT14);
-
-            if (PMC_Wait_BusyFlag(SYS_BASE + 0xF4C) != 0) return PMC_ERR_TIMEOUT;
 
             if (PMC_SetPowerLevel(u32PowerLevel) != 0) return PMC_ERR_TIMEOUT;
 

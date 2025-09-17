@@ -196,60 +196,57 @@ void LPPDMA_Trigger(LPPDMA_T *pdma, uint32_t u32Ch)
     }
     else {}
 }
-
 /**
  * @brief       Enable Interrupt
  *
- * @param[in]   pdma            The pointer of the specified LPPDMA module
+ * @param[in]   lppdma            The pointer of the specified LPPDMA module
  * @param[in]   u32Ch           The selected channel
  * @param[in]   u32Mask         The Interrupt Type. Valid values are
  *                - \ref LPPDMA_INT_TRANS_DONE
  *                - \ref LPPDMA_INT_TEMPTY
  *
+ * @return      None
+ *
  * @details     This function enable the selected channel interrupt.
  */
-void LPPDMA_EnableInt(LPPDMA_T *pdma, uint32_t u32Ch, uint32_t u32Mask)
+void LPPDMA_EnableInt(LPPDMA_T *lppdma, uint32_t u32Ch, uint32_t u32Mask)
 {
-    switch (u32Mask)
+    if (u32Mask & LPPDMA_INT_TRANS_DONE)
     {
-    case LPPDMA_INT_TRANS_DONE:
-        pdma->INTEN |= (1ul << u32Ch);
-        break;
-    case LPPDMA_INT_TEMPTY:
-        pdma->DSCT[u32Ch].CTL &= ~LPPDMA_DSCT_CTL_TBINTDIS_Msk;
-        break;
-
-    default:
-        break;
+        (lppdma)->INTEN |= (1UL << u32Ch);
+    }
+    if (u32Mask & LPPDMA_INT_TEMPTY)
+    {
+        (lppdma)->DSCT[u32Ch].CTL &= ~LPPDMA_DSCT_CTL_TBINTDIS_Msk;
     }
 }
 
 /**
  * @brief       Disable Interrupt
  *
- * @param[in]   pdma            The pointer of the specified LPPDMA module
+ * @param[in]   lppdma            The pointer of the specified LPPDMA module
  * @param[in]   u32Ch           The selected channel
  * @param[in]   u32Mask         The Interrupt Type. Valid values are
  *                - \ref LPPDMA_INT_TRANS_DONE
  *                - \ref LPPDMA_INT_TEMPTY
  *
+ * @return      None
+ *
  * @details     This function disable the selected channel interrupt.
  */
-void LPPDMA_DisableInt(LPPDMA_T *pdma, uint32_t u32Ch, uint32_t u32Mask)
+void LPPDMA_DisableInt(LPPDMA_T *lppdma, uint32_t u32Ch, uint32_t u32Mask)
 {
-    switch (u32Mask)
+    if (u32Mask & LPPDMA_INT_TRANS_DONE)
     {
-    case LPPDMA_INT_TRANS_DONE:
-        pdma->INTEN &= ~(1ul << u32Ch);
-        break;
-    case LPPDMA_INT_TEMPTY:
-        pdma->DSCT[u32Ch].CTL |= LPPDMA_DSCT_CTL_TBINTDIS_Msk;
-        break;
+        lppdma->INTEN &= ~(1ul << u32Ch);
+    }
 
-    default:
-        break;
+    if (u32Mask & LPPDMA_INT_TEMPTY)
+    {
+        lppdma->DSCT[u32Ch].CTL |= LPPDMA_DSCT_CTL_TBINTDIS_Msk;
     }
 }
+
 
 /** @} end of group LPPDMA_EXPORTED_FUNCTIONS */
 /** @} end of group LPPDMA_Driver */

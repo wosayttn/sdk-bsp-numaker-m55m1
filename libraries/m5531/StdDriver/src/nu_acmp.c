@@ -83,8 +83,6 @@ void ACMP_Calibration(ACMP_T *acmp)
     if (((acmp->CALSR & ACMP_CALSR_DONE0_Msk) == 0) || ((acmp->CALSR & ACMP_CALSR_DONE1_Msk) == 0))
     {
         uint32_t u32Delay = 0;
-        /* Unlock protected registers */
-        SYS_UnlockReg();
 
         if (acmp == ACMP01)
         {
@@ -96,10 +94,6 @@ void ACMP_Calibration(ACMP_T *acmp)
             /* Must reset ACMP before ACMP calibration */
             SYS_ResetModule(SYS_ACMP23RST);
         }
-
-        /* Lock protected registers */
-        SYS_LockReg();
-
 
         /* Calibration ACMP0/ACMP2*/
         acmp->CTL[0] |= ACMP_CTL_ACMPEN_Msk;

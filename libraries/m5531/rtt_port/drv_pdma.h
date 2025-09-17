@@ -52,7 +52,15 @@ typedef enum
     eMemCtl_Undefined = (-1)
 } nu_pdma_memctrl_t;
 
-typedef DSCT_T *nu_pdma_desc_t;
+typedef struct
+{
+    __IO uint32_t CTL;             /*!< [0x0000] Descriptor Table Control Register of PDMA Channel n.             */
+    __IO uint32_t SA;              /*!< [0x0004] Source Address Register of PDMA Channel n                        */
+    __IO uint32_t DA;              /*!< [0x0008] Destination Address Register of PDMA Channel n                   */
+    __IO uint32_t NEXT;            /*!< [0x000c] First Scatter-Gather Descriptor Table Offset Address of PDMA Channel n */
+    __IO uint32_t Reserved[4];     /*!< [0x0010]*/
+} sDESC_T;
+typedef sDESC_T *nu_pdma_desc_t;
 
 typedef void (*nu_pdma_cb_handler_t)(void *, uint32_t);
 

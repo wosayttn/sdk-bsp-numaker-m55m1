@@ -114,9 +114,6 @@ static int rt_hw_gdma_init(void)
     s_xGDMASem = rt_sem_create("gdma_sem", 0, RT_IPC_FLAG_FIFO);
     RT_ASSERT(s_xGDMASem);
 
-    /* Unlock protected registers */
-    SYS_UnlockReg();
-
     /* Enable GDMA0 clock source */
     CLK_EnableModuleClock(GDMA0_MODULE);
 

@@ -304,9 +304,6 @@ int rt_hw_epwmcap_init(void)
     int i;
     rt_err_t ret = RT_EOK;
 
-    uint32_t u32RegLockBackup = SYS_IsRegLocked();
-    SYS_UnlockReg();
-
     for (i = (EPWM_START + 1); i < EPWM_CNT; i++)
     {
         nu_epwmcap_t psNuEpwmCap = &nu_epwmcap_arr[i];
@@ -327,9 +324,6 @@ int rt_hw_epwmcap_init(void)
         ret = rt_device_inputcapture_register(&psNuEpwmCap->parent, psNuEpwmCap->name, psNuEpwmCap);
         RT_ASSERT(ret == RT_EOK);
     }
-
-    if (u32RegLockBackup)
-        SYS_LockReg();
 
     return 0;
 }

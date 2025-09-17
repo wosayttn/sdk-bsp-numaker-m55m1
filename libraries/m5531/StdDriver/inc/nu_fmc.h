@@ -196,7 +196,6 @@ __STATIC_INLINE void FMC_Close(void)
 
 /**
   * @brief Enable FMC ISP INT function.
-  * @note  Workaround: Read ISPSTS once after trigger FMC_ISPTRG.ISPGO[0] to get ISPFF interrupt.
   */
 __STATIC_INLINE void FMC_EnableINT(void)
 {

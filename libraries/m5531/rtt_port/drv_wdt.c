@@ -145,14 +145,7 @@ static int wdt_pm_suspend(const struct rt_device *device, rt_uint8_t mode)
     case PM_SLEEP_MODE_LIGHT:
     case PM_SLEEP_MODE_DEEP:
     {
-        uint32_t u32RegLockBackup = SYS_IsRegLocked();
-        SYS_UnlockReg();
-
         WDT0->CTL &= ~WDT_CTL_WDTEN_Msk;
-
-        if (u32RegLockBackup)
-            SYS_LockReg();
-
         break;
     }
     default:
@@ -177,12 +170,7 @@ static void wdt_pm_resume(const struct rt_device *device, rt_uint8_t mode)
     case PM_SLEEP_MODE_LIGHT:
     case PM_SLEEP_MODE_DEEP:
     {
-        uint32_t u32RegLockBackup = SYS_IsRegLocked();
-        SYS_UnlockReg();
         WDT0->CTL |= WDT_CTL_WDTEN_Msk;
-
-        if (u32RegLockBackup)
-            SYS_LockReg();
     }
     break;
 
@@ -251,17 +239,11 @@ static void soft_time_freqeucy_change(uint32_t new_hz, soft_time_handle_t *const
 
 static void hw_wdt_init(void)
 {
-    uint32_t u32RegLockBackup = SYS_IsRegLocked();
-    SYS_UnlockReg();
-
     if (WDT_GET_RESET_FLAG(WDT0))
     {
         LOG_W("System re-boots from watchdog timer reset.\n");
         WDT_CLEAR_RESET_FLAG(WDT0);
     }
-
-    if (u32RegLockBackup)
-        SYS_LockReg();
 
     NVIC_EnableIRQ(WDT0_IRQn);
 }
@@ -319,10 +301,6 @@ static uint32_t wdt_get_working_hz(void)
         hz = __LXT;
         break;
 
-    case CLK_WDTSEL_WDT0SEL_HCLK2_DIV2048:
-        hz = CLK_GetHCLK2Freq() / 2048;
-        break;
-
     default:
         break;
     }
@@ -367,14 +345,9 @@ static rt_err_t wdt_control(rt_watchdog_t *dev, int cmd, void *args)
     uint32_t wanted_sec, hz;
     uint32_t *buf;
     rt_err_t ret = RT_EOK;
-    uint32_t u32RegLockBackup;
 
     if (dev == NULL)
         return -(RT_EINVAL);
-
-    u32RegLockBackup = SYS_IsRegLocked();
-
-    SYS_UnlockReg();
 
     hz = wdt_get_working_hz();
 
@@ -438,9 +411,6 @@ static rt_err_t wdt_control(rt_watchdog_t *dev, int cmd, void *args)
     default:
         ret = RT_ERROR;
     }
-
-    if (u32RegLockBackup)
-        SYS_LockReg();
 
     return -(ret);
 }

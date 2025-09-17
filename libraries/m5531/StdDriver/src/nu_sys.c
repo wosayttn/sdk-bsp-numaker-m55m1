@@ -123,11 +123,30 @@
   */
 void SYS_ResetModule(uint32_t u32ModuleIndex)
 {
+    uint32_t u32SPIM0CKEN;
+
+    /* SPIM reset limitation */
+    if (u32ModuleIndex == SYS_SPIM0RST)
+    {
+        /* Store the SPIM clock setting */
+        u32SPIM0CKEN = CLK->SPIMCTL & CLK_SPIMCTL_SPIM0CKEN_Msk;
+
+        /* Disable SPIM clock */
+        CLK->SPIMCTL &= ~CLK_SPIMCTL_SPIM0CKEN_Msk;
+    }
+
     /* Generate reset signal to the corresponding module */
     *(volatile uint32_t *)((uint32_t)SYS_BASE + (u32ModuleIndex >> 20UL))  |= 1UL << (u32ModuleIndex & 0x000fffffUL);
 
     /* Release corresponding module from reset state */
     *(volatile uint32_t *)((uint32_t)SYS_BASE + (u32ModuleIndex >> 20UL))  &= ~(1UL << (u32ModuleIndex & 0x000fffffUL));
+
+    /* SPIM reset limitation */
+    if (u32ModuleIndex == SYS_SPIM0RST)
+    {
+        /* Restore the SPIM clock setting */
+        CLK->SPIMCTL |= u32SPIM0CKEN;
+    }
 }
 
 /**

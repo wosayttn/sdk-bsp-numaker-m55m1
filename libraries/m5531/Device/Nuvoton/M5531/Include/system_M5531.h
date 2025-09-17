@@ -57,31 +57,30 @@ extern "C" {
 #define DCACHE_LINE_SIZE                        (__SCB_DCACHE_LINE_SIZE)    /*!< DCache line byte size              */
 #define DCACHE_ALIGN_LINE_SIZE(u32ByteSize)     (((u32ByteSize) + (DCACHE_LINE_SIZE) - 1) & ~((DCACHE_LINE_SIZE) - 1))  /* Align to DCache line size */
 
-#define NVT_UNUSED(x)                           (void)(x)                                               /*!< To suppress the unused parameter warnings      */
-#define NVT_ITCM                                __attribute__((section("ITCM")))                        /*!< Placed declaration code in ITCM region         */
-#define NVT_DTCM_INIT                           __attribute__((section("DTCM.Init")))                   /*!< Placed declaration data in DTCM region         */
-#define NVT_NONCACHEABLE_INIT                   __attribute__((section("NonCacheable.Init")))           /*!< Placed declaration data in NonCacheable region */
-#define NVT_DTCM_VTOR                           __attribute__((section("DTCM.VTOR")))                   /*!< Placed vector table in DTCM region             */
+#define NVT_UNUSED(x)                           (void)(x)                                           /*!< To suppress the unused parameter warnings      */
+#define NVT_ITCM                                __attribute__((section("ITCM")))                    /*!< Placed declaration code in ITCM region         */
+#define NVT_DTCM_INIT                           __attribute__((section("DTCM.Init")))               /*!< Placed declaration data in DTCM region         */
+#define NVT_NONCACHEABLE_INIT                   __attribute__((section("NonCacheable.Init")))       /*!< Placed declaration data in NonCacheable region */
+#define NVT_DTCM_VTOR                           __attribute__((section("DTCM.VTOR")))               /*!< Placed vector table in DTCM region             */
 
 #if defined (__GNUC__) && !defined(__ARMCC_VERSION)
-    #if (NVT_DCACHE_ON == 1)
-        /* If D-Cache is enabled, placed NVT_NONCACHEABLE in predefined non-cacheable section. */
-        #define NVT_NONCACHEABLE                __attribute__((section(".NonCacheable.ZeroInit")))      /*!< Placed declaration data in NonCacheable region */
-    #else   // (NVT_DCACHE_ON == 0)
-        /* If D-Cache is disabled, placed NVT_NONCACHEABLE in bss section. */
-        #define NVT_NONCACHEABLE                __attribute__((section(".bss.NonCacheable.ZeroInit")))  /*!< Placed declaration data in bss region          */
-    #endif
-
-    #define NVT_DTCM                            __attribute__((section(".DTCM.ZeroInit")))              /*!< Placed declaration data in DTCM region         */
-    #define NVT_NOINIT                          __attribute__((section(".noinit")))                     /*!< Placed variables in the UNINIT region          */
-#else
-    /* https://developer.arm.com/documentation/ka003046 */
-    /* Arm Compiler 6 only creates ZI sections, if the section name starts with ".bss". */
-    #define NVT_NONCACHEABLE                    __attribute__((section(".bss.NonCacheable.ZeroInit")))  /*!< Placed declaration data in NonCacheable region */
-    #define NVT_DTCM                            __attribute__((section(".bss.DTCM.ZeroInit")))          /*!< Placed declaration data in DTCM region         */
-    #define NVT_NOINIT                          __attribute__((section(".bss.NoInit")))                 /*!< Placed variables in the UNINIT region          */
+#if (NVT_DCACHE_ON == 1)
+/* If D-Cache is enabled, placed NVT_NONCACHEABLE in predefined non-cacheable section. */
+#define NVT_NONCACHEABLE                __attribute__((section(".NonCacheable.ZeroInit")))          /*!< Placed declaration data in NonCacheable region */
+#else   // (NVT_DCACHE_ON == 0)
+/* If D-Cache is disabled, placed NVT_NONCACHEABLE in bss section. */
+#define NVT_NONCACHEABLE                __attribute__((section(".bss.NonCacheable.ZeroInit")))      /*!< Placed declaration data in bss region          */
 #endif
 
+#define NVT_DTCM                            __attribute__((section(".DTCM.ZeroInit")))              /*!< Placed declaration data in DTCM region         */
+#define NVT_NOINIT                          __attribute__((section(".noinit")))                     /*!< Placed variables in the UNINIT region          */
+#else
+/* https://developer.arm.com/documentation/ka003046 */
+/* Arm Compiler 6 only creates ZI sections, if the section name starts with ".bss". */
+#define NVT_NONCACHEABLE                    __attribute__((section(".bss.NonCacheable.ZeroInit")))  /*!< Placed declaration data in NonCacheable region */
+#define NVT_DTCM                            __attribute__((section(".bss.DTCM.ZeroInit")))          /*!< Placed declaration data in DTCM region         */
+#define NVT_NOINIT                          __attribute__((section(".bss.NoInit")))                 /*!< Placed variables in the UNINIT region          */
+#endif
 
 #define __PC()                                                \
     __extension__({                                           \
@@ -181,7 +180,7 @@ extern void InitDebugUart(void);
 #endif /* NVT_DBG_UART_OFF */
 
 /**
- * \brief  Initialize MPU Region according to mpu_config_M5531.h and user defined table
+ * \brief  Initialize MPU Region according to mpu_config_M55M1.h and user defined table
  */
 extern int32_t InitPreDefMPURegion(const ARM_MPU_Region_t *psMPURegion, uint32_t u32RegionCnt);
 
@@ -199,4 +198,4 @@ extern int32_t SetupMPC(
 }
 #endif
 
-#endif /* __SYSTEM_M5531_H__ */
+#endif /* __SYSTEM_M55M1_H__ */
