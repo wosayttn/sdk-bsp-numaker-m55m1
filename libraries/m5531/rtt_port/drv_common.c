@@ -112,17 +112,12 @@ void nu_pin_func(rt_base_t pin, int data)
 
 void nu_read_uid(uint32_t *id)
 {
-    /* Enable FMC ISP function */
-    FMC_Open();
-
     /* Read Unique ID */
+    FMC_Open();
     id[0] = FMC_ReadUID(0);
     id[1] = FMC_ReadUID(1);
     id[2] = FMC_ReadUID(2);
     id[3] = 0;
-
-    /* Disable FMC ISP function */
-    FMC_Close();
 }
 
 /**

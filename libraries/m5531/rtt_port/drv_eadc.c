@@ -326,7 +326,6 @@ int rt_hw_eadc_init(void)
     /* Invoke ISP function to read built-in band-gap A/D conversion result*/
     FMC_Open();
     s_u32BuiltInBandGapValue = FMC_ReadBandGap();
-    FMC_Close();
 
     for (i = (EADC_START + 1); i < EADC_CNT; i++)
     {

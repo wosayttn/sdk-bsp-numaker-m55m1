@@ -213,7 +213,6 @@ int rt_hw_lpadc_init(void)
     /* Invoke ISP function to read built-in band-gap A/D conversion result*/
     FMC_Open();
     s_u32BuiltInBandGapValue = FMC_ReadBandGap();
-    FMC_Close();
 
     for (i = (LPADC_START + 1); i < LPADC_CNT; i++)
     {

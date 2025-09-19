@@ -1110,15 +1110,12 @@ void nutool_modclkcfg_deinit_lpgpio0(void)
 
 void nutool_modclkcfg_init_npu0(void)
 {
-    /* Enable FMC0 module clock to keep FMC clock when CPU idle but NPU running*/
-    CLK_EnableModuleClock(FMC0_MODULE);
     CLK_EnableModuleClock(NPU0_MODULE);
 }
 
 void nutool_modclkcfg_deinit_npu0(void)
 {
     CLK_DisableModuleClock(NPU0_MODULE);
-    CLK_DisableModuleClock(FMC0_MODULE);
 }
 
 void nutool_modclkcfg_init_base(void)
