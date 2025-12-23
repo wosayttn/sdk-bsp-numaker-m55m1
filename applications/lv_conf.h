@@ -12,6 +12,7 @@
 
 #define LV_USE_DRAW_GDMA                1
 #define LV_USE_NATIVE_HELIUM_ASM        1
+#define LV_USE_DRAW_SW_ASM              LV_DRAW_SW_ASM_HELIUM
 
 #define LV_COLOR_DEPTH                  BSP_LCD_BPP
 

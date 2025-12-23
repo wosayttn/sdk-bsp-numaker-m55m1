@@ -43,7 +43,7 @@ if PLATFORM == 'gcc':
     STRIP = PREFIX + 'strip'
 
     NPU = '  '
-    DEVICE = ' -march=armv8.1-m.main -mthumb -mfpu=fpv5-d16 -mfloat-abi=hard -ffunction-sections -fdata-sections -ffreestanding -funwind-tables -fno-strict-aliasing '
+    DEVICE = ' -march=armv8.1-m.main+mve -flax-vector-conversions -mthumb -mfpu=fpv5-d16 -mfloat-abi=hard -ffunction-sections -fdata-sections -ffreestanding -funwind-tables -fno-strict-aliasing '
     CFLAGS = DEVICE + ' -Dgcc -Wno-unused-variable -Wno-unused-function -Wno-unused-but-set-variable '
     AFLAGS = ' -c ' + DEVICE + ' -x assembler-with-cpp -Wa,-mimplicit-it=thumb '
     LFLAGS = DEVICE + ' -Wl,--gc-sections,-Map=rtthread.map,-cref,-u,Reset_Handler -T ./linking_scripts/M55M1.ld '
