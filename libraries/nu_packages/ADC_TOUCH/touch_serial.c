@@ -224,12 +224,16 @@ rt_err_t nu_adc_touch_disable(void)
 int nu_adc_touch_serial_register(void)
 {
     rt_thread_t  serial_touch_thread;
+    int ret;
 
     s_NuSerialTouch.serial = rt_device_find(NU_PKG_SERIAL_TOUCH_DEVNAME);
     RT_ASSERT(s_NuSerialTouch.serial);
 
     g_pmqTouchXYZ = rt_mq_create("ADC_TOUCH_SERIAL", sizeof(struct nu_adc_touch_data), TOUCH_MQ_LENGTH, RT_IPC_FLAG_FIFO);
     RT_ASSERT(g_pmqTouchXYZ);
+
+    ret = rt_hw_adc_touch_init();
+    RT_ASSERT(ret == 0);
 
     serial_touch_thread = rt_thread_create("serial_touch_thread",
                                            serial_touch_entry,

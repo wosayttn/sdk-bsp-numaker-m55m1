@@ -14,7 +14,6 @@
 #if defined(NU_PKG_USING_ADC_TOUCH_SW)
 
 #include "rtdevice.h"
-#include "touch.h"
 #include "touch_sw.h"
 
 /* Private define ---------------------------------------------------------------*/
@@ -89,7 +88,7 @@ static void nu_adc_touch_smpl(void *p)
     struct nu_adc_touch_data point;
     S_TOUCH_SW *psTouchSW;
 
-    if (!bDoSmpling)
+    if (!bDoSmpling || !p)
         return ;
 
     psTouchSW = (S_TOUCH_SW *)p;
@@ -115,6 +114,7 @@ static void nu_adc_touch_smpl(void *p)
         if (psTouchSW->psRtTouch != RT_NULL)
             rt_hw_touch_isr(psTouchSW->psRtTouch);
     }
+
     u32LastZ0 = point.u32Z0;
 }
 
@@ -143,7 +143,7 @@ void nu_adc_touch_detect(rt_bool_t bStartDetect)
 
 rt_err_t nu_adc_touch_enable(rt_touch_t psRtTouch)
 {
-    if (g_psTouchSW->adc)
+    if (g_psTouchSW && g_psTouchSW->adc)
     {
         g_psTouchSW->psRtTouch = psRtTouch;
 
@@ -153,6 +153,7 @@ rt_err_t nu_adc_touch_enable(rt_touch_t psRtTouch)
 
         /* Start sampling procedure. */
         rt_timer_start(g_psRtTouchMenuTimer);
+
         return RT_EOK;
     }
 
@@ -161,7 +162,7 @@ rt_err_t nu_adc_touch_enable(rt_touch_t psRtTouch)
 
 rt_err_t nu_adc_touch_disable(void)
 {
-    if (g_psTouchSW->adc)
+    if (g_psTouchSW && g_psTouchSW->adc)
     {
         /* Stop sampling procedure. */
         rt_timer_stop(g_psRtTouchMenuTimer);
@@ -170,6 +171,7 @@ rt_err_t nu_adc_touch_disable(void)
         rt_adc_disable((rt_adc_device_t)g_psTouchSW->adc, g_psTouchSW->i32ADCChnXR);
         rt_adc_disable((rt_adc_device_t)g_psTouchSW->adc, g_psTouchSW->i32ADCChnYU);
         g_psTouchSW->psRtTouch = RT_NULL;
+
         return RT_EOK;
     }
 
@@ -191,7 +193,7 @@ rt_err_t nu_adc_touch_sw_register(S_TOUCH_SW *psTouchSW)
 
     g_psTouchSW = psTouchSW;
 
-    return RT_EOK;
+    return rt_hw_adc_touch_init();
 }
 
 #endif //#if defined(NU_PKG_USING_ADC_TOUCH_SW)

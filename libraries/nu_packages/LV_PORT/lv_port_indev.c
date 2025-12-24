@@ -57,6 +57,11 @@ RT_WEAK void lv_port_indev_init(void)
 
 #elif defined(LVGL_VERSION_MAJOR) && (LVGL_VERSION_MAJOR==9)
 
+RT_WEAK void lv_port_other_indev_init(void)
+{
+
+}
+
 static void input_read(lv_indev_t *indev, lv_indev_data_t *data)
 {
     data->point.x = last_x;
@@ -70,6 +75,8 @@ RT_WEAK void lv_port_indev_init(void)
 
     lv_indev_set_type(lv_indev_touch, LV_INDEV_TYPE_POINTER);
     lv_indev_set_read_cb(lv_indev_touch,  input_read);
+
+    lv_port_other_indev_init();
 }
 
 #endif

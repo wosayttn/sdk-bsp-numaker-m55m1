@@ -3,4 +3,5 @@
 #include "../../../../lv_conf_internal.h"
 #include LV_STDINT_INCLUDE
 
-typedef intptr_t ssize_t;
+//typedef intptr_t ssize_t;
+/* use system-provided ssize_t */

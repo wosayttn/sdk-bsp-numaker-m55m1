@@ -15,6 +15,7 @@
 
 #include <rtthread.h>
 #include "touch.h"
+#include "adc_touch.h"
 
 typedef enum
 {

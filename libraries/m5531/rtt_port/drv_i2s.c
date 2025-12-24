@@ -573,17 +573,6 @@ static void nu_i2s_buffer_info(struct rt_audio_device *audio, struct rt_audio_bu
     return;
 }
 
-#if 0
-static rt_size_t nu_i2s_transmit(struct rt_audio_device *audio, const void *writeBuf, void *readBuf, rt_size_t size)
-{
-#if defined(RT_USING_CACHE)
-    if (writeBuf && size)
-        rt_hw_cpu_dcache_ops(RT_HW_CACHE_FLUSH, (void *)writeBuf, size);
-#endif
-    return size;
-}
-#endif
-
 static struct rt_audio_ops nu_i2s_audio_ops =
 {
     .getcaps     = nu_i2s_getcaps,

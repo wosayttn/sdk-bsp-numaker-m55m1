@@ -11,7 +11,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <drv_uart.h>
+#include "drv_uart.h"
+
+static struct serial_configure s_sUartConfig = RT_SERIAL_CONFIG_DEFAULT;
 
 static int send_message(rt_device_t serial, int num)
 {
@@ -36,9 +38,9 @@ static void uart_aud(int argc, char **argv)
     if (argc < 2)
     {
         rt_kprintf("\n");
-        rt_kprintf("can     [OPTION] [PARAM]\n");
+        rt_kprintf("uart_aud [OPTION] [PARAM]\n");
         rt_kprintf("         probe <dev_name>      Probe sensor by given name\n");
-        rt_kprintf("         send                  send [num] times message (default 5)\n");
+        rt_kprintf("         send                  send [num] times message (default 1)\n");
         return ;
     }
     else if (!strcmp(argv[1], "send"))
@@ -64,12 +66,19 @@ static void uart_aud(int argc, char **argv)
         {
             rt_device_t new_dev;
 
+            if (dev)
+            {
+                rt_device_close(dev);
+            }
+
             new_dev = rt_device_find(argv[2]);
             if (new_dev == RT_NULL)
             {
                 LOG_E("Can't find device:%s", argv[2]);
                 return;
             }
+
+            rt_device_control(new_dev, RT_DEVICE_CTRL_CONFIG, &s_sUartConfig);
 
             if (rt_device_open(new_dev, RT_DEVICE_FLAG_INT_RX) != RT_EOK)
             {
@@ -79,11 +88,6 @@ static void uart_aud(int argc, char **argv)
 
             /* Nuvoton private command */
             nu_uart_set_rs485aud((struct rt_serial_device *)new_dev, RT_FALSE);
-
-            if (dev)
-            {
-                rt_device_close(dev);
-            }
 
             dev = new_dev;
         }
@@ -99,6 +103,6 @@ static void uart_aud(int argc, char **argv)
     }
 
 }
-MSH_CMD_EXPORT(uart_aud, test Nuvoton uart aud communication);
+MSH_CMD_EXPORT(uart_aud, Nuvoton uart-aud );
 
 #endif //defined(BSP_USING_UART)

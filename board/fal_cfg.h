@@ -32,7 +32,7 @@
     #endif
 
     /* ---------------- QSPI ---------------- */
-    #if defined(BOARD_USING_NUTFT_QSPI_FLASH)
+    #if defined(BOARD_USING_QSPI_FLASH)
         extern struct fal_flash_dev        nor_flash0;
         #define IFDEF_BOARD_USING_QSPI     &nor_flash0,
         #define FAL_PART_QSPI \
@@ -43,7 +43,7 @@
     #endif
 
     /* ---------------- Device Table ---------------- */
-    #if defined(BSP_USING_FMC) || defined(BOARD_USING_NUTFT_QSPI_FLASH)
+    #if defined(BSP_USING_FMC) || defined(BOARD_USING_QSPI_FLASH)
         #define FAL_FLASH_DEV_TABLE     \
         {                               \
             IFDEF_BOARD_USING_FMC       \
@@ -54,7 +54,7 @@
     #endif
 
     /* ---------------- Partition Table ---------------- */
-    #if defined(BSP_USING_FMC) || defined(BOARD_USING_NUTFT_QSPI_FLASH)
+    #if defined(BSP_USING_FMC) || defined(BOARD_USING_QSPI_FLASH)
         #define FAL_PART_TABLE          \
         {                               \
             FAL_PART_FMC                \

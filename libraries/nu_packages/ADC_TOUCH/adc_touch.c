@@ -305,8 +305,6 @@ int rt_hw_adc_touch_init(void)
 
     return (int)rt_hw_touch_register(&s_NuAdcTouch.dev, "adc_touch", RT_DEVICE_FLAG_INT_RX, RT_NULL);
 }
-INIT_DEVICE_EXPORT(rt_hw_adc_touch_init);
-
 
 static rt_thread_t  adc_touch_thread = RT_NULL;
 static rt_sem_t     adc_touch_sem = RT_NULL;

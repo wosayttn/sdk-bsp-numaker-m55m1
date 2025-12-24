@@ -34,4 +34,6 @@ typedef struct
     int32_t   div;
 } S_CALIBRATION_MATRIX;
 
+int rt_hw_adc_touch_init(void);
+
 #endif /* __ADC_TOUCH_CALIBRATE_H__ */
